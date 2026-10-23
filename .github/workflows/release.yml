@@ -1,0 +1,82 @@
+name: Auto Release
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Extract Version & Changelog
+        id: extract_changelog
+        run: |
+          python - << 'EOF'
+          import os
+          import re
+
+          # Baca versi dari game/options.rpy
+          with open("game/options.rpy", "r", encoding="utf-8") as f:
+              opt = f.read()
+          v_match = re.search(r'define\s+config\.version\s*=\s*["\']([^"\']+)["\']', opt)
+          version = v_match.group(1).strip() if v_match else "0.0.0"
+          tag = f"v{version}"
+
+          # Ekstrak catatan perubahan dari CHANGELOG.md
+          with open("CHANGELOG.md", "r", encoding="utf-8") as f:
+              cl = f.read()
+
+          pattern = rf'## \[{re.escape(version)}\][^\n]*\n(.*?)(?=\n---|\n## \[|$)'
+          notes_match = re.search(pattern, cl, re.DOTALL)
+          notes = notes_match.group(1).strip() if notes_match else f"Rilis pembaruan versi {version}"
+
+          # Simpan ke file release_notes.md untuk body release
+          with open("release_notes.md", "w", encoding="utf-8") as f:
+              f.write(notes)
+
+          # Teruskan variabel ke output GitHub Action
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
+              f.write(f"version={version}\n")
+              f.write(f"tag={tag}\n")
+          EOF
+
+      - name: Check if Release Already Exists
+        id: check_release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ steps.extract_changelog.outputs.tag }}"
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Release $TAG sudah ada. Melewati pembuatan rilis otomatis."
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Release $TAG belum ada. Rilis otomatis akan dibuat."
+          fi
+
+      - name: Create GitHub Release
+        if: steps.check_release.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ steps.extract_changelog.outputs.tag }}"
+          gh release create "$TAG" \
+            --title "Pay o' May $TAG" \
+            --notes-file release_notes.md \
+            --target main

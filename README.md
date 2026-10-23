@@ -44,9 +44,9 @@ Banyak mahasiswa perantau yang menghadapi kesulitan mengelola keuangan pribadi k
 
 | Karakter | Peran & Representasi |
 | :--- | :--- |
-| **(Pemain)** | Mahasiswa perantauan yang memegang kendali penuh atas uang sakunya. |
-| **Dimas** | Sahabat karib yang impulsif, suka nongkrong, dan sering menjadi sumber tekanan sosial (*FOMO*). |
-| **Sinta** | Mahasiswi bijak yang disiplin mencatat pengeluaran dan merepresentasikan literasi keuangan yang baik. |
+| **Billa (Pemain)** | Mahasiswa perantauan yang memegang kendali penuh atas uang sakunya. |
+| **Axel** | Sahabat karib yang impulsif, suka nongkrong, dan sering menjadi sumber tekanan sosial (*FOMO*). |
+| **Michelle** | Mahasiswi bijak yang disiplin mencatat pengeluaran dan merepresentasikan literasi keuangan yang baik. |
 | **Mama** | Orang tua yang mengirimkan uang saku dan memberikan dukungan moral serta nasihat keuangan. |
 | **Tips Finansial** | Narator edukasi yang mengulas prinsip keuangan di setiap akhir keputusan dengan efek suara lonceng. |
 
@@ -110,7 +110,7 @@ Pay o May/
 │   ├── everyday_ui/          # Aset frame, tombol, dan ikon Everyday Life UI
 │   ├── everyday_weather/     # Animasi efek cuaca partikel (petals/rain)
 │   ├── fonts/                # Berkas tipografi PixelifySans.ttf
-│   ├── images/               # Latar tempat (background) & sprite tokoh (Dimas, Sinta)
+│   ├── images/               # Latar tempat (background) & sprite tokoh (Axel, Michelle)
 │   ├── gui.rpy               # Konfigurasi dimensi antarmuka Ren'Py
 │   ├── options.rpy           # Informasi metadata versi & build gim
 │   ├── screens.rpy           # Screen internal bawaan Ren'Py

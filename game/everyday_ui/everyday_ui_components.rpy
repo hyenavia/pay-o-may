@@ -5,6 +5,8 @@ default persistent.el_ui_theme = "cream"
 default el_ui_theme = persistent.el_ui_theme
 default el_ui_large_text = False
 default el_ui_animate = False
+default persistent.game_font = "fredoka"
+default game_font = persistent.game_font
 
 init -20 python:
     if not hasattr(store, "el_ui_asset_root"):
@@ -50,8 +52,66 @@ init python:
     if renpy.loadable("audio/sfx_click.ogg"):
         style.button.activate_sound = "audio/sfx_click.ogg"
 
+    def get_game_font_path(choice=None):
+        if choice is None:
+            choice = getattr(store, "game_font", None) or getattr(persistent, "game_font", "fredoka")
+        if choice == "pixel":
+            return "fonts/PixelifySans.ttf"
+        return "fonts/Fredoka.ttf"
+
+    def el_ui_font():
+        return get_game_font_path()
+
+    def set_game_font(font_choice):
+        persistent.game_font = font_choice
+        store.game_font = font_choice
+        target = get_game_font_path(font_choice)
+
+        style.default.font = target
+        style.el_ui_text.font = target
+        style.el_ui_button_text.font = target
+        if hasattr(style, "say_dialogue"):
+            style.say_dialogue.font = target
+        if hasattr(style, "say_thought"):
+            style.say_thought.font = target
+        if hasattr(style, "say_label"):
+            style.say_label.font = target
+        if hasattr(style, "notify_text"):
+            style.notify_text.font = target
+
+        gui.text_font = target
+        gui.name_text_font = target
+        gui.interface_text_font = target
+
+        renpy.style.rebuild()
+        renpy.restart_interaction()
+
+init 50 python:
+    def _apply_saved_game_font():
+        _cur_f = get_game_font_path()
+        style.default.font = _cur_f
+        style.el_ui_text.font = _cur_f
+        style.el_ui_button_text.font = _cur_f
+        if hasattr(style, "say_dialogue"):
+            style.say_dialogue.font = _cur_f
+        if hasattr(style, "say_thought"):
+            style.say_thought.font = _cur_f
+        if hasattr(style, "say_label"):
+            style.say_label.font = _cur_f
+        if hasattr(style, "notify_text"):
+            style.notify_text.font = _cur_f
+        gui.text_font = _cur_f
+        gui.name_text_font = _cur_f
+        gui.interface_text_font = _cur_f
+
+    _apply_saved_game_font()
+    if hasattr(config, "start_callbacks"):
+        config.start_callbacks.append(_apply_saved_game_font)
+    if hasattr(config, "after_load_callbacks"):
+        config.after_load_callbacks.append(_apply_saved_game_font)
+
 style el_ui_text:
-    font "DejaVuSans.ttf"
+    font "fonts/Fredoka.ttf"
     color el_ui_color()
     size el_ui_font_size()
     outlines []
@@ -73,16 +133,17 @@ style el_ui_button_text is el_ui_text:
     yalign 0.5
     text_align 0.5
 
-screen el_ui_button(label, action, selected=None, sensitive=True, width=144, kind="button"):
-    $ _pad_l = el_u(10 if width < 140 else 20)
-    $ _pad_r = el_u(10 if width < 140 else 14)
-    $ _text_sz = 11 if width < 140 else 12
+screen el_ui_button(label, action, selected=None, sensitive=True, width=144, kind="button", font=None):
+    $ _pad_l = el_u(7 if width < 75 else (10 if width < 140 else 20))
+    $ _pad_r = el_u(7 if width < 75 else (10 if width < 140 else 14))
+    $ _text_sz = 10 if width < 75 else (11 if width < 140 else 12)
     textbutton label:
         style "el_ui_button"
         text_style "el_ui_button_text"
         text_color el_ui_color()
         text_insensitive_color el_ui_color(1)
         text_size el_ui_font_size(_text_sz)
+        text_font (font or el_ui_font())
         background el_ui_frame(kind + "_idle", True)
         hover_background el_ui_frame(kind + "_hover", True)
         insensitive_background el_ui_frame(kind + "_disabled", True)
@@ -155,12 +216,13 @@ screen el_ui_quick_menu():
     hbox:
         xalign 0.5
         ypos el_u(5)
-        spacing el_u(4)
-        for label, action in [("Riwayat", ShowMenu("el_ui_history")),
-                              ("Simpan", ShowMenu("el_ui_save")),
-                              ("Muat", ShowMenu("el_ui_load")),
-                              ("Opsi", ShowMenu("el_ui_preferences"))]:
-            use el_ui_button(_(label), action, width=92, kind="small_button")
+        spacing el_u(3)
+        for label, action, w in [("Riwayat", ShowMenu("el_ui_history"), 68),
+                                 ("Simpan", ShowMenu("el_ui_save"), 68),
+                                 ("Muat", ShowMenu("el_ui_load"), 62),
+                                 ("Opsi", ShowMenu("el_ui_preferences"), 62),
+                                 ("Menu Utama", MainMenu(), 88)]:
+            use el_ui_button(_(label), action, width=w, kind="small_button")
 
 screen el_ui_shell(title):
     modal True
@@ -235,20 +297,40 @@ screen el_ui_bar(val, width=258, invert=False):
 screen el_ui_preferences():
     tag menu
     use el_ui_shell(_("Pengaturan")):
+        if not main_menu:
+            fixed:
+                xpos el_u(36)
+                ypos el_u(298)
+                xsize el_u(110)
+                ysize el_u(32)
+                use el_ui_button(_("Menu Utama"), MainMenu(), width=110)
         vbox:
             xpos el_u(36)
-            ypos el_u(56)
-            spacing el_u(6)
+            ypos el_u(60)
+            spacing el_u(5)
 
-            # --- BAGIAN ATAS: TEMA WARNA ---
+            # --- BAGIAN ATAS: TEMA WARNA & PILIHAN FONT (1 BARIS) ---
             hbox:
-                spacing el_u(8)
+                spacing el_u(14)
                 yalign 0.5
-                text _("Tema Warna:") style "el_ui_text" color el_ui_color() size el_ui_font_size(11) yalign 0.5
-                for key, label, w in [("cream", _("Krem"), 86), ("sunset", _("Senja"), 86), ("midnight", _("Tengah Malam"), 136)]:
-                    use el_ui_button(label, [SetVariable("el_ui_theme", key), SetField(persistent, "el_ui_theme", key)], selected=el_ui_theme==key, width=w)
 
-            null height el_u(4)
+                # Tema Warna
+                hbox:
+                    spacing el_u(6)
+                    yalign 0.5
+                    text _("Tema:") style "el_ui_text" color el_ui_color() size el_ui_font_size(10.5) yalign 0.5
+                    for key, label, w in [("cream", _("Krem"), 60), ("sunset", _("Senja"), 60), ("midnight", _("Malam"), 66)]:
+                        use el_ui_button(label, [SetVariable("el_ui_theme", key), SetField(persistent, "el_ui_theme", key)], selected=el_ui_theme==key, width=w)
+
+                # Pilihan Font
+                hbox:
+                    spacing el_u(6)
+                    yalign 0.5
+                    text _("Font:") style "el_ui_text" color el_ui_color() size el_ui_font_size(10.5) yalign 0.5
+                    use el_ui_button(_("Default (Fredoka)"), Function(set_game_font, "fredoka"), selected=(getattr(persistent, "game_font", "fredoka") == "fredoka"), width=138)
+                    use el_ui_button(_("Pixel (Pixelify)"), Function(set_game_font, "pixel"), selected=(getattr(persistent, "game_font", "fredoka") == "pixel"), width=122)
+
+            null height el_u(3)
 
             # --- DUA KOLOM: TAMPILAN (Kiri) & AUDIO/LEWATI (Kanan) ---
             hbox:
@@ -259,25 +341,25 @@ screen el_ui_preferences():
                     spacing el_u(4)
                     xsize el_u(258)
 
-                    text _("Mode Layar") style "el_ui_text" color el_ui_color() size el_ui_font_size(11)
+                    text _("Mode Layar") style "el_ui_text" color el_ui_color() size el_ui_font_size(10.5)
                     hbox:
                         spacing el_u(6)
                         use el_ui_button(_("Jendela"), Preference("display", "window"), width=126)
                         use el_ui_button(_("Layar Penuh"), Preference("display", "fullscreen"), width=126)
 
                     null height el_u(1)
-                    text _("Teks & Efek Visual") style "el_ui_text" color el_ui_color() size el_ui_font_size(11)
+                    text _("Teks & Efek Visual") style "el_ui_text" color el_ui_color() size el_ui_font_size(10.5)
                     hbox:
                         spacing el_u(6)
                         use el_ui_button(_("Teks Besar"), ToggleVariable("el_ui_large_text"), selected=el_ui_large_text, width=126)
                         use el_ui_button(_("Animasi Penanda"), ToggleVariable("el_ui_animate"), selected=el_ui_animate, width=126)
 
                     null height el_u(1)
-                    text _("Kecepatan Teks") style "el_ui_text" color el_ui_color() size el_ui_font_size(11)
+                    text _("Kecepatan Teks") style "el_ui_text" color el_ui_color() size el_ui_font_size(10.5)
                     use el_ui_bar(Preference("text speed"), width=258)
 
                     null height el_u(1)
-                    text _("Waktu Maju Otomatis") style "el_ui_text" color el_ui_color() size el_ui_font_size(11)
+                    text _("Waktu Maju Otomatis") style "el_ui_text" color el_ui_color() size el_ui_font_size(10.5)
                     use el_ui_bar(Preference("auto-forward time"), width=258)
 
                 # KOLOM KANAN: Audio & Opsi Lewati
@@ -285,18 +367,18 @@ screen el_ui_preferences():
                     spacing el_u(4)
                     xsize el_u(258)
 
-                    text _("Volume Musik") style "el_ui_text" color el_ui_color() size el_ui_font_size(11)
+                    text _("Volume Musik") style "el_ui_text" color el_ui_color() size el_ui_font_size(10.5)
                     use el_ui_bar(Preference("music volume"), width=258)
 
                     null height el_u(1)
-                    text _("Volume Efek Suara") style "el_ui_text" color el_ui_color() size el_ui_font_size(11)
+                    text _("Volume Efek Suara") style "el_ui_text" color el_ui_color() size el_ui_font_size(10.5)
                     use el_ui_bar(Preference("sound volume"), width=258)
 
                     null height el_u(2)
                     use el_ui_button(_("Bisukan Semua"), Preference("all mute", "toggle"), width=258)
 
                     null height el_u(1)
-                    text _("Lewati Cerita (Skip)") style "el_ui_text" color el_ui_color() size el_ui_font_size(11)
+                    text _("Lewati Cerita (Skip)") style "el_ui_text" color el_ui_color() size el_ui_font_size(10.5)
                     hbox:
                         spacing el_u(6)
                         use el_ui_button(_("Belum Dibaca"), Preference("skip", "toggle"), width=126)

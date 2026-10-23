@@ -1,5 +1,5 @@
 # ============================================================
-#  PAY O' MAY  (v0.3.3)
+#  PAY O' MAY  (v0.3.4)
 #  Gim novel visual edukasi kesadaran finansial mahasiswa perantauan
 #  Ren'Py 8.5.3
 # ============================================================
@@ -79,18 +79,41 @@ init python:
     def ubah_uang(jumlah, ket=""):
         """
         Menambah atau mengurangi saldo uang jajan harian/bulanan.
-        - Memperbarui variabel 'uang' di store.
-        - Memunculkan banner notifikasi perubahan saldo (+/-).
-        - Memutar efek suara transaksi 'sfx_koin'.
+        - Jika saldo tidak mencukupi saat terjadi pengeluaran, saldo diset menjadi Rp 0
+          dan sisa defisit dialihkan otomatis menjadi tagihan PayLater.
+        - Memperbarui variabel 'uang' (dan 'hutang' jika terjadi defisit) di store.
+        - Memunculkan banner notifikasi perubahan saldo / pemindahan ke PayLater.
+        - Memutar efek suara transaksi 'sfx_koin' / 'sfx_peringatan'.
         """
-        store.uang += jumlah
-        tanda = "+" if jumlah > 0 else "-"
-        warna = "#a5d6a7" if jumlah > 0 else "#ff8a80"
-        teks = "Uang jajan " + tanda + rp(abs(jumlah))
-        if ket:
-            teks += " (" + ket + ")"
-        _lapor(teks, warna)
-        sfx("sfx_koin")
+        if jumlah >= 0:
+            store.uang += jumlah
+            teks = "Uang jajan +" + rp(jumlah)
+            if ket:
+                teks += " (" + ket + ")"
+            _lapor(teks, "#a5d6a7")
+            sfx("sfx_koin")
+        else:
+            biaya = abs(jumlah)
+            if store.uang >= biaya:
+                store.uang -= biaya
+                teks = "Uang jajan -" + rp(biaya)
+                if ket:
+                    teks += " (" + ket + ")"
+                _lapor(teks, "#ff8a80")
+                sfx("sfx_koin")
+            else:
+                sisa_uang = max(0, store.uang)
+                defisit = biaya - sisa_uang
+                store.uang = 0
+                store.hutang += defisit
+                if sisa_uang > 0:
+                    teks = "Saldo uang jajan habis! Defisit " + rp(defisit) + " dialihkan ke PayLater"
+                else:
+                    teks = "Saldo Rp 0! Tagihan PayLater +" + rp(defisit)
+                if ket:
+                    teks += " (" + ket + ")"
+                _lapor(teks, "#ffb74d")
+                sfx("sfx_peringatan")
 
     def ubah_dana(jumlah, ket=""):
         """
@@ -176,26 +199,26 @@ init python:
 # 2. DEFINISI KARAKTER & PERAN NARATIF
 # ------------------------------------------------------------
 # Karakter Utama & Pendukung:
-# - p: Tokoh utama (default 'Raka'), mahasiswa rantau semester awal
-# - dimas: Sahabat impulsif yang sering mengajak nongkrong/belanja (representasi tekanan sosial / FOMO)
-# - sinta: Sahabat bijak yang terbiasa mencatat keuangan dan berhemat (representasi literasi finansial)
+# - p: Tokoh utama (default 'Billa'), mahasiswa rantau
+# - dimas: Axel, sahabat impulsif yang sering mengajak nongkrong/belanja (representasi tekanan sosial / FOMO)
+# - sinta: Michelle, sahabat bijak yang terbiasa mencatat keuangan dan berhemat (representasi literasi finansial)
 # - mama: Orang tua yang mengirimkan uang saku bulanan dan memberikan nasihat keuangan
 # - tip: Karakter narator khusus penyampai edukasi keuangan dengan SFX lonceng
 define p     = Character("[nama]")
-define dimas = Character("Dimas")
-define sinta = Character("Sinta")
+define dimas = Character("Axel")
+define sinta = Character("Michelle")
 define mama  = Character("Mama")
 define tip   = Character("Tips Finansial", what_italic=True, callback=tip_callback)
 
 # ------------------------------------------------------------
 # 3. VARIABEL STATUS & TRACKING KEUANGAN (GAME STATE)
 # ------------------------------------------------------------
-default nama = "Raka"              # Nama pemain (dapat diubah saat awal game)
+default nama = "Billa"             # Nama pemain (dapat diubah saat awal game)
 default uang = 0                  # Saldo uang jajan aktif untuk belanja sehari-hari
 default dana_darurat = 0          # Saldo simpanan terpisah khusus keadaan darurat
 default hutang = 0                # Total pokok tagihan utang PayLater
 default skor = 0                  # Akumulasi poin keputusan finansial yang bijak
-default skor_max = 22             # Skor maksimal (11 titik keputusan x 2 poin maksimal)
+define skor_max = 22             # Skor maksimal (11 titik keputusan x 2 poin maksimal)
 default minggu = 1                # Indikator progres minggu (Minggu 1 s.d. 4)
 default catat = False             # Status pencatatan keuangan (diaktifkan di Minggu 2 jika setuju)
 default wants = 0                 # Penghitung berapa kali pemain memilih pengeluaran Keinginan
@@ -210,12 +233,14 @@ default headset = ""              # "paylater" / "tunai" / "tunda"  (Minggu 1)
 default makan = ""                # "online" / "campur" / "masak"  (Minggu 2)
 default langganan = ""            # "tahunan" / "bulanan" / "nobar"  (Minggu 2)
 default pinjam_dimas = ""         # "penuh" / "sebagian" / "tolak"  (Minggu 3)
-default pinjaman_dimas = 0        # Nominal uang yang dipinjamkan ke Dimas
+default pinjaman_dimas = 0        # Nominal uang yang dipinjamkan ke Axel
 default uang_awal_minggu = 0      # Untuk rekap pengeluaran mingguan
 default dana_awal_minggu = 0                # Persentase skor akhir kesadaran finansial
 default ending_nama = "Selamat Sampai Akhir Bulan"  # Nama ending yang diraih pemain
 
 # Status Instrumen Penelitian GDLC (Pre-Test & Post-Test)
+default pretest_dibuka = False                   # Penanda tautan Pre-Test telah dibuka di browser
+default pretest_selesai = False                  # Penanda pemain telah mengonfirmasi pengisian Pre-Test
 default posttest_dibuka = False                  # Penanda tautan Post-Test telah dibuka di browser
 default posttest_selesai = False                 # Penanda pemain telah mengonfirmasi pengisian Post-Test
 
@@ -358,7 +383,7 @@ screen hud():
                             xalign 1.0
                             yalign 0.5
 
-            # Indikator Piutang Teman (jika ada uang yang dipinjamkan ke Dimas dan belum kembali)
+            # Indikator Piutang Teman (jika ada uang yang dipinjamkan ke Axel dan belum kembali)
             if pinjaman_dimas > 0 and pinjam_dimas == "penuh" and minggu >= 4:
                 frame:
                     background Solid("#ffb74d22")
@@ -484,8 +509,12 @@ screen notify(message):
 
 # ---------- TITIK AWAL: INTRODUKSI ----------
 label start:
+    $ pretest_dibuka = False
+    $ pretest_selesai = False
     $ posttest_dibuka = False
     $ posttest_selesai = False
+    $ skor = 0
+    $ skor_max = 22
     scene black
     $ musik("bgm_menu")
     centered "{size=48}{b}PAY O' MAY{/b}{/size}\n{size=26}Gim edukasi kesadaran finansial untuk mahasiswa perantauan{/size}"
@@ -495,29 +524,20 @@ label start:
 
 # ---------- KUESIONER PRE-TEST (INSTRUMEN PENELITIAN GDLC) ----------
 label pretest:
-    # Menyajikan opsi pengisian kuesioner Pre-Test untuk mengukur tingkat
+    # Menyajikan modal kuesioner Pre-Test untuk mengukur tingkat
     # pengetahuan awal finansial responden sebelum memainkan visual novel.
     scene black
-    menu:
-        "Pre-Test: kuesioner singkat sebelum kamu bermain. Sudah kamu isi?"
-
-        "Buka tautan Pre-Test":
-            $ renpy.run(OpenURL(url_pretest))
-            "Selesaikan kuesioner di browser, lalu kembali ke sini."
-            jump pretest
-
-        "Saya sudah mengisi Pre-Test":
-            pass
+    call screen kuesioner_pretest
 
     jump nama_pemain
 
 # ---------- INPUT NAMA PEMAIN & MEMULAI PROLOG ----------
 label nama_pemain:
-    # Meminta nama pemain (default: 'Raka') untuk personalisasi dialog dan e-statement.
+    # Meminta nama pemain (default: 'Billa') untuk personalisasi dialog dan e-statement.
     $ nama = renpy.input("Siapa namamu?", length=14)
     $ nama = nama.strip()
     if nama == "":
-        $ nama = "Raka"
+        $ nama = "Billa"
 
     # ========================================================
     # PROLOG - Awal Bulan
@@ -540,7 +560,7 @@ label nama_pemain:
     p "Siap, Ma. Aku bisa atur kok."
     mama "Mama percaya. Jangan sampai kehabisan di tanggal tua ya."
 
-    "Dua juta rupiah untuk 31 hari. Rasanya banyak sekali. Tapi benarkah begitu?"
+    "Dua juta rupiah untuk sebulan. Rasanya banyak sekali. Tapi benarkah begitu?"
 
     menu:
         "Bagaimana kamu mengatur uang ini?"
@@ -596,7 +616,7 @@ label nama_pemain:
             "Kamu tetap ikut seru-seruan, dompet tetap aman. Total: Rp 40.000."
             tip "Hemat bukan berarti anti sosial. Kamu bisa tetap hadir dengan batas pengeluaran yang sudah kamu tentukan sendiri."
 
-        "Tolak dengan halus dan ajak Dimas nongkrong di taman kampus minggu depan.":
+        "Tolak dengan halus dan ajak Axel nongkrong di taman kampus minggu depan.":
             $ skor += 1
             show dimas kecewa
             dimas "Yah... oke deh, tapi minggu depan beneran ya!"
@@ -754,6 +774,7 @@ label nama_pemain:
             $ wants += 1
             $ skor += 2
             $ langganan = "nobar"
+            scene bg nobar with el_lantern_glow
             show dimas senang with dissolve
             dimas "Nah, camilan datang! Nobar di kos emang paling mantap, serunya dapet, dompet tetep aman!"
             hide dimas with dissolve
@@ -849,23 +870,23 @@ label nama_pemain:
     # --- Keputusan baru: teman meminjam uang ---
     $ musik("bgm_kos")
     scene bg malam with el_lantern_glow
-    "Malam itu HP-mu bergetar. Pesan dari Dimas."
+    "Malam itu HP-mu bergetar. Pesan dari Axel."
     $ sfx("sfx_notif")
-    show screen layar_hp("Chat", "Dimas", "Bro, boleh pinjam Rp 200.000? Uang saku udah mepet banget. Aku ganti pas dikirim bulan depan!", "#ffb74d")
+    show screen layar_hp("Chat", "Axel", "Bro, boleh pinjam Rp 200.000? Uang saku udah mepet banget. Aku ganti pas dikirim bulan depan!", "#ffb74d")
 
     if nongkrong == "boros":
-        "Kamu teringat malam di kafe viral itu. Struk Rp 250.000-mu ternyata punya kembaran di dompet Dimas."
+        "Kamu teringat malam di kafe viral itu. Struk Rp 250.000-mu ternyata punya kembaran di dompet Axel."
     elif nongkrong == "hemat":
-        "Kamu teringat Dimas memesan jauh lebih banyak dari yang kamu pesan di kafe waktu itu."
+        "Kamu teringat Axel memesan jauh lebih banyak dari yang kamu pesan di kafe waktu itu."
     else:
-        "Kamu teringat Dimas yang kecewa saat kamu menolak ke kafe. Rupanya dia terus mengikuti ajakan lain tanpa batas."
+        "Kamu teringat Axel yang kecewa saat kamu menolak ke kafe. Rupanya dia terus mengikuti ajakan lain tanpa batas."
 
     menu:
         "Bagaimana kamu membalasnya?"
 
         "Pinjamkan Rp 200.000 penuh. Namanya juga teman." if uang >= 200000:
             hide screen layar_hp
-            $ ubah_uang(-200000, "Pinjaman Dimas")
+            $ ubah_uang(-200000, "Pinjaman Axel")
             $ pinjaman_dimas = 200000
             $ pinjam_dimas = "penuh"
             "Kamu transfer tanpa banyak berpikir. 'Makasih banget, bro!' balasnya. Sisa uangmu ikut menipis drastis."
@@ -873,19 +894,19 @@ label nama_pemain:
 
         "Pinjamkan Rp 50.000 saja, sebatas yang rela kamu ikhlaskan." if uang >= 50000:
             hide screen layar_hp
-            $ ubah_uang(-50000, "Pinjaman Dimas")
+            $ ubah_uang(-50000, "Pinjaman Axel")
             $ pinjaman_dimas = 50000
             $ pinjam_dimas = "sebagian"
             $ skor += 1
-            "Kamu mengetik balasan dan mentransfer seikhlasnya. 'Cuma segini yang bisa aku bantu,' tulismu. 'Cukup kok, makasih!' balas Dimas."
+            "Kamu mengetik balasan dan mentransfer seikhlasnya. 'Cuma segini yang bisa aku bantu,' tulismu. 'Cukup kok, makasih!' balas Axel."
             tip "Aturan sederhana: pinjamkan hanya jumlah yang siap kamu relakan jika tidak kembali."
 
-        "Tolak dengan sopan, lalu ajak Dimas menyusun anggaran sisa bulan bersama.":
+        "Tolak dengan sopan, lalu ajak Axel menyusun anggaran sisa bulan bersama.":
             hide screen layar_hp
             $ sfx("sfx_click")
             $ pinjam_dimas = "tolak"
             $ skor += 2
-            "Kamu menjelaskan dengan jujur bahwa uangmu juga terbatas, lalu menawarkan bantuan lain: menyusun anggaran sisa bulan bersama. Balasan Dimas agak lama, tapi akhirnya dia setuju."
+            "Kamu menjelaskan dengan jujur bahwa uangmu juga terbatas, lalu menawarkan bantuan lain: menyusun anggaran sisa bulan bersama. Balasan Axel agak lama, tapi akhirnya dia setuju."
             tip "Menolak pinjaman bukan berarti tidak peduli. Membantu mencari solusi sering lebih berguna daripada memberi uang."
 
     hide screen layar_hp
@@ -922,7 +943,7 @@ label nama_pemain:
     # --- Konsekuensi dari keputusan meminjamkan uang ---
     if pinjam_dimas == "sebagian":
         dimas "Eh [nama], ini uang kemarin Rp 50.000 udah aku transfer balik. Makasih banget ya!"
-        $ ubah_uang(50000, "Dimas mengganti")
+        $ ubah_uang(50000, "Axel mengganti")
         $ pinjaman_dimas = 0
     elif pinjam_dimas == "penuh":
         show dimas khawatir
@@ -1013,15 +1034,15 @@ label nama_pemain:
     if hutang > 0:
         $ musik("bgm_darurat")
         scene bg malam with el_lantern_glow
-        $ tagihan = int(hutang * 1.1)
+        $ tagihan = hutang
         $ t = rp(tagihan)
         $ minimum = int(tagihan * 0.2)
         $ t_min = rp(minimum)
-        $ isi_tagihan = "Total tagihan " + t + ", sudah termasuk biaya layanan 10 persen. Jatuh tempo besok."
+        $ isi_tagihan = "Total tagihan " + t + " (pokok beserta akumulasi bunga). Jatuh tempo besok."
         $ sfx("sfx_peringatan")
         show screen layar_hp("PayLater", "Tagihan jatuh tempo", isi_tagihan, "#ef5350")
         "Notifikasi: {b}Tagihan PayLater jatuh tempo besok.{/b}"
-        "Total tagihan: [t] (sudah termasuk biaya layanan 10 persen)."
+        "Total tagihan saat ini: [t] (pokok beserta akumulasi bunga mingguan)."
 
         menu:
             "Bagaimana kamu membayarnya?"
@@ -1036,10 +1057,14 @@ label nama_pemain:
                 $ hutang = 0
                 "Lunas, tapi dana daruratmu terpakai untuk menutup keinginan bulan lalu."
 
-            "Bayar minimum saja ([t_min]), sisanya bulan depan.":
+            "Bayar minimum saja ([t_min]), sisanya bulan depan." if uang >= minimum:
                 $ ubah_uang(-minimum, "Cicilan minimum")
                 $ hutang = tagihan - minimum
-                "Sisa tagihan terbawa ke bulan depan, dan biaya layanan akan dihitung lagi."
+                "Sisa tagihan terbawa ke bulan depan, dan bunga mingguan akan terus bertambah."
+
+            "Tidak mampu membayar sekarang (Tagihan menunggak).":
+                $ sfx("sfx_peringatan")
+                "Kamu tidak mampu membayar tagihan sama sekali. Tagihan PayLater menunggak dan bunga denda akan membengkak ke bulan depan."
 
         hide screen layar_hp
         tip "Utang konsumtif menggerus uang saku bulan berikutnya. Bayar lunas tepat waktu, atau lebih baik jangan berutang untuk keinginan."
@@ -1056,9 +1081,10 @@ label nama_pemain:
     show weather kelopak with dissolve
     $ musik(None, fadeout=1.5)
     "Hari terakhir bulan ini. Malam yang tenang. Kamu membuka aplikasi bank dan menatap angkanya."
-    $ persen = (skor * 100) // skor_max
+    $ skor_max = 22
+    $ persen = (skor * 100) // 22
 
-    if uang < 0:
+    if uang <= 0:
         jump ending_habis
     elif hutang > 0:
         jump ending_paylater
@@ -1079,7 +1105,7 @@ label ending_bendahara:
     $ musik("bgm_ending_baik")
     $ ending_nama = "Ending A: Bendahara Handal"
     "{b}ENDING A: Bendahara Handal{/b}"
-    "Uang jajanmu masih ada, dana darurat terjaga, dan tidak ada utang. Kamu bahkan masih bisa traktir Dimas dan Sinta."
+    "Uang jajanmu masih ada, dana darurat terjaga, dan tidak ada utang. Kamu bahkan masih bisa traktir Axel dan Michelle."
     sinta "Hebat, [nama]! Kamu sudah jadi bendahara untuk dirimu sendiri."
     mama "Mama bangga. Bulan depan Mama tetap kirim ya, tapi kamu sekarang sudah paham caranya."
     jump rekap
@@ -1125,6 +1151,8 @@ label ending_habis:
 label rekap:
     # Menutup HUD permainan dan menampilkan modal E-Statement Rapor Keuangan Mahasiswa
     # serta tautan kuesioner Post-Test penelitian.
+    $ skor_max = 22
+    $ persen = (skor * 100) // 22
     hide screen hud
     hide screen el_ui_quick_menu
     hide weather with dissolve
@@ -1153,8 +1181,13 @@ label akhir_minggu:
     $ t_dana = rp(dana_darurat)
     "{b}Rekap minggu ke-[minggu]{/b}\nPengeluaran: [t_keluar]. Sisa uang jajan: [t_uang]. Dana darurat: [t_dana]."
     if hutang > 0:
+        $ bunga_minggu = int(hutang * 0.05)
+        $ hutang += bunga_minggu
+        $ t_bunga = rp(bunga_minggu)
         $ t_hutang = rp(hutang)
-        "Tagihan PayLater yang masih berjalan: [t_hutang]."
+        $ sfx("sfx_peringatan")
+        "Tagihan PayLater dikenakan bunga mingguan 5 persen (+[t_bunga]). Total tagihan berjalan: {b}[t_hutang]{/b}."
+        tip "Bunga PayLater terus bertambah setiap minggu selama belum lunas. Semakin lama menunda, semakin berat beban finansialmu."
     $ uang_awal_minggu = uang
     $ dana_awal_minggu = dana_darurat
 

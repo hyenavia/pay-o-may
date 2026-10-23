@@ -6,6 +6,55 @@ Format berkas ini mengacu pada [Keep a Changelog](https://keepachangelog.com/id/
 
 ---
 
+## [0.3.4] - 2026-10-23
+
+### Ditambahkan (Added)
+- **Modal Screen Kuesioner Pre-Test (`screen kuesioner_pretest`):**
+  - Mengubah alur pengisian kuesioner Pre-Test di awal permainan dengan modal antarmuka tersendiri berbasis desain *Everyday Life UI*.
+  - Menerapkan penguncian tombol konfirmasi (*gating*): tombol *"Saya sudah mengisi Pre-Test"* dinonaktifkan (`sensitive=False`) sampai pemain mengklik *"Buka tautan Pre-Test"*.
+  - Memberikan indikator peringatan dan petunjuk status dinamis (konsisten dengan alur Post-Test pada Rapor Finansial).
+  - Menambahkan penanda status `pretest_dibuka` dan `pretest_selesai` untuk pencatatan instrumen evaluasi penelitian GDLC.
+- **Aset Visual Latar Nobar (`bg nobar.png`):**
+  - Menambahkan gambar latar pixel art baru (1920x1080) bernuansa malam yang menggambarkan kamar kos Dimas saat nobar serial streaming (lengkap dengan karpet duduk, bantal lantai, meja camilan, dan laptop/layar tayang).
+  - Menggantikan latar kamar pemain (`bg malam`) saat opsi nobar di Minggu ke-2 dipilih, sehingga membedakan secara jelas antara kamar kos pemain dan kamar kos Dimas.
+- **Aset Logo Judul Kustom & Tipografi Home Screen:**
+  - Menambahkan logo plang pixel art Pay O' May berhias ornamen dedaunan dan bunga melati (`images/title_logo.png`) di pojok kanan atas layar menu utama beserta nomor versi di bawahnya.
+  - Mengintegrasikan jenis huruf *Cinzel* (`fonts/Cinzel.ttf`) pada seluruh tombol navigasi menu utama, teks nomor versi, dan kotak informasi instrumen riset GDLC.
+- **Pilihan Tipografi Permainan di Menu Pengaturan (`screen el_ui_preferences`):**
+  - Menambahkan baris konfigurasi *"Pilihan Font"* pada panel Pengaturan yang memungkinkan pemain memilih jenis huruf sesuai preferensi visual:
+    1. **Default (Fredoka)**: Font kurva membulat modern (`fonts/Fredoka.ttf`) yang bersih, ergonomis, dan sangat nyaman dibaca untuk durasi bermain panjang.
+    2. **Pixel (Pixelify Sans)**: Font retro pixel art (`fonts/PixelifySans.ttf`) yang memperkuat atmosfer visual novel 16-bit klasik.
+  - Pilihan font disimpan secara persisten (`persistent.game_font`) dan berganti secara instan/real-time di seluruh antarmuka dan teks cerita tanpa perlu me-restart gim (`renpy.style.rebuild()`).
+  - Menu utama (home screen) menyelaraskan jenis huruf tombol dengan font aktif pilihan pemain, sementara nomor versi tetap mempertahankan font elegan *Cinzel* (`fonts/Cinzel.ttf`).
+- **Tombol Navigasi Menu Utama di Dalam Gim (`el_ui_quick_menu` & `el_ui_preferences`):**
+  - Menambahkan tombol *"Menu Utama"* langsung pada bilah menu cepat atas di dalam permainan (`el_ui_quick_menu`), memudahkan navigasi pemain (khususnya pengguna perangkat layar sentuh/mobile) untuk kembali ke menu utama kapan saja.
+  - Menyediakan tombol *"Menu Utama"* di pojok kiri bawah layar Pengaturan saat dibuka dari dalam cerita permainan.
+  - Aksi tombol terhubung dengan sistem dialog konfirmasi interaktif untuk mencegah hilangnya progres permainan yang belum disimpan.
+- **Pembaruan Nama Karakter Cerita:**
+  - Memperbarui nama karakter utama dan pendukung: Pemain default menjadi *Billa*, sahabat impulsif menjadi *Axel*, dan sahabat bijak finansial menjadi *Michelle*.
+- **Tipografi In-Game Retro Pixel (`fonts/PixelifySans.ttf`):**
+  - Mengintegrasikan jenis huruf *Pixelify Sans* sebagai salah satu opsi tipografi utama untuk dialog cerita, nama karakter, HUD M-Banking, notifikasi banner HP, pilihan menu keputusan, menu navigasi cepat, riwayat, dan rapor keuangan.
+
+### Diubah (Changed)
+- **Penyesuaian Tata Letak Bilah Menu Cepat Atas (`el_ui_quick_menu`):**
+  - Menyesuaikan lebar tombol dan padding proporsional (Riwayat, Simpan, Muat, Opsi, Menu Utama) agar tetap berada presisi di tengah layar tanpa bertabrakan dengan banner notifikasi HP di kiri maupun HUD M-Banking di kanan.
+- **Integrasi Font Fleksibel dengan Fredoka sebagai Standar Bawaan:**
+  - Mengonfigurasi font *Fredoka* sebagai tipografi standar bawaan gim, dengan fleksibilitas berganti ke *Pixelify Sans* kapan saja melalui layar Pengaturan.
+- **Tata Letak Panel Menu Utama (`screen main_menu`):**
+  - Memindahkan teks judul dan versi keluar dari kotak panel kiri ke pojok kanan atas, sehingga kolom panel menu kiri kini khusus menampilkan tombol-tombol interaktif permainan secara bersih dan proporsional.
+  - Menambahkan parameter opsional `font` pada komponen `el_ui_button` untuk mendukung kustomisasi tipografi tombol.
+- **Sistem Saldo & Pengalihan Defisit ke PayLater (`ubah_uang`):**
+  - Mencegah saldo uang jajan bernilai negatif/minus saat pengeluaran melebihi sisa uang. Saldo kini berhenti di Rp 0 dan sisa kekurangan dialihkan otomatis menjadi tagihan PayLater.
+  - Muncul banner notifikasi transaksi bertema peringatan ketika defisit saldo dialihkan ke PayLater.
+  - Memperbarui evaluasi Ending D (*Mie Instan Akhir Bulan*) dan gelar finansial agar memeriksa `uang <= 0`.
+- **Mekanisme Bunga Mingguan PayLater (5% per Minggu):**
+  - Pada subrutin rekap akhir minggu (`akhir_minggu`), tagihan PayLater yang masih berjalan dikenakan bunga mingguan sebesar 5% (`hutang += bunga_minggu`).
+  - Menyesuaikan fase pelunasan PayLater di Minggu ke-4 berdasarkan akumulasi bunga mingguan, serta menambahkan opsi ketika pemain tidak mampu membayar cicilan minimum.
+- **Standardisasi Skala Skor Kesadaran Finansial (`skor_max = 22`):**
+  - Menetapkan nilai `skor_max` sebagai konstan 22 poin (11 keputusan x 2 poin) di seluruh layar e-statement rapor bulanan dan perhitungan gelar finansial, sehingga tidak lagi muncul skala 16 poin saat pemain memuat berkas simpanan lama.
+
+---
+
 ## [0.3.3] - 2026-10-23
 
 ### Diubah (Changed)

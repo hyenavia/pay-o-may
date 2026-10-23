@@ -21,9 +21,9 @@ init python:
     if hasattr(config, "mipmap"):
         config.mipmap = False
 
-# Pengaturan Font Utama Permainan (PixelifySans untuk nuansa retro)
+# Pengaturan Font Utama Permainan (Fredoka sebagai default, PixelifySans sebagai opsi retro)
 init -1 python:
-    UI_FONT = "fonts/PixelifySans.ttf"
+    UI_FONT = "fonts/Fredoka.ttf"
     if not renpy.loadable(UI_FONT):
         UI_FONT = "DejaVuSans.ttf"
 
@@ -158,34 +158,44 @@ screen main_menu():
     ## Animasi cuaca kelopak bunga di home screen
     add el_weather("petals")
 
+    # --- LOGO JUDUL & VERSI GAME (KANAN ATAS) ---
+    vbox:
+        xalign 0.95
+        ypos el_u(16)
+        spacing el_u(2)
+
+        add "images/title_logo.png" xsize el_u(165) ysize el_u(115) xalign 0.5
+        $ _ver_shadow = "#ffffffbb" if getattr(store, "el_ui_theme", "cream") == "cream" else "#10182ebb"
+        text "v[config.version]" style "el_ui_text" font "fonts/Cinzel.ttf" color el_ui_color(1) size el_u(9.5) bold True xalign 0.5 outlines [(1, _ver_shadow, 0, 0)]
+
+    # --- KOLOM MENU UTAMA (HANYA TOMBOL) ---
     frame:
         background el_ui_frame("menu_panel")
         xpos el_u(24)
-        ypos el_u(22)
-        xsize el_u(250)
-        ysize el_u(330)
-        padding (el_u(24), el_u(18), el_u(24), el_u(18))
+        ypos el_u(25)
+        xsize el_u(240)
+        ysize el_u(260)
+        padding (el_u(20), el_u(18), el_u(20), el_u(18))
 
         vbox:
-            spacing el_u(6)
-            text "PAY O' MAY" style "el_ui_text" color el_ui_color() size el_u(22)
-            null height el_u(4)
+            spacing el_u(5)
+            xalign 0.5
+            yalign 0.5
             use el_ui_button("Mulai Main", Start(), width=190)
             use el_ui_button("Muat Game", ShowMenu("el_ui_load"), width=190)
             use el_ui_button("Pengaturan", ShowMenu("el_ui_preferences"), width=190)
             use el_ui_button("Tentang", ShowMenu("about"), width=190)
             use el_ui_button("Cara Bermain", ShowMenu("help"), width=190)
             use el_ui_button("Keluar", Quit(confirm=True), width=190)
-            null height el_u(4)
-            text "v[config.version]" style "el_ui_text" color el_ui_color(1) size el_u(10) xalign 0.5
 
+    # --- KOTAK INFORMASI RISET GDLC ---
     frame:
         background el_ui_frame("tooltip")
         xalign 0.97
         yalign 0.95
         xmaximum el_u(230)
         padding (el_u(14), el_u(10), el_u(14), el_u(10))
-        text "Pre-Test akan muncul sebelum cerita dimulai, dan Post-Test setelah ending." style "el_ui_text" color el_ui_color() size el_ui_font_size(11)
+        text "Pre-Test akan muncul sebelum cerita dimulai, dan Post-Test setelah ending." style "el_ui_text" color el_ui_color() size el_ui_font_size(10.5)
 
 
 # ------------------------------------------------------------
@@ -256,21 +266,20 @@ screen about():
                 use pom_p("Versi [config.version!t]")
                 use pom_p("Gim novel visual edukasi untuk meningkatkan kesadaran finansial mahasiswa perantauan. Kamu menjalani satu bulan dengan uang saku terbatas dan memutuskan sendiri ke mana uang itu pergi.")
 
-                use pom_p("Pengembang", True)
-                use pom_p("Luthfi Rais Asral\nS1 Terapan Teknologi Rekayasa Multimedia\nFakultas Ilmu Terapan, Universitas Telkom")
+                ## use pom_p("Pengembang", True)
+                ## use pom_p("Luthfi Rais Asral\nS1 Terapan Teknologi Rekayasa Multimedia\nFakultas Ilmu Terapan, Universitas Telkom")
 
                 use pom_p("Tentang Proyek", True)
                 use pom_p("Dikembangkan sebagai Tugas Akhir dengan metode Game Development Life Cycle (GDLC). Cerita dan angka dalam game adalah fiksi untuk keperluan edukasi, bukan nasihat keuangan profesional.")
 
                 use pom_p("Kredit", True)
                 use pom_p("[kredit_visual]\n[kredit_audio]")
-                use pom_p("itch.io")
 
                 use pom_p("Catatan Pembaruan", True)
                 use pom_p("Riwayat pembaruan dan perubahan versi lengkap tercatat pada berkas CHANGELOG.md di direktori gim.")
 
                 use pom_p("Dibuat dengan Ren'Py", True)
-                use pom_p("Ren'Py [renpy.version_only]. Informasi lisensi lengkap tersedia di folder permainan.")
+                use pom_p("Ren'Py [renpy.version_only].")
 
 
 # ------------------------------------------------------------
@@ -308,7 +317,7 @@ screen help():
                 use pom_p("Ada 4 ending yang ditentukan oleh sisa uang, dana darurat, utang, dan kualitas keputusanmu.")
 
                 use pom_p("Setelah Selesai", True)
-                use pom_p("Jangan lupa mengisi Post-Test yang diberikan peneliti.")
+                use pom_p("Jangan lupa mengisi Post-Test yang diberikan.")
 
                 use pom_p("Kontrol", True)
                 use pom_p("Klik, Enter, atau Spasi: lanjut dialog.\nRoda mouse: gulir menu atau kembali ke dialog sebelumnya.\nCtrl (tahan) atau Tab: lewati dialog yang sudah dibaca.\nEsc: buka menu Jeda.\nBilah atas: Riwayat, Simpan, Muat, dan Opsi.")
@@ -334,12 +343,12 @@ init python:
         d = getattr(store, "dana_darurat", 0)
         h = getattr(store, "hutang", 0)
         s = getattr(store, "skor", 0)
-        s_max = getattr(store, "skor_max", 22)
-        p = getattr(store, "persen", (s * 100) // s_max if s_max else 0)
+        s_max = 22
+        p = (s * 100) // s_max if s_max else 0
         mb = getattr(store, "mama_bantu", False)
         w = getattr(store, "wants", 0)
 
-        if u < 0:
+        if u <= 0:
             return ("Sobat Mie Instan Akhir Bulan", "#ef5350", "Uang saku habis sebelum akhir bulan. Perlu evaluasi pos pengeluaran besar dan mulai sisihkan dana darurat sejak awal bulan.")
         elif h > 0:
             return ("Korban Kemudahan PayLater", "#ffa726", "Terjebak ilusi belanja sekarang bayar nanti. Berhati-hatilah dengan bunga dan biaya layanan utang konsumtif.")
@@ -386,7 +395,7 @@ screen rekap_finansial():
                 vbox:
                     spacing el_u(1)
                     text "RAPOR KEUANGAN BULANAN" style "el_ui_text" color el_ui_color(2) size el_ui_font_size(15) bold True
-                    $ _nama_display = getattr(store, "nama", "Raka")
+                    $ _nama_display = getattr(store, "nama", "Billa")
                     $ _ending_display = getattr(store, "ending_nama", "Selesai")
                     text "E-Statement Mahasiswa: [_nama_display] | [_ending_display]" style "el_ui_text" color el_ui_color(1) size el_ui_font_size(9.5)
 
@@ -475,8 +484,8 @@ screen rekap_finansial():
                         null height el_u(1)
 
                         $ _s = getattr(store, "skor", 0)
-                        $ _sm = getattr(store, "skor_max", 22)
-                        $ _p = getattr(store, "persen", (_s * 100) // _sm if _sm else 0)
+                        $ _sm = 22
+                        $ _p = (_s * 100) // _sm if _sm else 0
 
                         hbox:
                             xfill True
@@ -543,6 +552,78 @@ screen rekap_finansial():
                     if not _buka_post:
                         use el_ui_button("Selesai & Menu Utama", Return(), sensitive=False, width=225)
                     else:
-                        use el_ui_button("Saya Sudah Mengisi & Selesai", Return(), sensitive=True, width=225)
+                        use el_ui_button("Saya Sudah Mengisi & Selesai", [SetVariable("posttest_selesai", True), Return()], sensitive=True, width=225)
+
+
+# ------------------------------------------------------------
+# 10. SCREEN KUESIONER PRE-TEST (INSTRUMEN PENELITIAN GDLC)
+# ------------------------------------------------------------
+screen kuesioner_pretest():
+    """
+    Screen Kuesioner Pre-Test (Instrumen Penelitian GDLC).
+    Pemain diwajibkan membuka kuesioner Pre-Test terlebih dahulu sebelum tombol
+    lanjut / mulai permainan terbuka, konsisten dengan alur Post-Test pada Rapor Finansial.
+    """
+    modal True
+    zorder 150
+
+    add Solid("#10182ecc")
+
+    $ _buka_pre = getattr(store, "pretest_dibuka", False)
+
+    frame:
+        background el_ui_frame("menu_panel")
+        xalign 0.5
+        yalign 0.5
+        xsize el_u(520)
+        padding (el_u(24), el_u(18), el_u(24), el_u(18))
+
+        vbox:
+            spacing el_u(5)
+            xalign 0.5
+
+            # --- HEADER ---
+            vbox:
+                xalign 0.5
+                spacing el_u(1)
+                text "KUESIONER PRE-TEST" style "el_ui_text" color el_ui_color(2) size el_ui_font_size(15) bold True xalign 0.5
+                text "Instrumen Penelitian Evaluasi Literasi Keuangan Mahasiswa" style "el_ui_text" color el_ui_color(1) size el_ui_font_size(9) xalign 0.5
+
+            null height el_u(1)
+
+            # --- KOTAK PENJELASAN ---
+            frame:
+                background el_ui_frame("tooltip")
+                xalign 0.5
+                xfill True
+                padding (el_u(14), el_u(9), el_u(14), el_u(9))
+                text "Sebelum mulai bermain, silakan isi kuesioner singkat untuk mengukur pemahaman awal pengelolaan keuanganmu.\n\nData kuesioner ini digunakan untuk pengujian efektivitas media pembelajaran gim edukatif Pay o' May." style "el_ui_text" color el_ui_color() size el_ui_font_size(9) text_align 0.5 xalign 0.5
+
+            null height el_u(1)
+
+            # --- PETUNJUK STATUS PENGISIAN (KONSISTEN DENGAN ENDING) ---
+            vbox:
+                xalign 0.5
+                spacing el_u(2)
+
+                if not _buka_pre:
+                    text "⚠️ Harap buka kuesioner Pre-Test terlebih dahulu sebelum melanjutkan." style "el_ui_text" size el_ui_font_size(8.5) color "#e65100" xalign 0.5 italic True
+                else:
+                    text "💡 Setelah selesai mengisi Pre-Test di browser, klik tombol 'Saya sudah mengisi Pre-Test'." style "el_ui_text" size el_ui_font_size(8.5) color el_ui_color(2) xalign 0.5 italic True
+
+            null height el_u(2)
+
+            # --- TOMBOL AKSI (KONSISTEN DENGAN ENDING POST-TEST) ---
+            hbox:
+                xalign 0.5
+                spacing el_u(14)
+
+                use el_ui_button("Buka tautan Pre-Test", [OpenURL(url_pretest), SetVariable("pretest_dibuka", True)], width=225)
+
+                if not _buka_pre:
+                    use el_ui_button("Saya sudah mengisi Pre-Test", Return(), sensitive=False, width=225)
+                else:
+                    use el_ui_button("Saya sudah mengisi Pre-Test", [SetVariable("pretest_selesai", True), Return()], sensitive=True, width=225)
+
 
 
