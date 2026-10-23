@@ -69,8 +69,8 @@ Gim **Pay o' May** dapat diunduh langsung untuk platform Windows PC dan perangka
 
 | Platform | Format Berkas | Status | Tautan Unduhan (Download Link) |
 | :--- | :--- | :--- | :--- |
-| 🪟 **Windows PC** | `https://drive.google.com/drive/folders/1y-or1POxvo8BAoI7AzyYqSQIEUpLPOaK?usp=sharing` (Standalone Executable) | Siap Main | [🔗 Unduh untuk Windows](#) |
-| 📱 **Android** | `https://drive.google.com/drive/folders/1Vc10KSKxE-nm8-ji-it3tGMRei7bwDAj?usp=sharing` (Direct Install) | Siap Main | [🔗 Unduh APK Android](#) |
+| 🪟 **Windows PC** | `PayoMay-0.3.3-pc.zip` (Standalone Executable) | Siap Main | [🔗 Unduh untuk Windows](https://drive.google.com/drive/folders/1y-or1POxvo8BAoI7AzyYqSQIEUpLPOaK?usp=sharing) |
+| 📱 **Android** | `cam.axcom.payomay-0.3.3-1792734216-release.apk` (Direct Install) | Siap Main | [🔗 Unduh APK Android](https://drive.google.com/drive/folders/1Vc10KSKxE-nm8-ji-it3tGMRei7bwDAj?usp=sharing) |
 
 > 💡 **Petunjuk Pengguna Android:**  
 > Jika menginstal file `.apk` secara manual di ponsel Android, pastikan mengaktifkan izin *"Install from Unknown Sources"* pada pengaturan keamanan perangkat.
