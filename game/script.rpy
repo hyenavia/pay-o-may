@@ -640,7 +640,7 @@ label nama_pemain:
             tip "Aturan tunggu 24 jam sampai 3 hari efektif mengurangi belanja impulsif. Keinginan yang sungguhan akan tetap ada setelah ditunggu."
 
     hide screen layar_hp
-    call akhir_minggu
+    call akhir_minggu from _call_akhir_minggu
 
     # ========================================================
     # MINGGU 2
@@ -761,7 +761,7 @@ label nama_pemain:
             tip "Keinginan bisa dipenuhi dengan cara yang lebih murah. Sering kali cara itu sekaligus lebih menyenangkan."
 
     hide screen layar_hp
-    call akhir_minggu
+    call akhir_minggu from _call_akhir_minggu_1
 
     # ========================================================
     # MINGGU 3
@@ -889,7 +889,7 @@ label nama_pemain:
             tip "Menolak pinjaman bukan berarti tidak peduli. Membantu mencari solusi sering lebih berguna daripada memberi uang."
 
     hide screen layar_hp
-    call akhir_minggu
+    call akhir_minggu from _call_akhir_minggu_2
 
     # ========================================================
     # MINGGU 4
@@ -1003,7 +1003,7 @@ label nama_pemain:
             tip "Menunda pembelian itu baik, tetapi pastikan kebutuhan dasar tetap terpenuhi agar tidak jadi masalah di kemudian hari."
 
     hide screen layar_hp
-    call akhir_minggu
+    call akhir_minggu from _call_akhir_minggu_3
 
     # ========================================================
     # FASE PENYELESAIAN: TAGIHAN PAYLATER

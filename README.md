@@ -63,7 +63,21 @@ Pengembangan gim mengadopsi kerangka kerja **Game Development Life Cycle (GDLC)*
 
 ---
 
-## 💻 Cara Menjalankan & Memainkan
+## 📥 Unduh & Mainkan (Download)
+
+Gim **Pay o' May** dapat diunduh langsung untuk platform Windows PC dan perangkat Android melalui tautan di bawah ini:
+
+| Platform | Format Berkas | Status | Tautan Unduhan (Download Link) |
+| :--- | :--- | :--- | :--- |
+| 🪟 **Windows PC** | `https://drive.google.com/drive/folders/1y-or1POxvo8BAoI7AzyYqSQIEUpLPOaK?usp=sharing` (Standalone Executable) | Siap Main | [🔗 Unduh untuk Windows](#) |
+| 📱 **Android** | `https://drive.google.com/drive/folders/1Vc10KSKxE-nm8-ji-it3tGMRei7bwDAj?usp=sharing` (Direct Install) | Siap Main | [🔗 Unduh APK Android](#) |
+
+> 💡 **Petunjuk Pengguna Android:**  
+> Jika menginstal file `.apk` secara manual di ponsel Android, pastikan mengaktifkan izin *"Install from Unknown Sources"* pada pengaturan keamanan perangkat.
+
+---
+
+## 💻 Cara Menjalankan & Mengembangkan
 
 ### Prasyarat
 - [Ren'Py SDK](https://www.renpy.org/latest.html) versi 8.2 atau yang lebih baru (disarankan Ren'Py 8.4+ / 8.5+).
@@ -72,7 +86,7 @@ Pengembangan gim mengadopsi kerangka kerja **Game Development Life Cycle (GDLC)*
 ### Menjalankan dari Kode Sumber (Source Code)
 1. Klon repositori ini ke komputer lokal:
    ```bash
-   git clone https://github.com/username/pay-o-may.git
+   git clone https://github.com/luthfirais/pay-o-may.git
    ```
 2. Buka aplikasi **Ren'Py Launcher**.
 3. Tambahkan direktori proyek `Pay o May` ke dalam daftar proyek di Ren'Py Launcher.
