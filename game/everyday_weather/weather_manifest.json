@@ -1,0 +1,198 @@
+{
+  "version": "1.0",
+  "native_canvas": [
+    640,
+    360
+  ],
+  "alpha": "straight RGBA; deliberate opacity levels; transparent RGB is zero",
+  "first_frame": 0,
+  "playback": "numeric order, repeat; no duplicate endpoint",
+  "effects": [
+    {
+      "id": "light_rain",
+      "name": "Light Rain",
+      "frames": 48,
+      "fps": 12,
+      "frame_duration_seconds": 0.08333333333333333,
+      "loop_seconds": 4.0,
+      "exports": {
+        "native": {
+          "size": [
+            640,
+            360
+          ],
+          "template": "PNG/native/light_rain/el_weather_light_rain_{frame:03d}.png"
+        },
+        "720p": {
+          "size": [
+            1280,
+            720
+          ],
+          "template": "PNG/720p/light_rain/el_weather_light_rain_{frame:03d}_720p.png"
+        },
+        "1080p": {
+          "size": [
+            1920,
+            1080
+          ],
+          "template": "PNG/1080p/light_rain/el_weather_light_rain_{frame:03d}_1080p.png"
+        }
+      }
+    },
+    {
+      "id": "heavy_rain",
+      "name": "Heavy Rain",
+      "frames": 48,
+      "fps": 12,
+      "frame_duration_seconds": 0.08333333333333333,
+      "loop_seconds": 4.0,
+      "exports": {
+        "native": {
+          "size": [
+            640,
+            360
+          ],
+          "template": "PNG/native/heavy_rain/el_weather_heavy_rain_{frame:03d}.png"
+        },
+        "720p": {
+          "size": [
+            1280,
+            720
+          ],
+          "template": "PNG/720p/heavy_rain/el_weather_heavy_rain_{frame:03d}_720p.png"
+        },
+        "1080p": {
+          "size": [
+            1920,
+            1080
+          ],
+          "template": "PNG/1080p/heavy_rain/el_weather_heavy_rain_{frame:03d}_1080p.png"
+        }
+      }
+    },
+    {
+      "id": "snow",
+      "name": "Snow",
+      "frames": 96,
+      "fps": 12,
+      "frame_duration_seconds": 0.08333333333333333,
+      "loop_seconds": 8.0,
+      "exports": {
+        "native": {
+          "size": [
+            640,
+            360
+          ],
+          "template": "PNG/native/snow/el_weather_snow_{frame:03d}.png"
+        },
+        "720p": {
+          "size": [
+            1280,
+            720
+          ],
+          "template": "PNG/720p/snow/el_weather_snow_{frame:03d}_720p.png"
+        },
+        "1080p": {
+          "size": [
+            1920,
+            1080
+          ],
+          "template": "PNG/1080p/snow/el_weather_snow_{frame:03d}_1080p.png"
+        }
+      }
+    },
+    {
+      "id": "drifting_fog",
+      "name": "Drifting Fog",
+      "frames": 96,
+      "fps": 12,
+      "frame_duration_seconds": 0.08333333333333333,
+      "loop_seconds": 8.0,
+      "exports": {
+        "native": {
+          "size": [
+            640,
+            360
+          ],
+          "template": "PNG/native/drifting_fog/el_weather_drifting_fog_{frame:03d}.png"
+        },
+        "720p": {
+          "size": [
+            1280,
+            720
+          ],
+          "template": "PNG/720p/drifting_fog/el_weather_drifting_fog_{frame:03d}_720p.png"
+        },
+        "1080p": {
+          "size": [
+            1920,
+            1080
+          ],
+          "template": "PNG/1080p/drifting_fog/el_weather_drifting_fog_{frame:03d}_1080p.png"
+        }
+      }
+    },
+    {
+      "id": "falling_leaves",
+      "name": "Falling Leaves",
+      "frames": 96,
+      "fps": 12,
+      "frame_duration_seconds": 0.08333333333333333,
+      "loop_seconds": 8.0,
+      "exports": {
+        "native": {
+          "size": [
+            640,
+            360
+          ],
+          "template": "PNG/native/falling_leaves/el_weather_falling_leaves_{frame:03d}.png"
+        },
+        "720p": {
+          "size": [
+            1280,
+            720
+          ],
+          "template": "PNG/720p/falling_leaves/el_weather_falling_leaves_{frame:03d}_720p.png"
+        },
+        "1080p": {
+          "size": [
+            1920,
+            1080
+          ],
+          "template": "PNG/1080p/falling_leaves/el_weather_falling_leaves_{frame:03d}_1080p.png"
+        }
+      }
+    },
+    {
+      "id": "petals",
+      "name": "Petals",
+      "frames": 96,
+      "fps": 12,
+      "frame_duration_seconds": 0.08333333333333333,
+      "loop_seconds": 8.0,
+      "exports": {
+        "native": {
+          "size": [
+            640,
+            360
+          ],
+          "template": "PNG/native/petals/el_weather_petals_{frame:03d}.png"
+        },
+        "720p": {
+          "size": [
+            1280,
+            720
+          ],
+          "template": "PNG/720p/petals/el_weather_petals_{frame:03d}_720p.png"
+        },
+        "1080p": {
+          "size": [
+            1920,
+            1080
+          ],
+          "template": "PNG/1080p/petals/el_weather_petals_{frame:03d}_1080p.png"
+        }
+      }
+    }
+  ]
+}

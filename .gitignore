@@ -1,0 +1,61 @@
+# ============================================================
+#  .gitignore untuk proyek Ren'Py "Pay o' May"
+#  Taruh di folder induk proyek (sejajar dengan folder game/)
+# ============================================================
+
+# --- Direktori yang diubah Ren'Py saat game berjalan ---
+/game/saves
+/game/cache
+
+# --- File hasil kompilasi (dibuat ulang otomatis) ---
+/game/**/*.rpyc
+/game/**/*.rpymc
+/game/bytecode*.rpyb
+
+# --- File cadangan yang dibuat Ren'Py ---
+/game/**/*.bak
+/game/**/*.new
+/game/**/*.old
+
+# --- Log dan keluaran error ---
+/errors.txt
+/files.txt
+/image_cache.txt
+/log.txt
+/save_dump.txt
+/traceback.txt
+/lint.txt
+
+# --- File yang dibuat Launcher ---
+/dialogue.tab
+/dialogue.txt
+/strings.json
+
+# --- Hasil build / distribusi ---
+/Pay*dists/
+*-dists/
+
+# --- KUNCI PENANDATANGANAN ANDROID: JANGAN PERNAH DI-COMMIT ---
+*.keystore
+*.jks
+*.pem
+*.p12
+
+# --- Pengaturan editor lokal & OS ---
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# ============================================================
+#  KHUSUS JIKA REPOSITORY PUBLIC
+#  Lisensi paket Everyday Life melarang mengunggah file aset
+#  lepas ke repositori publik. Hapus tanda # pada baris berikut
+#  jika repository kamu PUBLIC.
+# ============================================================
+# /game/images/
+# /game/everyday_ui/PNG/
+# /game/everyday_weather/PNG/
+# /game/everyday_transitions/
+# /game/audio/
