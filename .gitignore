@@ -47,6 +47,8 @@
 Thumbs.db
 Desktop.ini
 .DS_Store
+AGENTS.md
+.agents/
 
 # ============================================================
 #  KHUSUS JIKA REPOSITORY PUBLIC
