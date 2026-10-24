@@ -8,6 +8,72 @@ Format berkas ini mengacu pada [Keep a Changelog](https://keepachangelog.com/id/
 
 ---
 
+## [0.3.72] - 2026-10-24
+
+### 🇬🇧 English
+#### Added
+- **Emergency Fund Withdrawal to Main Wallet Mechanic:**
+  - Implemented the ability to withdraw savings from the digital bank emergency fund (`dana_darurat`) back into the main daily allowance (`uang`) whenever money runs low.
+  - Added an interactive **⇄ Withdraw to Allowance** (`screen modal_tarik_dana`) button directly in the M-Banking HUD, enabling players to liquidate custom preset increments (Rp 50,000, Rp 100,000, Rp 200,000, or the full balance) at will.
+  - Added in-story narrative financial check-in menus (`menu_tarik_darurat`) at the end of each week and before month-end evaluation, offering timely lifelines to prevent unexpected deficits or unfair starvation endings.
+#### Changed
+- **Version Bump to Minor Patch 0.3.72:**
+  - Synchronized version `0.3.72` across `game/options.rpy`, `game/script.rpy`, `README.md`, `CHANGELOG.md`, `docs/index.html`, and `docs/script.js`.
+  - Added complete bilingual English translations in `game/tl/english/script.rpy` with zero lint errors and zero orphan translations.
+
+---
+
+### 🇮🇩 Bahasa Indonesia
+#### Ditambahkan (Added)
+- **Mekanik Penarikan Dana Darurat ke Tabungan Utama:**
+  - Mengimplementasikan fitur pencairan simpanan dari pos dana darurat bank digital (`dana_darurat`) kembali ke rekening uang saku utama (`uang`) ketika saldo harian menipis.
+  - Menambahkan tombol interaktif **⇄ Tarik ke Uang Saku** pada HUD M-Banking yang membuka modal pencairan (`screen modal_tarik_dana`), memungkinkan pemain mencairkan nominal sesuai kebutuhan (Rp 50.000, Rp 100.000, Rp 200.000, atau seluruh saldo).
+  - Menghadirkan menu naratif otomatis (`menu_tarik_darurat`) pada akhir minggu dan sebelum evaluasi penutup akhir bulan, memberikan kesempatan bagi pemain menyelamatkan keuangan tanpa harus terjebak defisit jika masih memiliki simpanan darurat.
+#### Diubah (Changed)
+- **Pembaruan Versi ke Minor Patch 0.3.72:**
+  - Menyelaraskan nomor versi `0.3.72` pada `game/options.rpy`, `game/script.rpy`, `README.md`, `CHANGELOG.md`, `docs/index.html`, dan `docs/script.js`.
+  - Melengkapi pelokalan dwibahasa Inggris di `game/tl/english/script.rpy` dengan 0 galat lint dan 0 orphan translations.
+
+---
+
+## [0.3.71] - 2026-10-24
+
+### 🇬🇧 English
+#### Added
+- **Digital Bank Emergency Fund Interest Yield:**
+  - Implemented weekly passive interest payout for emergency savings placed in digital bank pocket (`dana_darurat > 0`). Players receive 0.25% weekly yield (minimum Rp 500) accompanied by audio feedback (`sfx_koin`).
+- **Student Financial Crisis Dilemma (Week 3):**
+  - Enhanced the Week 3 broken charger crisis by introducing an explicit branching choice between liquidating digital bank emergency fund savings (protecting daily allowance) vs preserving savings yield by sacrificing living allowance (forcing extreme frugality on meals next week). Added partial combination support when emergency funds are partially funded.
+- **Narrative Continuity & Watch Party Variation for Billa:**
+  - In Week 2, when playing as default character Billa (`pakai_sprite_billa`), the movie watch party scene is set in Michelle's dorm room (`sinta`) with Michelle welcoming Billa, reflecting a natural friendship dynamic between female peers.
+  - Michelle's dialogue in Week 3 was updated to warmly reminisce about the cozy girls' movie night in her room.
+- **Minor vs Major Patch Versioning Rules:**
+  - Updated [AGENTS.md](AGENTS.md) to define standard criteria differentiating Major Patches (`vX.X.(+1)`) from Minor Patches (`vX.X.X(+1)`).
+#### Changed
+- **Version Bump to Minor Patch 0.3.71:**
+  - Synchronized version `0.3.71` across `game/options.rpy`, `game/script.rpy`, `README.md`, `CHANGELOG.md`, `docs/index.html`, and `docs/script.js`.
+  - Updated bilingual English translations in `game/tl/english/script.rpy` with zero lint errors and zero orphan translations.
+
+---
+
+### 🇮🇩 Bahasa Indonesia
+#### Ditambahkan (Added)
+- **Mekanik Bunga Tabungan Dana Darurat Bank Digital:**
+  - Mengimplementasikan keuntungan bunga simpanan pasif mingguan jika pemain mengalokasikan dana darurat di kantong bank digital (`dana_darurat > 0`). Pemain memperoleh imbal hasil 0,25% per minggu (minimal Rp 500) dengan efek suara koin (`sfx_koin`).
+- **Dilema Krisis Finansial Mahasiswa Perantauan (Minggu 3):**
+  - Memperdalam momen darurat charger rusak di Minggu 3 dengan menghadirkan dilema nyata: memilih mencairkan dana darurat bank digital (uang makan harian aman) atau mempertahankan saldo tabungan demi bunga simpanan namun memangkas uang jajan (minggu depan makan seadanya). Dilengkapi opsi kombinasi jika dana darurat terisi sebagian.
+- **Variasi Nobar Kamar Kos Michelle untuk Karakter Billa:**
+  - Pada Minggu 2, jika menggunakan karakter default Billa (`pakai_sprite_billa`), kegiatan nonton bareng berpindah ke kamar kos Michelle (`sinta`) yang menyambut Billa dengan hangat, menciptakan dinamika pertemanan sesama mahasiswi yang lebih klop dan natural.
+  - Dialog Michelle di Minggu 3 disesuaikan untuk mengingat momen seru nobar di kamarnya bersama Billa.
+- **Aturan Pembaruan Patch Minor & Major:**
+  - Memperbarui [AGENTS.md](AGENTS.md) dengan panduan resmi pembeda rilis Major Patch (`vX.X.(+1)`) dan Minor Patch (`vX.X.X(+1)`).
+#### Diubah (Changed)
+- **Pembaruan Versi ke Minor Patch 0.3.71:**
+  - Menyelaraskan nomor versi `0.3.71` pada `game/options.rpy`, `game/script.rpy`, `README.md`, `CHANGELOG.md`, `docs/index.html`, dan `docs/script.js`.
+  - Memperbarui pelokalan dwibahasa Inggris di `game/tl/english/script.rpy` dengan 0 galat lint dan 0 orphan translations.
+
+---
+
 ## [0.3.7] - 2026-10-24
 
 ### 🇬🇧 English

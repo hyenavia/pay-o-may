@@ -54,17 +54,6 @@ translate english nama_pemain_1b0c8866:
     # "Dua juta rupiah untuk sebulan. Rasanya banyak sekali. Tapi benarkah begitu?"
     "Two million rupiah for a month. It feels like a lot. But is it really?"
 
-# game/script.rpy:670
-translate english nama_pemain_d124aa04:
-
-    # "Kamu memindahkan Rp 300.000 ke tabungan terpisah dan memberinya nama 'Dana Darurat - Jangan Disentuh'."
-    "You transfer Rp 300,000 to a separate savings pot and name it 'Emergency Fund - Do Not Touch'."
-
-# game/script.rpy:671
-translate english nama_pemain_d4ab5709:
-
-    # tip "Pay yourself first: sisihkan dana darurat di awal bulan, bukan dari sisa di akhir bulan. Sisa uang biasanya tidak pernah ada."
-    tip "Pay yourself first: set aside emergency funds at the start of the month, not from whatever is left over. Leftovers rarely exist."
 
 # game/script.rpy:677
 translate english nama_pemain_fe135cc2:
@@ -414,29 +403,6 @@ translate english nama_pemain_e5682e92:
     # "Charger original di toko resmi harganya {b}Rp 275.000{/b}. Toko buka besok pagi dan kamu harus memutuskan sumber dananya sekarang."
     "An original charger at the official store costs {b}Rp 275,000{/b}. The shop opens tomorrow morning, and you must decide where the money comes from right now."
 
-# game/script.rpy:950
-translate english nama_pemain_f4c679e5:
-
-    # "Tugas selesai tepat waktu, dan uang makanmu tidak terganggu. Dana darurat menjalankan tugasnya."
-    "The assignment gets submitted on time, and your meal money stays untouched. Your emergency fund did its job."
-
-# game/script.rpy:951
-translate english nama_pemain_cc7253e9:
-
-    # tip "Dana darurat ada agar kejadian tak terduga tidak berubah menjadi krisis. Idealnya mencakup beberapa minggu sampai beberapa bulan kebutuhan pokok."
-    tip "Emergency funds exist so unexpected mishaps don't escalate into full crises. Ideally, aim to buffer several weeks or months of basic needs."
-
-# game/script.rpy:957
-translate english nama_pemain_6a58a395:
-
-    # "Charger terbeli, tugas aman. Tapi uang makan minggu depan terpaksa diirit."
-    "The charger is bought, the assignment is saved. But you'll have to skimp hard on next week's meals."
-
-# game/script.rpy:958
-translate english nama_pemain_ce975113:
-
-    # tip "Tanpa dana darurat, kejadian tak terduga memotong uang kebutuhan sehari-hari."
-    tip "Without an emergency fund, unexpected emergencies take a direct bite out of your everyday essentials."
 
 # game/script.rpy:962
 translate english nama_pemain_b9b38db0:
@@ -1333,3 +1299,243 @@ translate english strings:
 
     old "Trip ke Lembang"
     new "Lembang weekend trip"
+# TODO: Translation updated at 2026-10-24 13:28
+
+# game/script.rpy:678
+translate english nama_pemain_78251a9c:
+
+    # "Kamu memindahkan Rp 300.000 ke kantong terpisah di aplikasi bank digital ('Dana Darurat - Siaga & Berbunga'). Uang ini aman dari godaan jajan dan akan menghasilkan bunga simpanan tiap minggu."
+    "You transfer Rp 300,000 to a separate pocket in your digital banking app ('Emergency Fund - Standby & Earning'). This money is shielded from impulsive spending and will earn interest every week."
+
+# game/script.rpy:679
+translate english nama_pemain_39997315:
+
+    # tip "Pay yourself first: simpan dana darurat di kantong bank digital terpisah. Selain tidak gampang terpakai impulsif, dana tetap likuid dan menghasilkan bunga simpanan mingguan."
+    tip "Pay yourself first: stash your emergency fund in a separate digital bank pocket. Besides preventing impulsive spending, the funds stay liquid and earn weekly interest."
+
+# game/script.rpy:930
+translate english nama_pemain_fbf1b5d5:
+
+    # sinta "Nah, camilan datang! Pas banget, Billa! Nobar di kamarku emang paling cozy, serunya dapet, dompet tetep aman!"
+    sinta "Yay, snacks are here! Perfect timing, Billa! Watching together in my room is super cozy—we get all the fun, and our wallets stay safe!"
+
+# game/script.rpy:959
+translate english nama_pemain_63ad38fb:
+
+    # "Tugas selesai tepat waktu, dan uang jajan harianmu tidak terganggu. Meskipun bunga tabungan berkurang, dana darurat berhasil menjalankan tugas utamanya."
+    "Your assignment is submitted on time, and your daily allowance stays untouched. Even though future interest yield dips slightly, your emergency fund fulfilled its primary purpose."
+
+# game/script.rpy:960
+translate english nama_pemain_4df9403b:
+
+    # tip "Dana darurat ada agar kejadian tak terduga tidak berubah menjadi krisis. Mencairkannya untuk situasi genting adalah keputusan bijak."
+    tip "Emergency funds exist so unexpected mishaps don't turn into full-blown crises. Liquidating it during a genuine emergency is a wise move."
+
+# game/script.rpy:966
+translate english nama_pemain_9c16cd7c:
+
+    # "Kamu memilih mempertahankan saldo bank digital demi bunga mingguan. Charger terbeli dan tugas aman, tetapi sisa uang sakumu langsung tergerus drastis untuk minggu depan."
+    "You choose to protect your digital bank balance to keep earning weekly interest. The charger is bought and classwork is saved, but your remaining daily allowance takes a heavy hit for next week."
+
+# game/script.rpy:967
+translate english nama_pemain_55c02e71:
+
+    # tip "Mempertahankan dana darurat namun mengorbankan gizi dan uang makan harian adalah dilema nyata perantau. Jangan sampai terlalu memaksakan diri jika ada dana cadangan."
+    tip "Preserving emergency savings at the cost of your daily nutrition is a very real student dilemma. Avoid stretching yourself too thin when you have reserves meant for emergencies."
+
+# game/script.rpy:975
+translate english nama_pemain_75b7c778:
+
+    # "Semua saldo dana darurat di bank digital dicairkan, lalu kekurangannya ditutupi dari uang jajan. Tugas aman meski dompet harian ikut terpangkas."
+    "You withdraw all remaining emergency funds from your digital bank, covering the difference with your daily allowance. Your homework is safe, even though your wallet takes a dent."
+
+# game/script.rpy:976
+translate english nama_pemain_75704beb:
+
+    # tip "Ketika dana darurat belum penuh, setidaknya ia memperkecil guncangan pengeluaran mendadak terhadap uang saku harian."
+    tip "Even when an emergency fund isn't fully funded, it still softens the blow of surprise expenses on your everyday living allowance."
+
+# game/script.rpy:982
+translate english nama_pemain_2b7e25a6:
+
+    # "Charger terbeli, tugas aman. Tapi uang makan minggu depan terpaksa diirit habis-habisan."
+    "The charger is bought, and the assignment is safe. But you'll have to pinch every penny on meals next week."
+
+# game/script.rpy:983
+translate english nama_pemain_a9e9988f:
+
+    # tip "Tanpa dana darurat, kejadian tak terduga memotong langsung uang kebutuhan pokok sehari-hari."
+    tip "Without an emergency fund, unexpected emergencies take a direct cut out of your essential daily living budget."
+
+# game/script.rpy:1022
+translate english nama_pemain_2d31f53d:
+
+    # sinta "Seru banget nobar di kamarku kemarin, Billa! Kadang kumpul bareng sambil patungan camilan jauh lebih asyik daripada bayar langganan mahal sendirian."
+    sinta "Watching together in my room yesterday was so much fun, Billa! Hanging out and sharing snacks beats paying for an expensive solo subscription any day."
+
+# game/script.rpy:1445
+translate english akhir_minggu_172dee4b:
+
+    # "Tabungan dana darurat di kantong bank digital menghasilkan bunga simpanan mingguan (+[t_bunga_dana])."
+    "Emergency savings in your digital bank pocket earned weekly interest (+[t_bunga_dana])."
+
+translate english strings:
+
+    # game/script.rpy:672
+    old "Bagi ke pos-pos: kebutuhan, dana darurat Rp 300.000 di bank digital, dan sisanya untuk keinginan."
+    new "Divide into pots: needs, Rp 300,000 digital bank emergency fund, and the rest for wants."
+
+    # game/script.rpy:955
+    old "Cairkan dana darurat dari bank digital. Uang makan harian tetap aman."
+    new "Withdraw from digital bank emergency fund. Keep daily meal allowance intact."
+
+    # game/script.rpy:962
+    old "Pertahankan tabungan bank digital, bayar penuh dari uang saku harian. Konsekuensinya makan seadanya."
+    new "Protect digital bank savings, pay in full from daily allowance. Eat frugally next week."
+
+    # game/script.rpy:969
+    old "Kombinasikan: cairkan sisa tabungan bank digital dan tutupi kekurangannya dari uang saku."
+    new "Combine both: drain the remaining digital bank savings and cover the rest with daily allowance."
+
+    # game/script.rpy:978
+    old "Ambil dari uang saku harian. Minggu depan makan seadanya."
+    new "Take from daily allowance. Eat frugally next week."
+
+# TODO: Translation updated at 2026-10-24 13:54
+
+# game/script.rpy:1668
+translate english menu_tarik_darurat_e94f93fa:
+
+    # "Saldo uang saku harianmu saat ini menipis ([t_uang])."
+    "Your daily living allowance is running thin right now ([t_uang])."
+
+# game/script.rpy:1669
+translate english menu_tarik_darurat_d8b5e3c3:
+
+    # "Namun di kantong bank digital, kamu masih memiliki simpanan dana darurat sebesar {b}[t_dana]{/b}."
+    "However, in your digital bank pocket, you still have an emergency fund of {b}[t_dana]{/b}."
+
+# game/script.rpy:1676
+translate english menu_tarik_darurat_0a1942a1:
+
+    # "Kamu mencairkan Rp 50.000 ke rekening utama untuk menambah napas uang saku harian."
+    "You withdraw Rp 50,000 into your main account to give your daily living budget some breathing room."
+
+# game/script.rpy:1677
+translate english menu_tarik_darurat_4eda1aee:
+
+    # tip "Menarik dana darurat saat uang saku menipis membantu mencegah utang, namun mengurangi imbal hasil bunga tabungan mingguan."
+    tip "Withdrawing from your emergency fund when money gets tight helps prevent debt, but lowers your weekly savings interest."
+
+# game/script.rpy:1681
+translate english menu_tarik_darurat_aad49530:
+
+    # "Kamu mencairkan Rp 100.000 ke rekening utama. Uang saku harianmu kini lebih aman."
+    "You withdraw Rp 100,000 into your main account. Your daily pocket money is now much safer."
+
+# game/script.rpy:1682
+translate english menu_tarik_darurat_f8985dd1:
+
+    # tip "Gunakan dana darurat yang dicairkan dengan bijak agar tidak lekas habis untuk hal konsumtif."
+    tip "Spend withdrawn emergency funds prudently so they aren't quickly squandered on non-essentials."
+
+# game/script.rpy:1686
+translate english menu_tarik_darurat_3e2053de:
+
+    # "Kamu mencairkan Rp 200.000 ke rekening utama. Dompet harian kembali lega."
+    "You withdraw Rp 200,000 into your main account. Your daily wallet feels relieved once more."
+
+# game/script.rpy:1687
+translate english menu_tarik_darurat_ad2e06d7:
+
+    # tip "Mencairkan nominal besar mengamankan kebutuhan primer, tapi pastikan kamu berniat mengisi kembali pos dana darurat saat ada kesempatan."
+    tip "Withdrawing a larger chunk secures essential needs, but make sure you plan to replenish the emergency fund when you can."
+
+# game/script.rpy:1691
+translate english menu_tarik_darurat_aaab9833:
+
+    # "Seluruh dana darurat di bank digital dicairkan ke tabungan utama. Kamu kini tidak lagi memiliki bantalan darurat cadangan."
+    "All emergency funds in the digital bank are transferred to your main wallet. You no longer have a backup emergency buffer."
+
+# game/script.rpy:1692
+translate english menu_tarik_darurat_6fcbd5a6:
+
+    # tip "Menguras habis dana darurat membuatmu rentan jika terjadi musibah tak terduga berikutnya."
+    tip "Completely draining your emergency fund leaves you vulnerable if another unexpected mishap strikes."
+
+# game/script.rpy:1695
+translate english menu_tarik_darurat_86b9094c:
+
+    # "Kamu memilih tidak menyentuh dana darurat agar bunga simpanan di bank digital tetap berjalan maksimal."
+    "You decide not to touch your emergency fund so your digital bank interest continues earning at maximum potential."
+
+translate english strings:
+
+    # game/script.rpy:161
+    old "Tarik dari dana darurat: +"
+    new "Withdrawn from emergency fund: +"
+
+    # game/script.rpy:403
+    old "⇄ Tarik ke Uang Saku"
+    new "⇄ Withdraw to Allowance"
+
+    # game/script.rpy:647
+    old "Tarik Dana Darurat"
+    new "Withdraw Emergency Fund"
+
+    # game/script.rpy:663
+    old "Cairkan simpanan dari kantong bank digital ke saldo uang saku harian:"
+    new "Liquidate savings from digital bank pocket into daily allowance:"
+
+    # game/script.rpy:688
+    old "Uang Saku Utama:"
+    new "Main Daily Allowance:"
+
+    # game/script.rpy:711
+    old "+ Tarik Rp 50.000"
+    new "+ Withdraw Rp 50,000"
+
+    # game/script.rpy:724
+    old "+ Tarik Rp 100.000"
+    new "+ Withdraw Rp 100,000"
+
+    # game/script.rpy:737
+    old "+ Tarik Rp 200.000"
+    new "+ Withdraw Rp 200,000"
+
+    # game/script.rpy:750
+    old "+ Tarik Semua Saldo: "
+    new "+ Withdraw Entire Balance: "
+
+    # game/script.rpy:757
+    old "💡 Menarik dana darurat akan mengurangi bunga pasif mingguan di bank digital."
+    new "💡 Withdrawing emergency funds will reduce your weekly passive interest earnings in the digital bank."
+
+    # game/script.rpy:767
+    old "Batal"
+    new "Cancel"
+
+    # game/script.rpy:1671
+    old "Apakah kamu ingin mencairkan sebagian dana darurat ke tabungan utama?"
+    new "Would you like to withdraw part of your emergency fund into your main wallet?"
+
+    # game/script.rpy:1674
+    old "Tarik Rp 50.000 ke tabungan utama."
+    new "Withdraw Rp 50,000 to main wallet."
+
+    # game/script.rpy:1679
+    old "Tarik Rp 100.000 ke tabungan utama."
+    new "Withdraw Rp 100,000 to main wallet."
+
+    # game/script.rpy:1684
+    old "Tarik Rp 200.000 ke tabungan utama."
+    new "Withdraw Rp 200,000 to main wallet."
+
+    # game/script.rpy:1689
+    old "Tarik semua saldo dana darurat ([t_dana])."
+    new "Withdraw entire emergency fund ([t_dana])."
+
+    # game/script.rpy:1694
+    old "Jangan tarik, tetap bertahan dengan sisa uang saku yang ada."
+    new "Do not withdraw, push through with existing allowance."
+

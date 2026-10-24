@@ -1,5 +1,5 @@
 # ============================================================
-#  PAY O' MAY  (v0.3.7)
+#  PAY O' MAY  (v0.3.72)
 #  Gim novel visual edukasi kesadaran finansial mahasiswa perantauan
 #  Ren'Py 8.5.3
 # ============================================================
@@ -146,6 +146,19 @@ init python:
         store.uang -= jumlah
         store.dana_darurat += jumlah
         _lapor(_tr(_("Dipindah ke dana darurat: ")) + rp(jumlah), "#81d4fa")
+        sfx("sfx_koin")
+
+    def tarik_dari_dana(jumlah):
+        """
+        Memindahkan sejumlah uang dari pos 'dana darurat' (bank digital) kembali ke saldo 'uang' (tabungan utama / uang saku).
+        Digunakan saat saldo uang jajan menipis dan pemain memutuskan mencairkan sebagian dana darurat.
+        """
+        jumlah = min(jumlah, store.dana_darurat)
+        if jumlah <= 0:
+            return
+        store.dana_darurat -= jumlah
+        store.uang += jumlah
+        _lapor(_tr(_("Tarik dari dana darurat: +")) + rp(jumlah), "#4ade80")
         sfx("sfx_koin")
 
     def tambah_hutang(jumlah, ket=""):
@@ -376,6 +389,24 @@ screen hud():
                         xalign 1.0
                         yalign 0.5
 
+                # Tombol Tarik Dana Darurat ke Tabungan Utama (muncul jika ada dana darurat dan uang saku menipis)
+                if dana_darurat > 0 and uang < 350000:
+                    button:
+                        background Solid("#e6510022" if (uang < 150000 and el_ui_theme == "cream") else ("#ffb74d22" if uang < 150000 else ("#1976d222" if el_ui_theme == "cream" else "#81d4fa22")))
+                        hover_background Solid("#1976d244" if el_ui_theme == "cream" else "#81d4fa44")
+                        padding (el_u(3.5), el_u(1.8), el_u(3.5), el_u(1.8))
+                        xfill True
+                        action Show("modal_tarik_dana")
+                        hbox:
+                            xfill True
+                            yalign 0.5
+                            text _("⇄ Tarik ke Uang Saku"):
+                                style "el_ui_text"
+                                color ("#c62828" if (uang < 150000 and el_ui_theme == "cream") else ("#ffb74d" if uang < 150000 else ("#1976d2" if el_ui_theme == "cream" else "#81d4fa")))
+                                size el_u(5.6)
+                                bold True
+                                yalign 0.5
+
                 # Tagihan PayLater (jika berutang)
                 if hutang > 0:
                     frame:
@@ -578,6 +609,168 @@ screen layar_hp(app, judul, isi, warna="#4fc3f7"):
 
 
 # ------------------------------------------------------------
+# 5b. MODAL PENARIKAN DANA DARURAT KE TABUNGAN UTAMA
+# ------------------------------------------------------------
+screen modal_tarik_dana():
+    modal True
+    zorder 250
+
+    # Backdrop gelap semi-transparan
+    frame:
+        background Solid("#00000099")
+        xfill True
+        yfill True
+        button:
+            action Hide("modal_tarik_dana")
+            xfill True
+            yfill True
+
+    # Kotak Dialog M-Banking
+    frame:
+        xalign 0.5
+        yalign 0.5
+        xsize el_u(135)
+        background el_ui_frame("menu_panel")
+        padding (el_u(9), el_u(8), el_u(9), el_u(8))
+
+        vbox:
+            spacing el_u(3.5)
+
+            # Header Modal
+            hbox:
+                xfill True
+                yalign 0.5
+                hbox:
+                    spacing el_u(2.5)
+                    yalign 0.5
+                    add el_pj_path("icon_lock_idle") xsize el_u(8) ysize el_u(8) yalign 0.5
+                    text _("Tarik Dana Darurat"):
+                        style "el_ui_text"
+                        color el_ui_color()
+                        size el_u(7.5)
+                        bold True
+                        yalign 0.5
+                button:
+                    action Hide("modal_tarik_dana")
+                    background None
+                    padding (el_u(3), el_u(1), el_u(3), el_u(1))
+                    text "✕":
+                        style "el_ui_text"
+                        color el_ui_color(1)
+                        size el_u(7.5)
+                        bold True
+
+            text _("Cairkan simpanan dari kantong bank digital ke saldo uang saku harian:"):
+                style "el_ui_text"
+                color el_ui_color(1)
+                size el_u(6)
+
+            # Ringkasan Saldo Saat Ini
+            frame:
+                background Solid(el_ui_color(1) + "15")
+                padding (el_u(5), el_u(4), el_u(5), el_u(4))
+                xfill True
+                vbox:
+                    spacing el_u(2)
+                    hbox:
+                        xfill True
+                        text _("Dana Darurat:"):
+                            style "el_ui_text"
+                            size el_u(6.2)
+                            color el_ui_color(1)
+                        text rp(dana_darurat):
+                            style "el_ui_text"
+                            size el_u(6.8)
+                            bold True
+                            color ("#1976d2" if el_ui_theme == "cream" else "#81d4fa")
+                    hbox:
+                        xfill True
+                        text _("Uang Saku Utama:"):
+                            style "el_ui_text"
+                            size el_u(6.2)
+                            color el_ui_color(1)
+                        $ warna_u = ("#2e7d32" if el_ui_theme == "cream" else "#a5d6a7") if uang >= 200000 else ("#c62828" if el_ui_theme == "cream" else "#ff8a80")
+                        text rp(uang):
+                            style "el_ui_text"
+                            size el_u(6.8)
+                            bold True
+                            color warna_u
+
+            # Tombol-tombol Pilihan Nominal
+            vbox:
+                spacing el_u(2.5)
+                xfill True
+
+                if dana_darurat >= 50000:
+                    button:
+                        background Solid(el_ui_color(1) + "22")
+                        hover_background Solid("#2e7d3244" if el_ui_theme == "cream" else "#4caf5044")
+                        padding (el_u(5), el_u(3.5), el_u(5), el_u(3.5))
+                        xfill True
+                        action [Function(tarik_dari_dana, 50000), Hide("modal_tarik_dana")]
+                        text _("+ Tarik Rp 50.000"):
+                            style "el_ui_text"
+                            color el_ui_color()
+                            size el_u(6.5)
+                            xalign 0.5
+
+                if dana_darurat >= 100000:
+                    button:
+                        background Solid(el_ui_color(1) + "22")
+                        hover_background Solid("#2e7d3244" if el_ui_theme == "cream" else "#4caf5044")
+                        padding (el_u(5), el_u(3.5), el_u(5), el_u(3.5))
+                        xfill True
+                        action [Function(tarik_dari_dana, 100000), Hide("modal_tarik_dana")]
+                        text _("+ Tarik Rp 100.000"):
+                            style "el_ui_text"
+                            color el_ui_color()
+                            size el_u(6.5)
+                            xalign 0.5
+
+                if dana_darurat >= 200000:
+                    button:
+                        background Solid(el_ui_color(1) + "22")
+                        hover_background Solid("#2e7d3244" if el_ui_theme == "cream" else "#4caf5044")
+                        padding (el_u(5), el_u(3.5), el_u(5), el_u(3.5))
+                        xfill True
+                        action [Function(tarik_dari_dana, 200000), Hide("modal_tarik_dana")]
+                        text _("+ Tarik Rp 200.000"):
+                            style "el_ui_text"
+                            color el_ui_color()
+                            size el_u(6.5)
+                            xalign 0.5
+
+                if dana_darurat > 0:
+                    button:
+                        background Solid("#1976d233" if el_ui_theme == "cream" else "#81d4fa33")
+                        hover_background Solid("#1976d266" if el_ui_theme == "cream" else "#81d4fa66")
+                        padding (el_u(5), el_u(3.5), el_u(5), el_u(3.5))
+                        xfill True
+                        action [Function(tarik_dari_dana, dana_darurat), Hide("modal_tarik_dana")]
+                        text (_("+ Tarik Semua Saldo: ") + rp(dana_darurat)):
+                            style "el_ui_text"
+                            color ("#1976d2" if el_ui_theme == "cream" else "#81d4fa")
+                            size el_u(6.5)
+                            bold True
+                            xalign 0.5
+
+            text _("💡 Menarik dana darurat akan mengurangi bunga pasif mingguan di bank digital."):
+                style "el_ui_text"
+                color ("#e65100" if el_ui_theme == "cream" else "#ffb74d")
+                size el_u(5.2)
+
+            button:
+                action Hide("modal_tarik_dana")
+                background None
+                xalign 0.5
+                padding (el_u(4), el_u(2), el_u(4), el_u(2))
+                text _("Batal"):
+                    style "el_ui_text"
+                    color el_ui_color(1)
+                    size el_u(6)
+
+
+# ------------------------------------------------------------
 # 6. BANNER NOTIFIKASI TRANSAKSI CEPAT (CUSTOM NOTIFY)
 # ------------------------------------------------------------
 screen notify(message):
@@ -669,14 +862,14 @@ label nama_pemain:
     menu:
         "Bagaimana kamu mengatur uang ini?"
 
-        "Bagi ke pos-pos: kebutuhan, dana darurat Rp 300.000, dan sisanya untuk keinginan.":
+        "Bagi ke pos-pos: kebutuhan, dana darurat Rp 300.000 di bank digital, dan sisanya untuk keinginan.":
             $ pindah_ke_dana(300000)
             $ skor += 2
             $ needs += 1
             if pakai_sprite_billa:
                 show billa senang
-            "Kamu memindahkan Rp 300.000 ke tabungan terpisah dan memberinya nama 'Dana Darurat - Jangan Disentuh'."
-            tip "Pay yourself first: sisihkan dana darurat di awal bulan, bukan dari sisa di akhir bulan. Sisa uang biasanya tidak pernah ada."
+            "Kamu memindahkan Rp 300.000 ke kantong terpisah di aplikasi bank digital ('Dana Darurat - Siaga & Berbunga'). Uang ini aman dari godaan jajan dan akan menghasilkan bunga simpanan tiap minggu."
+            tip "Pay yourself first: simpan dana darurat di kantong bank digital terpisah. Selain tidak gampang terpakai impulsif, dana tetap likuid dan menghasilkan bunga simpanan mingguan."
 
         "Biarkan semua di satu rekening dulu. Lihat nanti saja.":
             $ skor += 1
@@ -926,13 +1119,14 @@ label nama_pemain:
             scene bg nobar with el_lantern_glow
             if pakai_sprite_billa:
                 show billa senang at left with dissolve
-                show dimas senang at right with dissolve
+                show sinta senang at right with dissolve
+                sinta "Nah, camilan datang! Pas banget, Billa! Nobar di kamarku emang paling cozy, serunya dapet, dompet tetep aman!"
+                hide sinta with dissolve
+                hide billa with dissolve
             else:
                 show dimas senang with dissolve
-            dimas "Nah, camilan datang! Nobar di kos emang paling mantap, serunya dapet, dompet tetep aman!"
-            hide dimas with dissolve
-            if pakai_sprite_billa:
-                hide billa with dissolve
+                dimas "Nah, camilan datang! Nobar di kos emang paling mantap, serunya dapet, dompet tetep aman!"
+                hide dimas with dissolve
             "Nobar ternyata jauh lebih seru daripada nonton sendirian di kamar, dan kamu hanya mengeluarkan Rp 15.000 untuk camilan."
             tip "Keinginan bisa dipenuhi dengan cara yang lebih murah. Sering kali cara itu sekaligus lebih menyenangkan."
 
@@ -951,19 +1145,35 @@ label nama_pemain:
     menu:
         "Dari mana uangnya?"
 
-        "Pakai dana darurat. Memang untuk hal seperti ini." if dana_darurat >= biaya_darurat:
+        "Cairkan dana darurat dari bank digital. Uang makan harian tetap aman." if dana_darurat >= biaya_darurat:
             $ ubah_dana(-biaya_darurat, "Charger baru")
             $ skor += 2
             $ needs += 1
-            "Tugas selesai tepat waktu, dan uang makanmu tidak terganggu. Dana darurat menjalankan tugasnya."
-            tip "Dana darurat ada agar kejadian tak terduga tidak berubah menjadi krisis. Idealnya mencakup beberapa minggu sampai beberapa bulan kebutuhan pokok."
+            "Tugas selesai tepat waktu, dan uang jajan harianmu tidak terganggu. Meskipun bunga tabungan berkurang, dana darurat berhasil menjalankan tugas utamanya."
+            tip "Dana darurat ada agar kejadian tak terduga tidak berubah menjadi krisis. Mencairkannya untuk situasi genting adalah keputusan bijak."
 
-        "Ambil dari uang jajan. Minggu depan makan seadanya.":
+        "Pertahankan tabungan bank digital, bayar penuh dari uang saku harian. Konsekuensinya makan seadanya." if (dana_darurat > 0 and uang >= biaya_darurat):
             $ ubah_uang(-biaya_darurat, "Charger baru")
             $ skor += 1
             $ needs += 1
-            "Charger terbeli, tugas aman. Tapi uang makan minggu depan terpaksa diirit."
-            tip "Tanpa dana darurat, kejadian tak terduga memotong uang kebutuhan sehari-hari."
+            "Kamu memilih mempertahankan saldo bank digital demi bunga mingguan. Charger terbeli dan tugas aman, tetapi sisa uang sakumu langsung tergerus drastis untuk minggu depan."
+            tip "Mempertahankan dana darurat namun mengorbankan gizi dan uang makan harian adalah dilema nyata perantau. Jangan sampai terlalu memaksakan diri jika ada dana cadangan."
+
+        "Kombinasikan: cairkan sisa tabungan bank digital dan tutupi kekurangannya dari uang saku." if (dana_darurat > 0 and dana_darurat < biaya_darurat and (dana_darurat + uang) >= biaya_darurat):
+            $ sisa_bayar = biaya_darurat - dana_darurat
+            $ ubah_dana(-dana_darurat, "Charger baru")
+            $ ubah_uang(-sisa_bayar, "Charger baru")
+            $ skor += 2
+            $ needs += 1
+            "Semua saldo dana darurat di bank digital dicairkan, lalu kekurangannya ditutupi dari uang jajan. Tugas aman meski dompet harian ikut terpangkas."
+            tip "Ketika dana darurat belum penuh, setidaknya ia memperkecil guncangan pengeluaran mendadak terhadap uang saku harian."
+
+        "Ambil dari uang saku harian. Minggu depan makan seadanya." if (dana_darurat == 0 and uang >= biaya_darurat):
+            $ ubah_uang(-biaya_darurat, "Charger baru")
+            $ skor += 1
+            $ needs += 1
+            "Charger terbeli, tugas aman. Tapi uang makan minggu depan terpaksa diirit habis-habisan."
+            tip "Tanpa dana darurat, kejadian tak terduga memotong langsung uang kebutuhan pokok sehari-hari."
 
         "Pakai PayLater saja. Gampang dan cepat.":
             $ tambah_hutang(biaya_darurat, "Charger")
@@ -1001,7 +1211,10 @@ label nama_pemain:
     if langganan == "tahunan":
         sinta "Eh, kamu beneran ambil paket tahunan streaming itu? Lumayan nguras saldo awal bulan ya."
     elif langganan == "nobar":
-        sinta "Seru ya nobar di kos kemarin. Kadang kumpul bareng jauh lebih asyik daripada bayar langganan mahal sendirian."
+        if pakai_sprite_billa:
+            sinta "Seru banget nobar di kamarku kemarin, Billa! Kadang kumpul bareng sambil patungan camilan jauh lebih asyik daripada bayar langganan mahal sendirian."
+        else:
+            sinta "Seru ya nobar di kos kemarin. Kadang kumpul bareng jauh lebih asyik daripada bayar langganan mahal sendirian."
 
     if catat:
         $ t = rp(uang)
@@ -1292,6 +1505,8 @@ label nama_pemain:
     show weather kelopak with dissolve
     $ musik(None, fadeout=1.5)
     "Hari terakhir bulan ini. Malam yang tenang. Kamu membuka aplikasi bank dan menatap angkanya."
+    if uang < 200000 and dana_darurat > 0:
+        call menu_tarik_darurat from _call_menu_tarik_darurat_akhir
     $ skor_max = 22
     $ persen = (skor * 100) // 22
 
@@ -1417,6 +1632,12 @@ label akhir_minggu:
     $ t_uang = rp(uang)
     $ t_dana = rp(dana_darurat)
     "{b}Rekap minggu ke-[minggu]{/b}\nPengeluaran: [t_keluar]. Sisa uang jajan: [t_uang]. Dana darurat: [t_dana]."
+    if dana_darurat > 0:
+        $ bunga_dana = max(500, int(dana_darurat * 0.0025))
+        $ dana_darurat += bunga_dana
+        $ t_bunga_dana = rp(bunga_dana)
+        $ sfx("sfx_koin")
+        "Tabungan dana darurat di kantong bank digital menghasilkan bunga simpanan mingguan (+[t_bunga_dana])."
     if hutang > 0:
         $ bunga_minggu = int(hutang * 0.05)
         $ hutang += bunga_minggu
@@ -1425,9 +1646,52 @@ label akhir_minggu:
         $ sfx("sfx_peringatan")
         "Tagihan PayLater dikenakan bunga mingguan 5 persen (+[t_bunga]). Total tagihan berjalan: {b}[t_hutang]{/b}."
         tip "Bunga PayLater terus bertambah setiap minggu selama belum lunas. Semakin lama menunda, semakin berat beban finansialmu."
+
+    if uang < 150000 and dana_darurat > 0:
+        call menu_tarik_darurat from _call_menu_tarik_darurat_mingguan
+
     $ uang_awal_minggu = uang
     $ dana_awal_minggu = dana_darurat
 
     if minggu < 4:
         $ minggu += 1
+    return
+
+
+# ============================================================
+# 11. SUBRUTIN: PENCAIRAN DANA DARURAT KE TABUNGAN UTAMA
+# ============================================================
+label menu_tarik_darurat:
+    $ t_uang = rp(uang)
+    $ t_dana = rp(dana_darurat)
+    $ sfx("sfx_peringatan")
+    "Saldo uang saku harianmu saat ini menipis ([t_uang])."
+    "Namun di kantong bank digital, kamu masih memiliki simpanan dana darurat sebesar {b}[t_dana]{/b}."
+
+    menu:
+        "Apakah kamu ingin mencairkan sebagian dana darurat ke tabungan utama?"
+
+        "Tarik Rp 50.000 ke tabungan utama." if dana_darurat >= 50000:
+            $ tarik_dari_dana(50000)
+            "Kamu mencairkan Rp 50.000 ke rekening utama untuk menambah napas uang saku harian."
+            tip "Menarik dana darurat saat uang saku menipis membantu mencegah utang, namun mengurangi imbal hasil bunga tabungan mingguan."
+
+        "Tarik Rp 100.000 ke tabungan utama." if dana_darurat >= 100000:
+            $ tarik_dari_dana(100000)
+            "Kamu mencairkan Rp 100.000 ke rekening utama. Uang saku harianmu kini lebih aman."
+            tip "Gunakan dana darurat yang dicairkan dengan bijak agar tidak lekas habis untuk hal konsumtif."
+
+        "Tarik Rp 200.000 ke tabungan utama." if dana_darurat >= 200000:
+            $ tarik_dari_dana(200000)
+            "Kamu mencairkan Rp 200.000 ke rekening utama. Dompet harian kembali lega."
+            tip "Mencairkan nominal besar mengamankan kebutuhan primer, tapi pastikan kamu berniat mengisi kembali pos dana darurat saat ada kesempatan."
+
+        "Tarik semua saldo dana darurat ([t_dana]).":
+            $ tarik_dari_dana(dana_darurat)
+            "Seluruh dana darurat di bank digital dicairkan ke tabungan utama. Kamu kini tidak lagi memiliki bantalan darurat cadangan."
+            tip "Menguras habis dana darurat membuatmu rentan jika terjadi musibah tak terduga berikutnya."
+
+        "Jangan tarik, tetap bertahan dengan sisa uang saku yang ada.":
+            "Kamu memilih tidak menyentuh dana darurat agar bunga simpanan di bank digital tetap berjalan maksimal."
+
     return

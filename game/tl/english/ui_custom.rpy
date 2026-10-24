@@ -47,6 +47,9 @@ translate english strings:
     old "Gim novel visual edukasi untuk meningkatkan kesadaran finansial mahasiswa perantauan. Kamu menjalani satu bulan dengan uang saku terbatas dan memutuskan sendiri ke mana uang itu pergi."
     new "An educational visual novel to enhance the financial awareness of college students living away from home. Survive 31 days with a limited allowance and decide for yourself where your money goes."
 
+    old "Pengembang"
+    new "Developer"
+
     old "Tentang Proyek"
     new "About the Project"
 
@@ -316,3 +319,11 @@ translate english strings:
 
     old "Selesai"
     new "Completed"
+# TODO: Translation updated at 2026-10-24 13:28
+
+translate english strings:
+
+    # game/ui_custom.rpy:405
+    old "E-Statement Mahasiswa: [_nama_display] | [_ending_display!t]"
+    new "Student E-Statement: [_nama_display] | [_ending_display!t]"
+

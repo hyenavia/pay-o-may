@@ -8,7 +8,7 @@
 [![Python](https://img.shields.io/badge/Python-3.12-brightgreen.svg)](https://www.python.org/)
 [![Methodology](https://img.shields.io/badge/Methodology-GDLC-orange.svg)](https://en.wikipedia.org/wiki/Video_game_development)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20|%20Android-lightgrey.svg)]()
-[![Version](https://img.shields.io/badge/Version-0.3.7-teal.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-0.3.72-teal.svg)](CHANGELOG.md)
 
 </div>
 
@@ -18,7 +18,7 @@
 
 **Pay o' May** adalah gim novel visual (*visual novel*) simulasi edukasi kesadaran finansial yang dirancang khusus untuk mahasiswa perantauan. Pemain berperan sebagai mahasiswa tahun pertama yang harus mengelola uang saku bulanan terbatas sebesar **Rp 2.000.000** selama 31 hari (4 minggu) di tengah berbagai tekanan sosial, godaan belanja konsumtif, dan keadaan darurat nyata.
 
-Proyek ini dikembangkan sebagai karya **Tugas Akhir** program studi **S1 Terapan Teknologi Rekayasa Multimedia (TRM)**, Fakultas Ilmu Terapan, **Universitas Telkom**.
+Proyek ini dikembangkan sebagai karya gim indie edukasi kesadaran finansial oleh **Hyenavia**.
 
 ---
 
@@ -98,7 +98,7 @@ Gim **Pay o' May** dapat diunduh langsung untuk platform Windows PC dan perangka
 ### Langkah Instalasi
 1. Klon repositori ini ke komputer lokal:
    ```bash
-   git clone https://github.com/luthfirais/pay-o-may.git
+   git clone https://github.com/hyenavia/pay-o-may.git
    ```
 2. Buka aplikasi **Ren'Py Launcher**.
 3. Tambahkan direktori proyek `Pay o May` ke dalam daftar proyek di Ren'Py Launcher.
@@ -116,7 +116,7 @@ Gim **Pay o' May** dapat diunduh langsung untuk platform Windows PC dan perangka
 
 **Pay o' May** is an educational financial literacy visual novel simulation game tailored specifically for university students living away from home. Players step into the shoes of a first-year college student who must manage a limited monthly allowance of **Rp 2,000,000** across 31 days (4 weeks) amidst intense peer social pressure, seductive consumer installment traps, and real-world emergencies.
 
-This project was developed as an undergraduate **Final Project** for the **Applied Bachelor of Multimedia Engineering Technology (TRM)** program, School of Applied Science, **Telkom University**.
+This project was developed as an educational financial literacy indie game project by **Hyenavia**.
 
 ---
 
@@ -196,7 +196,7 @@ Game development followed the **Game Development Life Cycle (GDLC)** framework:
 ### Steps
 1. Clone this repository locally:
    ```bash
-   git clone https://github.com/luthfirais/pay-o-may.git
+   git clone https://github.com/hyenavia/pay-o-may.git
    ```
 2. Open the **Ren'Py Launcher**.
 3. Add the `Pay o May` project folder to your Ren'Py project directory list.
@@ -250,17 +250,16 @@ Pay o May/
 
 ## ⚠️ Disclaimer / Penafian
 
-The narrative, characters, and events depicted in this game are works of fiction crafted strictly for financial literacy education within the scope of an academic Final Project. Currency amounts, compounding interest models, and presented scenarios are instructional simplifications and should not be construed as professional financial advice.
+The narrative, characters, and events depicted in this game are works of fiction crafted strictly for financial literacy education. Currency amounts, compounding interest models, and presented scenarios are instructional simplifications and should not be construed as professional financial advice.
 
-Kisah, tokoh, dan skenario dalam permainan ini adalah fiksi yang dirancang untuk tujuan edukasi kesadaran finansial dalam rangka Tugas Akhir akademik. Nilai nominal, perhitungan bunga, dan situasi yang disajikan merupakan simplifikasi simulasi dan tidak dimaksudkan sebagai nasihat keuangan profesional (*financial advice*).
+Kisah, tokoh, dan skenario dalam permainan ini adalah fiksi yang dirancang untuk tujuan edukasi kesadaran finansial. Nilai nominal, perhitungan bunga, dan situasi yang disajikan merupakan simplifikasi simulasi dan tidak dimaksudkan sebagai nasihat keuangan profesional (*financial advice*).
 
 ---
 
 <div align="center">
 
 **Pengembang / Developer:**  
-**Luthfi Rais Asral (Hyenavia)**  
-Program Studi S1 Terapan Teknologi Rekayasa Multimedia  
-Fakultas Ilmu Terapan, Universitas Telkom
+**Hyenavia**  
+*Indie Game Developer* • [GitHub Profile](https://github.com/hyenavia)
 
 </div>

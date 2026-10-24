@@ -246,8 +246,8 @@ screen pom_p(teks, judul=False):
 # ------------------------------------------------------------
 screen about():
     """
-    Menampilkan informasi proyek Tugas Akhir S1 TRM Universitas Telkom,
-    data pengembang, metodologi perancangan (GDLC), kredit aset visual/audio,
+    Menampilkan informasi proyek gim Pay o' May oleh Hyenavia,
+    metodologi perancangan (GDLC), kredit aset visual/audio,
     dan informasi lisensi Ren'Py.
     """
     tag menu
@@ -268,8 +268,8 @@ screen about():
                 use pom_p(_("Versi [config.version!t]"))
                 use pom_p(_("Gim novel visual edukasi untuk meningkatkan kesadaran finansial mahasiswa perantauan. Kamu menjalani satu bulan dengan uang saku terbatas dan memutuskan sendiri ke mana uang itu pergi."))
 
-                ## use pom_p("Pengembang", True)
-                ## use pom_p("Luthfi Rais Asral\nS1 Terapan Teknologi Rekayasa Multimedia\nFakultas Ilmu Terapan, Universitas Telkom")
+                use pom_p(_("Pengembang"), True)
+                use pom_p("Hyenavia")
 
                 use pom_p(_("Tentang Proyek"), True)
                 use pom_p(_("Dikembangkan sebagai Tugas Akhir dengan metode Game Development Life Cycle (GDLC). Cerita dan angka dalam game adalah fiksi untuk keperluan edukasi, bukan nasihat keuangan profesional."))
