@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="page_title">Pay o' May - Gim Visual Novel Edukasi Finansial Mahasiswa</title>
+    <meta name="description"
+        content="Pay o' May adalah gim visual novel simulasi edukasi kesadaran finansial untuk mahasiswa perantauan. Kelola uang saku Rp 2.000.000 selama 31 hari di tengah godaan FOMO dan PayLater.">
+    <meta name="keywords"
+        content="Pay o May, Visual Novel, Edukasi Finansial, Literasi Keuangan, Ren'Py, Indie Game, Simulasi Keuangan, Mahasiswa Rantau">
+    <meta name="author" content="Hyenavia">
+
+    <!-- Open Graph / Meta Sosial -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://luthfirais.github.io/pay-o-may/">
+    <meta property="og:title" content="Pay o' May - Gim Visual Novel Edukasi Finansial">
+    <meta property="og:description"
+        content="Mampukah kamu bertahan Sebulan di perantauan dengan Rp 2.000.000 tanpa terjebak PayLater? Mainkan gim edukatif Pay o' May!">
+    <meta property="og:image" content="images/cover_cream.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/icon.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Background Ambient Glows -->
+    <div class="ambient-glow glow-top"></div>
+    <div class="ambient-glow glow-middle"></div>
+    <div class="ambient-glow glow-bottom"></div>
+
+    <!-- Navigation Header -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="brand">
+                <img src="images/title_logo.png" alt="Logo Pay o' May" class="brand-logo">
+                <span class="brand-name">Pay o' May</span>
+            </a>
+
+            <nav class="nav-menu" id="nav-menu">
+                <a href="#tentang" class="nav-link" data-i18n="nav_about">Tentang</a>
+                <a href="#fitur" class="nav-link" data-i18n="nav_features">Dilema Finansial</a>
+                <a href="#tokoh" class="nav-link" data-i18n="nav_characters">Karakter</a>
+                <a href="#simulator" class="nav-link" data-i18n="nav_simulator">Simulasi 50/30/20</a>
+                <a href="#ending" class="nav-link" data-i18n="nav_ending">Ending</a>
+                <a href="#download" class="nav-link btn-nav-cta" data-i18n="nav_download">Unduh Gim</a>
+                <div class="lang-switch" id="lang-switch">
+                    <button type="button" class="lang-btn active" data-lang="id" aria-label="Bahasa Indonesia">ID</button>
+                    <span class="lang-divider">/</span>
+                    <button type="button" class="lang-btn" data-lang="en" aria-label="English">EN</button>
+                </div>
+            </nav>
+
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigasi">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section class="hero" id="hero">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    <span data-i18n="hero_badge">Visual Novel Edukasi Finansial • Versi 0.3.7</span>
+                </div>
+
+                <h1 class="hero-title" data-i18n="hero_title">
+                    Kelola Uang Sakumu,<br>
+                    <span class="gradient-text">Tentukan Masa Depanmu.</span>
+                </h1>
+
+                <p class="hero-description" data-i18n="hero_desc">
+                    Kamu berperan sebagai seorang mahasiswa yang merantau dengan uang saku bulanan
+                    terbatas <strong>Rp 2.000.000</strong>. Mampukah kamu bertahan selama Sebulan di tengah godaan
+                    nongkrong FOMO, promo PayLater berbunga, dan keadaan darurat tak terduga?
+                </p>
+
+                <div class="hero-actions">
+                    <a href="#download" class="btn btn-primary">
+                        <span class="btn-icon">📥</span>
+                        <span data-i18n="hero_btn_download">Unduh Sekarang</span>
+                    </a>
+                    <a href="#simulator" class="btn btn-secondary">
+                        <span class="btn-icon">🧮</span>
+                        <span data-i18n="hero_btn_sim">Simulasi Anggaran 50/30/20</span>
+                    </a>
+                    <a href="https://github.com/luthfirais/pay-o-may" target="_blank" rel="noopener noreferrer"
+                        class="btn btn-outline">
+                        <span class="btn-icon">⭐</span>
+                        <span data-i18n="hero_btn_gh">Lihat di GitHub</span>
+                    </a>
+                </div>
+
+                <!-- Feature Pills -->
+                <div class="hero-pills">
+                    <div class="pill-item">
+                        <span class="pill-icon">🎮</span>
+                        <span data-i18n="pill_engine">Engine Ren'Py 8.5</span>
+                    </div>
+                    <div class="pill-item">
+                        <span class="pill-icon">📱</span>
+                        <span data-i18n="pill_platforms">Windows & Android</span>
+                    </div>
+                    <div class="pill-item">
+                        <span class="pill-icon">🎭</span>
+                        <span data-i18n="pill_endings">4 Variasi Ending</span>
+                    </div>
+                    <div class="pill-item">
+                        <span class="pill-icon">💡</span>
+                        <span data-i18n="pill_simulation">Simulasi Finansial Nyata</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Interactive Visual Showcase -->
+            <div class="hero-visual">
+                <div class="mockup-window">
+                    <div class="window-header">
+                        <div class="window-dots">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                        </div>
+                        <span class="window-title" data-i18n="mockup_window_title">Pay o' May - Preview Visual Novel</span>
+                        <div class="window-badge">16-Bit Retro Art</div>
+                    </div>
+
+                    <div class="window-body">
+                        <img src="images/bg kos.png" alt="Cuplikan Kamar Kos Pay o' May" id="showcase-img"
+                            class="showcase-image">
+
+                        <div class="showcase-overlay">
+                            <div class="showcase-hud">
+                                <div class="hud-chip">
+                                    <span class="chip-label" data-i18n="hud_active_balance">Saldo Aktif</span>
+                                    <span class="chip-val green" id="hud-saldo">Rp 1.700.000</span>
+                                </div>
+                                <div class="hud-chip">
+                                    <span class="chip-label" data-i18n="hud_emergency_fund">Dana Darurat</span>
+                                    <span class="chip-val blue">Rp 300.000</span>
+                                </div>
+                                <div class="hud-chip">
+                                    <span class="chip-label" data-i18n="hud_paylater_label">PayLater</span>
+                                    <span class="chip-val red" data-i18n="hud_paylater">Rp 0 (Bebas Utang)</span>
+                                </div>
+                            </div>
+
+                            <div class="showcase-dialogue">
+                                <span class="dialogue-name" data-i18n="mockup_tip_title">Tips Finansial</span>
+                                <p class="dialogue-text" id="showcase-quote">
+                                    "Sisihkan dana darurat di awal bulan sebelum berbelanja. Uang yang tidak kamu lihat
+                                    adalah uang yang tidak akan kamu habiskan."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Showcase Controls -->
+                    <div class="showcase-tabs">
+                        <button class="showcase-tab active" data-img="images/bg kos.png" data-name="Kamar Kos Billa">
+                            <span>🏠</span> <span data-i18n="tab_room">Kamar Kos</span>
+                        </button>
+                        <button class="showcase-tab" data-img="images/bg kampus.png" data-name="Kampus & Ajakan Axel">
+                            <span>🏫</span> <span data-i18n="tab_campus">Kampus & FOMO</span>
+                        </button>
+                        <button class="showcase-tab" data-img="images/cover_midnight.png" data-name="E-Statement Rapor">
+                            <span>📊</span> <span data-i18n="tab_report">Rapor Finansial</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TENTANG & LATAR BELAKANG -->
+        <section class="section" id="tentang">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag" data-i18n="about_tag">Latar Belakang Cerita</span>
+                    <h2 class="section-title" data-i18n="about_title">Kenapa Pay o' May Diciptakan?</h2>
+                    <p class="section-subtitle" data-i18n="about_sub">
+                        Transisi dari masa sekolah ke kehidupan mandiri di perantauan adalah fase krusial bagi
+                        mahasiswa. Tanpa literasi keuangan yang tepat, kebebasan finansial sering kali berujung pada
+                        krisis tanggal tua.
+                    </p>
+                </div>
+
+                <div class="grid-3">
+                    <div class="card glass-card">
+                        <div class="card-icon gold">💸</div>
+                        <h3 class="card-title" data-i18n="card1_title">Ilusi Uang Saku Awal Bulan</h3>
+                        <p class="card-desc" data-i18n="card1_desc">
+                            Menerima uang saku utuh di awal bulan membuat mahasiswa merasa kaya raya, sehingga belanja
+                            konsumtif dilakukan tanpa memperhitungkan kebutuhan 30 hari ke depan.
+                        </p>
+                    </div>
+
+                    <div class="card glass-card">
+                        <div class="card-icon red">📱</div>
+                        <h3 class="card-title" data-i18n="card2_title">Jebakan Kemudahan PayLater</h3>
+                        <p class="card-desc" data-i18n="card2_desc">
+                            Fitur beli sekarang bayar nanti terasa seperti uang gratis, padahal bunga mingguan dan denda
+                            keterlambatan mengintai saat uang kiriman bulan depan masuk.
+                        </p>
+                    </div>
+
+                    <div class="card glass-card">
+                        <div class="card-icon teal">👥</div>
+                        <h3 class="card-title" data-i18n="card3_title">Tekanan Sosial & Budaya FOMO</h3>
+                        <p class="card-desc" data-i18n="card3_desc">
+                            Takut ketinggalan tren kawan sebaya (nongkrong kafe, sewa vila, langganan hiburan) sering
+                            memaksa mahasiswa memaksakan gaya hidup di luar batas dompetnya.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FITUR & DILEMA FINANSIAL -->
+        <section class="section section-alt" id="fitur">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag" data-i18n="features_tag">Mekanika Permainan</span>
+                    <h2 class="section-title" data-i18n="features_title">4 Pilar Pembelajaran Finansial</h2>
+                    <p class="section-subtitle" data-i18n="features_sub">
+                        Setiap keputusan yang kamu ambil memiliki konsekuensi nyata pada saldo uang jajan, cadangan
+                        tabungan, tagihan utang, dan hubungan pertemananmu.
+                    </p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="feature-box glass-card">
+                        <div class="feature-num">01</div>
+                        <div class="feature-info">
+                            <h3 class="feature-title" data-i18n="feat1_title">Pay Yourself First (Dana Darurat)</h3>
+                            <p class="feature-desc" data-i18n="feat1_desc">
+                                Belajar mendisiplinkan diri menyisihkan simpanan aman sebelum memakai uang untuk hal
+                                lain. Ketika musibah seperti charger laptop rusak terjadi, kamu siap 100% mandiri tanpa
+                                merepotkan orang tua.
+                            </p>
+                            <span class="feature-tag" data-i18n="feat1_tag">Kemandirian Finansial</span>
+                        </div>
+                    </div>
+
+                    <div class="feature-box glass-card">
+                        <div class="feature-num">02</div>
+                        <div class="feature-info">
+                            <h3 class="feature-title" data-i18n="feat2_title">Formula Anggaran 50 / 30 / 20</h3>
+                            <p class="feature-desc" data-i18n="feat2_desc">
+                                Mempraktikkan pembagian pos ala mahasiswa bersama Michelle: 50% untuk kebutuhan pokok
+                                (makan, kos, kuota), 30% untuk hiburan/keinginan, dan 20% untuk tabungan masa depan.
+                            </p>
+                            <span class="feature-tag" data-i18n="feat2_tag">Prinsip Alokasi Sehat</span>
+                        </div>
+                    </div>
+
+                    <div class="feature-box glass-card">
+                        <div class="feature-num">03</div>
+                        <div class="feature-info">
+                            <h3 class="feature-title" data-i18n="feat3_title">Simulasi Utang & Bunga PayLater</h3>
+                            <p class="feature-desc" data-i18n="feat3_desc">
+                                Mengalami langsung bagaimana defisit uang jajan otomatis dialihkan ke tagihan PayLater
+                                dengan bunga majemuk 5% per minggu yang menggerogoti stabilitas finansialmu.
+                            </p>
+                            <span class="feature-tag" data-i18n="feat3_tag">Literasi Bahaya Utang</span>
+                        </div>
+                    </div>
+
+                    <div class="feature-box glass-card">
+                        <div class="feature-num">04</div>
+                        <div class="feature-info">
+                            <h3 class="feature-title" data-i18n="feat4_title">Menegakkan Batasan Finansial Pertemanan</h3>
+                            <p class="feature-desc" data-i18n="feat4_desc">
+                                Mengasah ketegasan emosional untuk menolak ajakan boros atau membatasi nominal saat
+                                kawan meminjam uang tanpa merusak kehangatan hubungan pertemanan.
+                            </p>
+                            <span class="feature-tag" data-i18n="feat4_tag">Financial Boundary</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KARAKTER PERMAINAN -->
+        <section class="section" id="tokoh">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag" data-i18n="tokoh_tag">Dramatis Personal</span>
+                    <h2 class="section-title" data-i18n="tokoh_title">Karakter & Dinamika Cerita</h2>
+                    <p class="section-subtitle" data-i18n="tokoh_sub">
+                        Kenali tokoh-tokoh yang akan memengaruhi setiap langkah finansialmu sepanjang 4 minggu di kota
+                        perantauan.
+                    </p>
+                </div>
+
+                <div class="grid-4">
+                    <!-- Billa -->
+                    <div class="char-card glass-card">
+                        <div class="char-avatar-wrapper">
+                            <img src="images/billa.png" alt="Sprite Billa" class="char-avatar-img">
+                        </div>
+                        <div class="char-meta">
+                            <span class="char-badge role-player" data-i18n="role_player">Tokoh Utama</span>
+                            <h3 class="char-name" data-i18n="char_player_name">Player (Billa)</h3>
+                            <span class="char-sub" data-i18n="char_player_sub">Mahasiswa/i Perantau</span>
+                        </div>
+                        <p class="char-quote">
+                            <span data-i18n="char_player_quote">"Dua juta rupiah untuk sebulan. Rasanya banyak sekali... tapi benarkah begitu?"</span>
+                        </p>
+                        <p class="char-bio">
+<span data-i18n="char_player_bio">Seorang mahasiswa/i yang memegang kendali penuh atas uang sakunya. Keputusannya menentukan apakah ia lulus dengan predikat Bendahara Handal atau krisis mie instan.</span>
+                        </p>
+                    </div>
+
+                    <!-- Axel -->
+                    <div class="char-card glass-card">
+                        <div class="char-avatar-wrapper">
+                            <img src="images/axel.png" alt="Sprite Axel" class="char-avatar-img">
+                        </div>
+                        <div class="char-meta">
+                            <span class="char-badge role-impulsive" data-i18n="role_fomo">Representasi FOMO</span>
+                            <h3 class="char-name" data-i18n="char_axel_name">Axel</h3>
+                            <span class="char-sub" data-i18n="char_axel_sub">Sahabat Impulsif</span>
+                        </div>
+                        <p class="char-quote">
+                            <span data-i18n="char_axel_quote">"Momen ini cuma sekali sebelum UAS! Kalau nggak ikut nongkrong, nyesel loh!"</span>
+                        </p>
+                        <p class="char-bio" data-i18n="char_axel_bio">
+                            Teman karib yang gemar nongkrong dan berbelanja spontan. Sumber utama godaan pengeluaran
+                            sosial yang menguji pertahanan finansial pemain.
+                        </p>
+                    </div>
+
+                    <!-- Michelle -->
+                    <div class="char-card glass-card">
+                        <div class="char-avatar-wrapper">
+                            <img src="images/michelle.png" alt="Sprite Michelle" class="char-avatar-img">
+                        </div>
+                        <div class="char-meta">
+                            <span class="char-badge role-wise" data-i18n="role_wise">Literasi Finansial</span>
+                            <h3 class="char-name" data-i18n="char_michelle_name">Michelle</h3>
+                            <span class="char-sub" data-i18n="char_michelle_sub">Sahabat Cermat</span>
+                        </div>
+                        <p class="char-quote">
+                            <span data-i18n="char_michelle_quote">"Sejak aku mencatat semua pengeluaran, aku jadi tahu uangku bocor ke mana."</span>
+                        </p>
+                        <p class="char-bio" data-i18n="char_michelle_bio">
+                            Mahasiswi disiplin yang memperkenalkan metode pencatatan kas harian dan alokasi 50/30/20.
+                            Menjadi mentor sekaligus tempat bertukar solusi hemat.
+                        </p>
+                    </div>
+
+                    <!-- Mama -->
+                    <div class="char-card glass-card">
+                        <div class="char-avatar-wrapper">
+                            <img src="images/mama.png" alt="Sprite Mama" class="char-avatar-img">
+                        </div>
+                        <div class="char-meta">
+                            <span class="char-badge role-mama" data-i18n="role_support">Dukungan Moral</span>
+                            <h3 class="char-name" data-i18n="char_mama_name">Mama</h3>
+                            <span class="char-sub" data-i18n="char_mama_sub">Orang Tua di Rumah</span>
+                        </div>
+                        <p class="char-quote">
+                            <span data-i18n="char_mama_quote">"Mama percaya kamu bisa atur uang saku sendiri. Jangan sampai kehabisan di tanggal tua ya."</span>
+                        </p>
+                        <p class="char-bio" data-i18n="char_mama_bio">
+                            Pengirim uang saku bulanan yang selalu menaruh kepercayaan besar pada kemampuan mandiri
+                            anaknya. Reaksinya di akhir bulan mencerminkan hasil usahamu.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KALKULATOR INTERAKTIF 50/30/20 -->
+        <section class="section section-alt" id="simulator">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag" data-i18n="sim_tag">Mini-Widget Interaktif</span>
+                    <h2 class="section-title" data-i18n="sim_title">Kalkulator Pos Keuangan 50 / 30 / 20</h2>
+                    <p class="section-subtitle" data-i18n="sim_sub">
+                        Geser slider di bawah ini untuk melihat bagaimana rumus emas Michelle membagi uang saku
+                        bulananmu secara seimbang!
+                    </p>
+                </div>
+
+                <div class="calc-wrapper glass-card">
+                    <div class="calc-input-group">
+                        <div class="calc-slider-header">
+                            <label for="budget-slider" class="calc-label" data-i18n="sim_label_allowance">Nominal Uang Saku Bulanan:</label>
+                            <span class="calc-amount" id="budget-display">Rp 2.000.000</span>
+                        </div>
+                        <input type="range" id="budget-slider" min="1000000" max="5000000" step="100000" value="2000000"
+                            class="budget-slider">
+                        <div class="slider-marks">
+                            <span data-i18n="sim_mark_1">Rp 1 Juta</span>
+                            <span data-i18n="sim_mark_2">Rp 2 Juta (Game)</span>
+                            <span data-i18n="sim_mark_3">Rp 3 Juta</span>
+                            <span data-i18n="sim_mark_5">Rp 5 Juta</span>
+                        </div>
+                    </div>
+
+                    <div class="calc-results-grid">
+                        <!-- 50% Needs -->
+                        <div class="calc-card needs-card">
+                            <div class="calc-card-header">
+                                <span class="calc-pct">50%</span>
+                                <span class="calc-cat" data-i18n="sim_cat_needs">Kebutuhan Pokok (Needs)</span>
+                            </div>
+                            <div class="calc-card-val" id="val-needs">Rp 1.000.000</div>
+                            <p class="calc-card-desc" data-i18n="sim_desc_needs">
+                                Makan sehari-hari, sewa kos, kuota internet kuliah, perlengkapan mandi, dan
+                                transportasi.
+                            </p>
+                        </div>
+
+                        <!-- 30% Wants -->
+                        <div class="calc-card wants-card">
+                            <div class="calc-card-header">
+                                <span class="calc-pct">30%</span>
+                                <span class="calc-cat" data-i18n="sim_cat_wants">Gaya Hidup & Keinginan (Wants)</span>
+                            </div>
+                            <div class="calc-card-val" id="val-wants">Rp 600.000</div>
+                            <p class="calc-card-desc" data-i18n="sim_desc_wants">
+                                Nongkrong bareng teman, jajan kopi, langganan serial streaming, dan belanja hobi
+                                seperlunya.
+                            </p>
+                        </div>
+
+                        <!-- 20% Savings -->
+                        <div class="calc-card savings-card">
+                            <div class="calc-card-header">
+                                <span class="calc-pct">20%</span>
+                                <span class="calc-cat" data-i18n="sim_cat_savings">Tabungan & Dana Darurat</span>
+                            </div>
+                            <div class="calc-card-val" id="val-savings">Rp 400.000</div>
+                            <p class="calc-card-desc" data-i18n="sim_desc_savings">
+                                Tabungan wajib di awal bulan untuk antisipasi darurat medis, servis laptop, atau
+                                investasi masa depan.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="calc-advice" id="calc-advice">
+                        <span class="advice-icon">💡</span>
+                        <span class="advice-text">
+                            <strong>Nasihat Michelle:</strong> Dengan alokasi Rp 2.000.000, menyisihkan Rp 400.000 di
+                            awal bulan menjamin kamu punya jaring pengaman kuat saat charger laptop rusak di Minggu
+                            ke-3!
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4 CABANG ENDING CERITA -->
+        <section class="section" id="ending">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag" data-i18n="ending_tag">Hasil Akhir</span>
+                    <h2 class="section-title" data-i18n="ending_title">4 Cabang Ending & Gelar Finansial</h2>
+                    <p class="section-subtitle" data-i18n="ending_sub">
+                        Skor kesadaran finansial (skala tetap 22 poin) menentukan nasib akhir petualanganmu di
+                        penghujung bulan.
+                    </p>
+                </div>
+
+                <div class="grid-4">
+                    <div class="ending-card glass-card rank-gold">
+                        <div class="ending-badge" data-i18n="end_badge_a">Ending A</div>
+                        <h3 class="ending-title" data-i18n="end_a_title">Bendahara Handal</h3>
+                        <p class="ending-condition" data-i18n="end_a_cond">Skor Tinggi • Bebas Utang</p>
+                        <p class="ending-desc" data-i18n="end_a_desc">
+                            Berhasil mengendalikan seluruh pos anggaran, memiliki sisa uang jajan, dana darurat utuh,
+                            dan mampu mentraktir kawan tanpa cemas.
+                        </p>
+                        <span class="ending-star" data-i18n="end_a_star">⭐⭐⭐⭐ (Gelar: Financial Master)</span>
+                    </div>
+
+                    <div class="ending-card glass-card rank-silver">
+                        <div class="ending-badge" data-i18n="end_badge_b">Ending B</div>
+                        <h3 class="ending-title" data-i18n="end_b_title">Bertahan Aman</h3>
+                        <p class="ending-condition" data-i18n="end_b_cond">Skor Sedang • Mandiri</p>
+                        <p class="ending-desc" data-i18n="end_b_desc">
+                            Mampu melewati 31 hari tanpa utang PayLater meskipun saldo tipis dan dana darurat sempat
+                            terpakai untuk keperluan mendesak.
+                        </p>
+                        <span class="ending-star" data-i18n="end_b_star">⭐⭐⭐ (Gelar: Survivor Rantau)</span>
+                    </div>
+
+                    <div class="ending-card glass-card rank-bronze">
+                        <div class="ending-badge" data-i18n="end_badge_c">Ending C</div>
+                        <h3 class="ending-title" data-i18n="end_c_title">Jeratan PayLater</h3>
+                        <p class="ending-condition" data-i18n="end_c_cond">Tagihan Utang Berjalan</p>
+                        <p class="ending-desc" data-i18n="end_c_desc">
+                            Tergiur kemudahan cicilan konsumtif. Bunga mingguan 5% menumpuk dan uang kiriman bulan
+                            berikutnya terancam langsung tersedot.
+                        </p>
+                        <span class="ending-star" data-i18n="end_c_star">⭐⭐ (Pelajaran Bunga Berbunga)</span>
+                    </div>
+
+                    <div class="ending-card glass-card rank-danger">
+                        <div class="ending-badge" data-i18n="end_badge_d">Ending D</div>
+                        <h3 class="ending-title" data-i18n="end_d_title">Mie Instan Akhir Bulan</h3>
+                        <p class="ending-condition" data-i18n="end_d_cond">Saldo Habis / Minus</p>
+                        <p class="ending-desc" data-i18n="end_d_desc">
+                            Belanja impulsif tanpa pos darurat membuat saldo terkuras habis sebelum tanggal 25. Bertahan
+                            hidup dengan mie instan dan bantuan darurat.
+                        </p>
+                        <span class="ending-star" data-i18n="end_d_star">⭐ (Perlu Remedial Finansial)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- UNDUH GIM -->
+        <section class="section section-alt" id="download">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag" data-i18n="dl_tag">Akses Permainan</span>
+                    <h2 class="section-title" data-i18n="dl_title">Unduh Gim Pay o' May</h2>
+                    <p class="section-subtitle" data-i18n="dl_sub">
+                        Pay o' May tersedia secara gratis untuk perangkat Windows PC dan Android. Pilih platform
+                        perangkatmu dan mulailah petualangan mengelola keuangan mandiri!
+                    </p>
+                </div>
+
+                <div class="grid-2 download-grid">
+                    <!-- Windows PC Card -->
+                    <div class="download-card glass-card">
+                        <div class="platform-header">
+                            <span class="platform-icon">🪟</span>
+                            <div>
+                                <h3 class="download-card-title" data-i18n="dl_win_title">Windows PC</h3>
+                                <span class="platform-badge" data-i18n="dl_win_badge">Standalone Desktop (.zip)</span>
+                            </div>
+                        </div>
+                        <p class="download-card-desc" data-i18n="dl_win_desc">
+                            Untuk laptop dan PC (Windows 7/8/10/11 64-bit). Cukup unduh, ekstrak berkas zip, dan
+                            langsung mainkan via <code>PayoMay.exe</code> tanpa perlu instalasi rumit.
+                        </p>
+                        <ul class="platform-features">
+                            <li><span>✓</span> <span data-i18n="dl_win_f1">Resolusi Full HD 1080p Tajam & Audio BGM Stereo</span></li>
+                            <li><span>✓</span> <span data-i18n="dl_win_f2">Kontrol Keyboard, Mouse & Pintasan Lengkap</span></li>
+                            <li><span>✓</span> <span data-i18n="dl_win_f3">Berkas Portabel (Simpan save data lokal)</span></li>
+                        </ul>
+                        <a href="https://drive.google.com/drive/folders/1y-or1POxvo8BAoI7AzyYqSQIEUpLPOaK?usp=sharing"
+                            target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-block">
+                            <span class="btn-icon">📥</span>
+                            <div class="btn-text-group">
+                                <span class="btn-title" data-i18n="dl_win_btn">Unduh Versi Windows (.zip)</span>
+                                <span class="btn-sub" data-i18n="dl_win_sub">Tautan Unduhan Google Drive</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Android Card -->
+                    <div class="download-card glass-card">
+                        <div class="platform-header">
+                            <span class="platform-icon">🤖</span>
+                            <div>
+                                <h3 class="download-card-title" data-i18n="dl_and_title">Android</h3>
+                                <span class="platform-badge" data-i18n="dl_and_badge">Paket Instalasi (.apk)</span>
+                            </div>
+                        </div>
+                        <p class="download-card-desc" data-i18n="dl_and_desc">
+                            Untuk smartphone dan tablet (Android 6.0 Marshmallow ke atas). Unduh berkas APK, pasang di
+                            ponselmu, dan nikmati petualangan finansial di mana saja.
+                        </p>
+                        <ul class="platform-features">
+                            <li><span>✓</span> <span data-i18n="dl_and_f1">Navigasi Layar Sentuh Responsif & Intuitif</span></li>
+                            <li><span>✓</span> <span data-i18n="dl_and_f2">100% Offline Tanpa Butuh Kuota Internet</span></li>
+                            <li><span>✓</span> <span data-i18n="dl_and_f3">Ringan, Performa Halus & Hemat Daya</span></li>
+                        </ul>
+                        <a href="https://drive.google.com/drive/folders/1Vc10KSKxE-nm8-ji-it3tGMRei7bwDAj?usp=sharing"
+                            target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-block">
+                            <span class="btn-icon">📥</span>
+                            <div class="btn-text-group">
+                                <span class="btn-title" data-i18n="dl_and_btn">Unduh Versi Android (.apk)</span>
+                                <span class="btn-sub" data-i18n="dl_win_sub">Tautan Unduhan Google Drive</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="download-footer-notes">
+                    <div><span>✓</span> <span data-i18n="dl_note_free">100% Gratis & Bebas Iklan</span></div>
+                    <div><span>✓</span> <span data-i18n="dl_note_offline">Offline Playable Tanpa Koneksi Internet</span></div>
+                    <div><span>✓</span> <span data-i18n="dl_note_safe">Aman & Tanpa Perlu Akun / Registrasi</span></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <img src="images/title_logo.png" alt="Logo Pay o' May" class="footer-logo">
+                <h3 class="footer-title">Pay o' May</h3>
+                <p class="footer-desc" data-i18n="footer_desc">
+                    Gim Visual Novel Interaktif Edukasi Finansial untuk Mahasiswa dan Gen-Z. Rasakan serunya mengatur
+                    anggaran mandiri dan hadapi berbagai godaan finansial di dunia perantauan.
+                </p>
+                <div class="footer-badges">
+                    <span class="tech-badge">Ren'Py 8.5.3</span>
+                    <span class="tech-badge">Python 3.12</span>
+                    <span class="tech-badge">Visual Novel</span>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h4 class="footer-heading" data-i18n="footer_quick_links">Navigasi Cepat</h4>
+                <ul>
+                    <li><a href="#tentang" data-i18n="footer_nav_about">Latar Belakang</a></li>
+                    <li><a href="#fitur" data-i18n="footer_nav_dilemmas">Dilema Finansial</a></li>
+                    <li><a href="#tokoh" data-i18n="footer_nav_characters">Karakter</a></li>
+                    <li><a href="#simulator" data-i18n="footer_nav_calculator">Kalkulator 50/30/20</a></li>
+                    <li><a href="#download" data-i18n="footer_nav_download">Unduh Gim</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-academic">
+                <h4 class="footer-heading" data-i18n="footer_credit_heading">Kredit & Lisensi Aset</h4>
+                <p class="academic-text" data-i18n="footer_credit_text">
+                    <strong>Karya Gim Indie:</strong> Dikembangkan oleh Hyenavia.<br>
+                    <strong>Engine:</strong> Ren'Py Visual Novel Engine.<br><br>
+                    <strong>Lisensi Aset:</strong> Creative Commons BY 4.0 (Kevin MacLeod) & Everyday Life UI by
+                    DadddyDarko.
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container footer-bottom-inner">
+                <p data-i18n="footer_copyright">&copy; 2026 Pay o' May. Semua hak cipta dilindungi.</p>
+                <a href="https://github.com/luthfirais/pay-o-may" target="_blank" rel="noopener noreferrer"
+                    class="footer-gh-link">
+                    GitHub Repository ↗
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Script -->
+    <script src="script.js"></script>
+</body>
+
+</html>

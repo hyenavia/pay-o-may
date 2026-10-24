@@ -137,7 +137,7 @@ screen el_ui_button(label, action, selected=None, sensitive=True, width=144, kin
     $ _pad_l = el_u(7 if width < 75 else (10 if width < 140 else 20))
     $ _pad_r = el_u(7 if width < 75 else (10 if width < 140 else 14))
     $ _text_sz = 10 if width < 75 else (11 if width < 140 else 12)
-    textbutton label:
+    textbutton _(label):
         style "el_ui_button"
         text_style "el_ui_button_text"
         text_color el_ui_color()
@@ -220,7 +220,7 @@ screen el_ui_quick_menu():
         for label, action, w in [("Riwayat", ShowMenu("el_ui_history"), 68),
                                  ("Simpan", ShowMenu("el_ui_save"), 68),
                                  ("Muat", ShowMenu("el_ui_load"), 62),
-                                 ("Opsi", ShowMenu("el_ui_preferences"), 62),
+                                 ("Opsi", ShowMenu("el_ui_preferences"), 68),
                                  ("Menu Utama", MainMenu(), 88)]:
             use el_ui_button(_(label), action, width=w, kind="small_button")
 
@@ -234,7 +234,7 @@ screen el_ui_shell(title):
         ysize el_u(328)
         background el_ui_frame("menu_panel")
         padding (el_u(20), el_u(16), el_u(20), el_u(16))
-        text title style "el_ui_text" color el_ui_color() size el_ui_font_size(20)
+        text _(title) style "el_ui_text" color el_ui_color() size el_ui_font_size(20)
     fixed:
         xpos el_u(508)
         ypos el_u(298)
@@ -309,26 +309,34 @@ screen el_ui_preferences():
             ypos el_u(60)
             spacing el_u(5)
 
-            # --- BAGIAN ATAS: TEMA WARNA & PILIHAN FONT (1 BARIS) ---
+            # --- BAGIAN ATAS: TEMA WARNA, BAHASA & FONT (1 BARIS) ---
             hbox:
-                spacing el_u(14)
+                spacing el_u(10)
                 yalign 0.5
 
                 # Tema Warna
                 hbox:
-                    spacing el_u(6)
+                    spacing el_u(4)
                     yalign 0.5
-                    text _("Tema:") style "el_ui_text" color el_ui_color() size el_ui_font_size(10.5) yalign 0.5
-                    for key, label, w in [("cream", _("Krem"), 60), ("sunset", _("Senja"), 60), ("midnight", _("Malam"), 66)]:
+                    text _("Tema:") style "el_ui_text" color el_ui_color() size el_ui_font_size(10) yalign 0.5
+                    for key, label, w in [("cream", _("Krem"), 50), ("sunset", _("Senja"), 50), ("midnight", _("Malam"), 56)]:
                         use el_ui_button(label, [SetVariable("el_ui_theme", key), SetField(persistent, "el_ui_theme", key)], selected=el_ui_theme==key, width=w)
+
+                # Pilihan Bahasa (Language)
+                hbox:
+                    spacing el_u(4)
+                    yalign 0.5
+                    text _("Bahasa:") style "el_ui_text" color el_ui_color() size el_ui_font_size(10) yalign 0.5
+                    use el_ui_button("ID", Language(None), selected=(_preferences.language is None), width=44)
+                    use el_ui_button("EN", Language("english"), selected=(_preferences.language == "english"), width=44)
 
                 # Pilihan Font
                 hbox:
-                    spacing el_u(6)
+                    spacing el_u(4)
                     yalign 0.5
-                    text _("Font:") style "el_ui_text" color el_ui_color() size el_ui_font_size(10.5) yalign 0.5
-                    use el_ui_button(_("Default (Fredoka)"), Function(set_game_font, "fredoka"), selected=(getattr(persistent, "game_font", "fredoka") == "fredoka"), width=138)
-                    use el_ui_button(_("Pixel (Pixelify)"), Function(set_game_font, "pixel"), selected=(getattr(persistent, "game_font", "fredoka") == "pixel"), width=122)
+                    text _("Font:") style "el_ui_text" color el_ui_color() size el_ui_font_size(10) yalign 0.5
+                    use el_ui_button(_("Fredoka"), Function(set_game_font, "fredoka"), selected=(getattr(persistent, "game_font", "fredoka") == "fredoka"), width=82)
+                    use el_ui_button(_("Pixelify"), Function(set_game_font, "pixel"), selected=(getattr(persistent, "game_font", "fredoka") == "pixel"), width=82)
 
             null height el_u(3)
 

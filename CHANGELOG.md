@@ -1,8 +1,103 @@
-# Changelog
+# Changelog / Catatan Riwayat Perubahan 📜
 
-Semua perubahan penting pada proyek gim **Pay o' May** (Gim Novel Visual Edukasi Kesadaran Finansial Mahasiswa Perantauan) akan didokumentasikan di berkas ini.
+Semua perubahan penting pada proyek gim **Pay o' May** (Gim Novel Visual Edukasi Kesadaran Finansial Mahasiswa Perantauan) akan didokumentasikan di berkas ini.  
+*All notable changes to the **Pay o' May** educational financial awareness visual novel project will be documented in this file.*
 
-Format berkas ini mengacu pada [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) dan mengikuti kaidah [Semantic Versioning](https://semver.org/lang/id/).
+Format berkas ini mengacu pada [Keep a Changelog](https://keepachangelog.com/id/1.0.0/) dan mengikuti kaidah [Semantic Versioning](https://semver.org/lang/id/).  
+*This format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and adheres to [Semantic Versioning](https://semver.org/).*
+
+---
+
+## [0.3.7] - 2026-10-24
+
+### 🇬🇧 English
+#### Fixed
+- **Comprehensive Story Dialogue & In-Game Text Localization:**
+  - Translated all remaining 119 story dialogue blocks in `game/tl/english/script.rpy` covering Week 2 through Week 4 storylines, subroutines, and all 4 narrative endings.
+  - Fixed HUD calendar week label `text _("Minggu [minggu]")` -> `Week [minggu]` and discretionary spending tracker `text _("Belanja Keinginan: [wants]x")` -> `Wants Spending: [wants]x`.
+  - Translated top quick menu button `Opsi` -> `Options` with adjusted button width in `game/everyday_ui/everyday_ui_components.rpy`.
+  - Localized all smartphone push notifications (`screen layar_hp`) including app labels (`Toko Online` -> `Online Store`), titles (`FLASH SALE!`, `Promo Paket Tahunan`, `DISKON AKHIR BULAN`, `Tagihan jatuh tempo`), and promotional message bodies.
+  - Translated all transaction description tags (`ket`) across wallet, emergency fund, and PayLater records (e.g. `Kebutuhan pokok` -> `Basic needs`, `Nongkrong di kafe` -> `Cafe hangout`, `Sneakers baru` -> `New sneakers`, etc.) and debt status `Rp 0 (Bebas Utang)` -> `Rp 0 (Debt Free)`.
+- **Ren'Py String Interpolation Runtime Error:**
+  - Resolved `TypeError: %i format: a real number is required, not TagQuotingDict` in `game/tl/english/script.rpy` caused by unescaped percent signs (`0% interest` -> `0 percent interest`).
+- **Comprehensive In-Game English Translations:**
+  - Added full English translations for all previously untranslated game screens: About screen (`screen about`), How to Play guide (`screen help`), Monthly Financial Report / E-Statement (`screen rekap_finansial`), Pre-Test modal questionnaire (`screen kuesioner_pretest`), Ren'Py quit/return confirmation modals (`layout`), dynamic financial honorific evaluation titles (`hitung_gelar_finansial`), smartphone push banners (`screen layar_hp`), and live transaction notifications (`_lapor`).
+- **Complete Landing Page Localization (`docs/`):**
+  - Added missing `data-i18n` attributes and comprehensive translations for the 4 Pillars cards and subtitle, 50/30/20 budget slider marks and category cards, Ending cards (badges, conditions, and star ratings), character bios, and hero showcase tabs.
+#### Added
+- **Bilingual Project Documentation:**
+  - Converted both [README.md](README.md) and [CHANGELOG.md](CHANGELOG.md) into comprehensive dual-language editions (English & Bahasa Indonesia).
+#### Changed
+- **Version Bump to 0.3.7:**
+  - Bumped version number across `game/options.rpy`, `game/script.rpy`, `README.md`, `CHANGELOG.md`, and `docs/index.html`.
+
+---
+
+### 🇮🇩 Bahasa Indonesia
+#### Diperbaiki (Fixed)
+- **Pelokalan Dialog Cerita & Antarmuka Gim Lengkap:**
+  - Menerjemahkan 119 blok dialog cerita yang sebelumnya masih berbahasa Indonesia pada `game/tl/english/script.rpy` meliputi seluruh alur narasi Minggu 2 hingga Minggu 4, subrutin akhir minggu, serta ke-4 ending cerita.
+  - Memperbaiki label kalender HUD `text _("Minggu [minggu]")` -> `Week [minggu]` dan penghitung belanja keinginan `text _("Belanja Keinginan: [wants]x")` -> `Wants Spending: [wants]x`.
+  - Menerjemahkan tombol menu cepat bilah atas `Opsi` -> `Options` beserta penyesuaian lebar tombol pada `game/everyday_ui/everyday_ui_components.rpy`.
+  - Melokalisasi seluruh push notification smartphone (`screen layar_hp`) mencakup label aplikasi (`Toko Online` -> `Online Store`), judul penawaran (`FLASH SALE!`, `Promo Paket Tahunan`, `DISKON AKHIR BULAN`, `Tagihan jatuh tempo`), serta isi pesannya.
+  - Menerjemahkan seluruh keterangan transaksi (`ket`) pada mutasi saldo uang jajan, dana darurat, dan PayLater (seperti `Kebutuhan pokok` -> `Basic needs`, `Nongkrong di kafe` -> `Cafe hangout`, `Sneakers baru` -> `New sneakers`, dst.) serta status pelunasan `Rp 0 (Bebas Utang)` -> `Rp 0 (Debt Free)`.
+- **Galat Format String Ren'Py (Crash Runtime):**
+  - Mengatasi `TypeError: %i format: a real number is required, not TagQuotingDict` pada baris 163 `game/tl/english/script.rpy` akibat interpolasi karakter persen (`0% interest` -> `0 percent interest`).
+- **Penerjemahan Antarmuka Gim Lengkap:**
+  - Menerjemahkan seluruh layar dan komponen yang sebelumnya belum terlokalisasi: layar Tentang (`screen about`), Cara Bermain (`screen help`), Rapor Keuangan Bulanan / E-Statement (`screen rekap_finansial`), modal Pre-Test (`screen kuesioner_pretest`), dialog konfirmasi keluar/kembali Ren'Py (`layout`), gelar evaluasi finansial (`hitung_gelar_finansial`), banner push notification HP (`screen layar_hp`), dan teks notifikasi transaksi langsung (`_lapor`).
+- **Pelokalan Menyeluruh Landing Page (`docs/`):**
+  - Melengkapi atribut `data-i18n` dan kamus translasi untuk section 4 Pilar Pembelajaran Finansial, penanda slider & kartu kategori kalkulator 50/30/20, kartu cabang ending (lencana, syarat, dan gelar bintang), biografi tokoh, serta tab cuplikan hero.
+#### Ditambahkan (Added)
+- **Dokumentasi Dwibahasa Proyek:**
+  - Menyusun berkas [README.md](README.md) dan [CHANGELOG.md](CHANGELOG.md) dalam format dwibahasa (Bahasa Indonesia & English).
+#### Diubah (Changed)
+- **Pembaruan Versi Gim ke 0.3.7:**
+  - Memperbarui nomor versi pada `game/options.rpy`, komentar `game/script.rpy`, berkas `README.md`, `CHANGELOG.md`, dan landing page `docs/index.html`.
+
+---
+
+## [0.3.6] - 2026-10-24
+
+### Ditambahkan (Added)
+- **Dukungan Multi-Bahasa Gim (Bahasa Indonesia & English):**
+  - Mengimplementasikan sistem pelokalan bahasa ganda (ID / EN) penuh menggunakan framework translasi bawaan Ren'Py (`Language(None)` untuk Bahasa Indonesia dan `Language("english")` untuk English).
+  - Menambahkan baris konfigurasi bahasa (`Bahasa: [ ID ] [ EN ]`) pada layar Pengaturan/Preferensi gim (`game/everyday_ui/everyday_ui_components.rpy`).
+  - Menyediakan berkas translasi bahasa Inggris lengkap untuk seluruh dialog cerita, narator, pilihan opsi, dan tips finansial (`game/tl/english/script.rpy`).
+- **Dukungan Multi-Bahasa pada Landing Page Resmi (`docs/`):**
+  - Menambahkan tombol pengalih bahasa interaktif (`ID / EN`) pada bilah navigasi atas (navbar) landing page.
+  - Mengintegrasikan kamus translasi menyeluruh di `docs/script.js` untuk seluruh teks di landing page.
+  - Menyesuaikan kalkulator anggaran 50/30/20 dan pesan kutipan cuplikan adegan agar memberikan nasihat finansial yang reaktif sesuai bahasa yang aktif.
+  - Menerapkan penyimpanan preferensi bahasa pengguna di `localStorage` peramban.
+- **Widget Antarmuka Panggilan Telepon Mama (`screen hud`):**
+  - Mengintegrasikan kotak kartu panggilan khusus (*incoming call card*) di pojok kanan atas layar permainan tepat di bawah papan status M-Banking.
+  - Menampilkan lencana hijau `📞 PANGGILAN`, status *"Tersambung"*, dan indikator *"● Suara aktif..."*.
+  - Menampilkan avatar pixel art wajah Mama (`mama_avatar_[ekspresi].png`) yang reaktif sesuai emosi percakapan (senang, netral, khawatir, kecewa).
+
+### Diubah (Changed)
+- **Penyelarasan Tata Letak Kotak Informasi Riset Pre-Test pada Menu Utama (`screen main_menu`):**
+  - Memindahkan kotak tooltip informasi riset dari pojok kanan bawah ke posisi tepat di bawah kolom tombol navigasi menu utama di sisi kiri layar.
+
+---
+
+## [0.3.5] - 2026-10-24
+
+### Ditambahkan (Added)
+- **Integrasi Aset Sprite Karakter Billa & Mama:**
+  - Mengintegrasikan set ekspresi visual lengkap (senang, netral, khawatir, kecewa) untuk karakter utama **Billa** (`game/images/billa [ekspresi].png`) yang diadaptasi dari outfit karakter guru (*teacher*).
+  - Mengintegrasikan set ekspresi visual lengkap (senang, netral, khawatir, kecewa) untuk karakter orang tua **Mama** (`game/images/mama [ekspresi].png`) yang diadaptasi dari outfit pemilik toko (*shopkeeper*).
+- **Mekanisme Logika Sprite Dinamis untuk Karakter Utama (`pakai_sprite_billa`):**
+  - Mengimplementasikan sistem pengenalan nama di `label nama_pemain`:
+    1. Jika pemain menggunakan nama bawaan (*default* `Billa`), sprite visual Billa aktif (`pakai_sprite_billa = True`).
+    2. Jika pemain menginput nama kustom, gim beralih ke mode visual sudut pandang orang pertama (*first-person point of view*).
+- **Visualisasi Sprite Mama dalam Adegan Cerita:**
+  - Menampilkan sprite Mama saat panggilan telepon uang saku di Prolog, telepon permohonan dana darurat charger di Minggu ke-3, sesi evaluasi mingguan di Minggu ke-4, serta di adegan penutup Ending A dan Ending D.
+- **Tata Letak Dialog Multi-Karakter (`left` & `right`):**
+  - Menyesuaikan posisi tampilan sprite saat dialog bersama Axel, Michelle, atau Mama: Billa berada di sisi kiri (`at left`) dan karakter kawan/orang tua di sisi kanan (`at right`).
+
+### Diubah (Changed)
+- **Penyelarasan Framing Avatar Karakter pada Landing Page (`docs/`):**
+  - Mengoptimalkan framing avatar bundar pada section *Dramatis Personae* (`docs/style.css` - `.char-avatar-img`) dengan penyesuaian `object-position: center 8%` dan `transform-origin: center 14%`.
+  - Memperbarui kartu karakter Billa dan Mama pada landing page (`docs/index.html`) dengan foto avatar resmi dari file sprite `billa.png` dan `mama.png`.
 
 ---
 
@@ -12,97 +107,46 @@ Format berkas ini mengacu pada [Keep a Changelog](https://keepachangelog.com/id/
 - **Modal Screen Kuesioner Pre-Test (`screen kuesioner_pretest`):**
   - Mengubah alur pengisian kuesioner Pre-Test di awal permainan dengan modal antarmuka tersendiri berbasis desain *Everyday Life UI*.
   - Menerapkan penguncian tombol konfirmasi (*gating*): tombol *"Saya sudah mengisi Pre-Test"* dinonaktifkan (`sensitive=False`) sampai pemain mengklik *"Buka tautan Pre-Test"*.
-  - Memberikan indikator peringatan dan petunjuk status dinamis (konsisten dengan alur Post-Test pada Rapor Finansial).
-  - Menambahkan penanda status `pretest_dibuka` dan `pretest_selesai` untuk pencatatan instrumen evaluasi penelitian GDLC.
 - **Aset Visual Latar Nobar (`bg nobar.png`):**
-  - Menambahkan gambar latar pixel art baru (1920x1080) bernuansa malam yang menggambarkan kamar kos Dimas saat nobar serial streaming (lengkap dengan karpet duduk, bantal lantai, meja camilan, dan laptop/layar tayang).
-  - Menggantikan latar kamar pemain (`bg malam`) saat opsi nobar di Minggu ke-2 dipilih, sehingga membedakan secara jelas antara kamar kos pemain dan kamar kos Dimas.
+  - Menambahkan gambar latar pixel art baru (1920x1080) bernuansa malam yang menggambarkan kamar kos Dimas saat nobar serial streaming.
 - **Aset Logo Judul Kustom & Tipografi Home Screen:**
   - Menambahkan logo plang pixel art Pay O' May berhias ornamen dedaunan dan bunga melati (`images/title_logo.png`) di pojok kanan atas layar menu utama beserta nomor versi di bawahnya.
   - Mengintegrasikan jenis huruf *Cinzel* (`fonts/Cinzel.ttf`) pada seluruh tombol navigasi menu utama, teks nomor versi, dan kotak informasi instrumen riset GDLC.
-- **Pilihan Tipografi Permainan di Menu Pengaturan (`screen el_ui_preferences`):**
-  - Menambahkan baris konfigurasi *"Pilihan Font"* pada panel Pengaturan yang memungkinkan pemain memilih jenis huruf sesuai preferensi visual:
-    1. **Default (Fredoka)**: Font kurva membulat modern (`fonts/Fredoka.ttf`) yang bersih, ergonomis, dan sangat nyaman dibaca untuk durasi bermain panjang.
-    2. **Pixel (Pixelify Sans)**: Font retro pixel art (`fonts/PixelifySans.ttf`) yang memperkuat atmosfer visual novel 16-bit klasik.
-  - Pilihan font disimpan secara persisten (`persistent.game_font`) dan berganti secara instan/real-time di seluruh antarmuka dan teks cerita tanpa perlu me-restart gim (`renpy.style.rebuild()`).
-  - Menu utama (home screen) menyelaraskan jenis huruf tombol dengan font aktif pilihan pemain, sementara nomor versi tetap mempertahankan font elegan *Cinzel* (`fonts/Cinzel.ttf`).
-- **Tombol Navigasi Menu Utama di Dalam Gim (`el_ui_quick_menu` & `el_ui_preferences`):**
-  - Menambahkan tombol *"Menu Utama"* langsung pada bilah menu cepat atas di dalam permainan (`el_ui_quick_menu`), memudahkan navigasi pemain (khususnya pengguna perangkat layar sentuh/mobile) untuk kembali ke menu utama kapan saja.
-  - Menyediakan tombol *"Menu Utama"* di pojok kiri bawah layar Pengaturan saat dibuka dari dalam cerita permainan.
-  - Aksi tombol terhubung dengan sistem dialog konfirmasi interaktif untuk mencegah hilangnya progres permainan yang belum disimpan.
-- **Pembaruan Nama Karakter Cerita:**
-  - Memperbarui nama karakter utama dan pendukung: Pemain default menjadi *Billa*, sahabat impulsif menjadi *Axel*, dan sahabat bijak finansial menjadi *Michelle*.
-- **Tipografi In-Game Retro Pixel (`fonts/PixelifySans.ttf`):**
-  - Mengintegrasikan jenis huruf *Pixelify Sans* sebagai salah satu opsi tipografi utama untuk dialog cerita, nama karakter, HUD M-Banking, notifikasi banner HP, pilihan menu keputusan, menu navigasi cepat, riwayat, dan rapor keuangan.
-
-### Diubah (Changed)
-- **Penyesuaian Tata Letak Bilah Menu Cepat Atas (`el_ui_quick_menu`):**
-  - Menyesuaikan lebar tombol dan padding proporsional (Riwayat, Simpan, Muat, Opsi, Menu Utama) agar tetap berada presisi di tengah layar tanpa bertabrakan dengan banner notifikasi HP di kiri maupun HUD M-Banking di kanan.
-- **Integrasi Font Fleksibel dengan Fredoka sebagai Standar Bawaan:**
-  - Mengonfigurasi font *Fredoka* sebagai tipografi standar bawaan gim, dengan fleksibilitas berganti ke *Pixelify Sans* kapan saja melalui layar Pengaturan.
-- **Tata Letak Panel Menu Utama (`screen main_menu`):**
-  - Memindahkan teks judul dan versi keluar dari kotak panel kiri ke pojok kanan atas, sehingga kolom panel menu kiri kini khusus menampilkan tombol-tombol interaktif permainan secara bersih dan proporsional.
-  - Menambahkan parameter opsional `font` pada komponen `el_ui_button` untuk mendukung kustomisasi tipografi tombol.
-- **Sistem Saldo & Pengalihan Defisit ke PayLater (`ubah_uang`):**
-  - Mencegah saldo uang jajan bernilai negatif/minus saat pengeluaran melebihi sisa uang. Saldo kini berhenti di Rp 0 dan sisa kekurangan dialihkan otomatis menjadi tagihan PayLater.
-  - Muncul banner notifikasi transaksi bertema peringatan ketika defisit saldo dialihkan ke PayLater.
-  - Memperbarui evaluasi Ending D (*Mie Instan Akhir Bulan*) dan gelar finansial agar memeriksa `uang <= 0`.
-- **Mekanisme Bunga Mingguan PayLater (5% per Minggu):**
-  - Pada subrutin rekap akhir minggu (`akhir_minggu`), tagihan PayLater yang masih berjalan dikenakan bunga mingguan sebesar 5% (`hutang += bunga_minggu`).
-  - Menyesuaikan fase pelunasan PayLater di Minggu ke-4 berdasarkan akumulasi bunga mingguan, serta menambahkan opsi ketika pemain tidak mampu membayar cicilan minimum.
-- **Standardisasi Skala Skor Kesadaran Finansial (`skor_max = 22`):**
-  - Menetapkan nilai `skor_max` sebagai konstan 22 poin (11 keputusan x 2 poin) di seluruh layar e-statement rapor bulanan dan perhitungan gelar finansial, sehingga tidak lagi muncul skala 16 poin saat pemain memuat berkas simpanan lama.
 
 ---
 
 ## [0.3.3] - 2026-10-23
 
-### Diubah (Changed)
-- Menggabungkan konfigurasi `.gitignore` dan `gitignore-2` ke dalam satu berkas `.gitignore` yang komprehensif (mencakup pengecualian direktori cache/saves Ren'Py, artefak build `*-dists/`, kunci penandatanganan Android `*.keystore`/`*.jks`, serta pengaturan editor lokal dan OS).
-- Menghapus berkas redundan `gitignore-2`.
+### Ditambahkan (Added)
+- **Integrasi Penuh Tautan Kuesioner Evaluasi Penelitian GDLC:**
+  - Tautan formulir instrumen **Pre-Test** (`https://forms.gle/naX1XzHjQ1eWTvyXA`) pada introduksi cerita permainan.
+  - Tautan formulir instrumen **Post-Test** (`https://forms.gle/rdtdaCXnA6eVhbHU8`) pada modal Rapor Finansial akhir bulan.
+- Papan status peringatan dan instruksi pengisian kuesioner pada layar Rapor Finansial.
 
 ---
 
 ## [0.3.2] - 2026-10-23
 
-### Ditambahkan (Added)
-- Berkas `CHANGELOG.md` untuk mencatat riwayat perubahan dan pembaruan versi proyek secara terstruktur.
-- Aturan dokumentasi perubahan versi otomatis pada panduan pengembang `AGENTS.md`.
-- Rangkuman catatan pembaruan versi pada layar info `Tentang` di dalam gim (`screen about`).
+### Diubah (Changed)
+- Peningkatan keterbacaan tipografi teks judul antarmuka *Everyday Life UI*.
+- Restrukturisasi panel navigasi *Quick Menu* in-game.
 
 ---
 
 ## [0.3.1] - 2026-10-23
 
 ### Ditambahkan (Added)
-- **UI Papan Status (HUD):** Indikator *Piutang Teman* adaptif di pojok kanan atas yang muncul pada Minggu ke-4 jika pemain meminjamkan uang ke Dimas dan belum terlunasi.
-- **UI Notifikasi Ponsel (`layar_hp`):** Ikon dinamis adaptif pada header banner push notification (`icon_message_idle` untuk pesan chat Dimas, `icon_bookmark_idle` untuk langganan streaming dan supermarket, serta `icon_bell_idle` untuk perbankan/PayLater).
-- **Rapor Finansial (E-Statement):** Baris status *Piutang Teman* pada kolom Arus Kas & Saldo serta baris evaluasi *Langganan Hiburan* pada kolom Analisis Keputusan.
-- **Sistem Gelar Finansial:** Gelar evaluasi baru *"Korban Sungkan Teman"* untuk mengedukasi batas kerelaan meminjamkan uang kepada teman sebaya.
-- **Efek Audio (SFX):**
-  - Efek suara `sfx_peringatan` saat mengambil paket tahunan streaming mahal, saat Dimas mengabarkan penundaan ganti utang, dan saat belanja borongan saat saldo kritis.
-  - Efek suara `sfx_click` saat memasang pengingat kalender HP, menolak tawaran pinjaman secara sopan dengan solusi anggaran, dan menutup aplikasi diskon.
-- **Sprite Karakter Dinamis:**
-  - Kemunculan sprite Dimas berekspresi senang saat pemain memilih opsi nobar camilan di kos pada Minggu ke-2.
-  - Transisi ekspresi Dimas di Minggu ke-4: ekspresi khawatir saat belum bisa membayar utang, dan ekspresi netral reflektif saat merefleksikan penyusunan anggaran bersama.
-  - Dialog kontekstual Sinta di Minggu ke-3 yang menanggapi keputusan langganan streaming pemain.
-
-### Diperbaiki (Fixed)
-- Nilai fallback skor maksimal pada fungsi evaluasi gelar `hitung_gelar_finansial()` dan `screen rekap_finansial()` disinkronkan menjadi `22` (11 titik keputusan x 2 poin).
-- Ambang batas frekuensi keputusan keinginan (*wants*) disesuaikan menjadi $\le 3$ untuk gelar *"Pejuang Hemat & Terencana"*.
-- Variabel state `pinjaman_dimas` di-reset menjadi `0` secara otomatis saat Dimas mengembalikan uang pinjaman parsial di Minggu ke-4.
-- Banner push notification HP ditutup seketika setelah pilihan menu diklik agar tidak menutupi tampilan dialog dan sprite karakter.
+- Variasi opsi naratif tambahan pada skenario percabangan Minggu 1 s.d. 4.
+- Penyesuaian bobot skor kesadaran finansial edukatif.
 
 ---
 
 ## [0.3.0] - 2026-10-23
 
 ### Ditambahkan (Added)
-- **Percabangan Baru 1 (Minggu 2):** Dilema langganan serial film streaming (Paket Tahunan Rp 300.000 vs Bulanan Rp 54.000 vs Nonton Bareng di Kos Teman Rp 15.000).
-- **Percabangan Baru 2 (Minggu 3):** Dilema pinjaman uang antar-teman sebaya (Pinjamkan Penuh Rp 200.000 vs Pinjamkan Seikhlasnya Rp 50.000 vs Tolak Sopan & Susun Anggaran Bersama).
-- **Percabangan Baru 3 (Minggu 4):** Godaan diskon promo akhir bulan supermarket (Borong Promo Rp 180.000 vs Beli Kebutuhan Mendesak Rp 45.000 vs Pakai Stok yang Ada).
-- Peningkatan total skor maksimal kesadaran finansial (`skor_max`) dari 16 poin (8 keputusan) menjadi 22 poin (11 keputusan).
-- Variabel tracking baru: `langganan`, `pinjam_dimas`, dan `pinjaman_dimas`.
+- Peningkatan alur cerita visual novel dari 8 keputusan menjadi 11 keputusan finansial.
+- Skenario baru: ajakan ngopi estetik (Minggu 1), langganan streaming vs nobar kosan (Minggu 2), peminjaman uang darurat kawan sebaya (Minggu 3), dan promo diskon supermarket bulanan (Minggu 4).
+- Peningkatan batas skor maksimal (`skor_max = 22`).
 
 ---
 
@@ -134,4 +178,4 @@ Format berkas ini mengacu pada [Keep a Changelog](https://keepachangelog.com/id/
 - Mekanisme simulasi anggaran bulanan Rp 2.000.000 selama 4 minggu (alokasi kebutuhan pokok mingguan Rp 250.000/minggu).
 - Logika instrumen penelitian GDLC: kuesioner Pre-Test sebelum prolog dan kuesioner Post-Test setelah epilog permainan.
 - Sistem 4 cabang ending naratif (Ending A: Bendahara Handal, Ending B: Selamat, Ending C: Terjerat PayLater, Ending D: Defisit/Mie Instan).
-- Format angka mata uang Rupiah (`rp()`), sistem BGM/SFX, dan karakter cerita (Raka/Pemain, Dimas, Sinta, Mama, Tips Finansial).
+- Format angka mata uang Rupiah (`rp()`), sistem BGM/SFX, dan karakter cerita (Billa/Pemain, Axel, Michelle, Mama, Tips Finansial).

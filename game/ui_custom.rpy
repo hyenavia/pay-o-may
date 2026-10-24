@@ -69,11 +69,11 @@ style say_label:
 
 # Lokalisasi teks konfirmasi bawaan Ren'Py ke Bahasa Indonesia
 init 1 python:
-    layout.QUIT = "Yakin ingin keluar?"
-    layout.MAIN_MENU = "Yakin ingin kembali ke menu utama?\nProgres yang belum disimpan akan hilang."
-    layout.OVERWRITE_SAVE = "Yakin ingin menimpa data simpananmu?"
-    layout.LOADING = "Memuat akan menghapus progres yang belum disimpan.\nYakin ingin melanjutkan?"
-    layout.DELETE_SAVE = "Yakin ingin menghapus data simpanan ini?"
+    layout.QUIT = _("Yakin ingin keluar?")
+    layout.MAIN_MENU = _("Yakin ingin kembali ke menu utama?\nProgres yang belum disimpan akan hilang.")
+    layout.OVERWRITE_SAVE = _("Yakin ingin menimpa data simpananmu?")
+    layout.LOADING = _("Memuat akan menghapus progres yang belum disimpan.\nYakin ingin melanjutkan?")
+    layout.DELETE_SAVE = _("Yakin ingin menghapus data simpanan ini?")
 
 # Tampilan teks transisi tengah layar (centered) berlatar belakang gelap pekat
 define centered = Character(None, what_style="centered_text", window_style="centered_window", screen="centered_say")
@@ -168,34 +168,36 @@ screen main_menu():
         $ _ver_shadow = "#ffffffbb" if getattr(store, "el_ui_theme", "cream") == "cream" else "#10182ebb"
         text "v[config.version]" style "el_ui_text" font "fonts/Cinzel.ttf" color el_ui_color(1) size el_u(9.5) bold True xalign 0.5 outlines [(1, _ver_shadow, 0, 0)]
 
-    # --- KOLOM MENU UTAMA (HANYA TOMBOL) ---
-    frame:
-        background el_ui_frame("menu_panel")
+    # --- KOLOM MENU UTAMA (TOMBOL & INFORMASI RISET) ---
+    vbox:
         xpos el_u(24)
-        ypos el_u(25)
-        xsize el_u(240)
-        ysize el_u(260)
-        padding (el_u(20), el_u(18), el_u(20), el_u(18))
+        ypos el_u(18)
+        spacing el_u(5)
 
-        vbox:
-            spacing el_u(5)
-            xalign 0.5
-            yalign 0.5
-            use el_ui_button("Mulai Main", Start(), width=190)
-            use el_ui_button("Muat Game", ShowMenu("el_ui_load"), width=190)
-            use el_ui_button("Pengaturan", ShowMenu("el_ui_preferences"), width=190)
-            use el_ui_button("Tentang", ShowMenu("about"), width=190)
-            use el_ui_button("Cara Bermain", ShowMenu("help"), width=190)
-            use el_ui_button("Keluar", Quit(confirm=True), width=190)
+        # Panel Menu Tombol
+        frame:
+            background el_ui_frame("menu_panel")
+            xsize el_u(240)
+            ysize el_u(255)
+            padding (el_u(20), el_u(16), el_u(20), el_u(16))
 
-    # --- KOTAK INFORMASI RISET GDLC ---
-    frame:
-        background el_ui_frame("tooltip")
-        xalign 0.97
-        yalign 0.95
-        xmaximum el_u(230)
-        padding (el_u(14), el_u(10), el_u(14), el_u(10))
-        text "Pre-Test akan muncul sebelum cerita dimulai, dan Post-Test setelah ending." style "el_ui_text" color el_ui_color() size el_ui_font_size(10.5)
+            vbox:
+                spacing el_u(5)
+                xalign 0.5
+                yalign 0.5
+                use el_ui_button(_("Mulai Main"), Start(), width=190)
+                use el_ui_button(_("Muat Game"), ShowMenu("el_ui_load"), width=190)
+                use el_ui_button(_("Pengaturan"), ShowMenu("el_ui_preferences"), width=190)
+                use el_ui_button(_("Tentang"), ShowMenu("about"), width=190)
+                use el_ui_button(_("Cara Bermain"), ShowMenu("help"), width=190)
+                use el_ui_button(_("Keluar"), Quit(confirm=True), width=190)
+
+        # Kotak Informasi Riset GDLC (Tepat di bawah kolom tombol)
+        frame:
+            background el_ui_frame("tooltip")
+            xsize el_u(240)
+            padding (el_u(12), el_u(8), el_u(12), el_u(8))
+            text _("Pre-Test akan muncul sebelum cerita dimulai, dan Post-Test setelah ending.") style "el_ui_text" color el_ui_color() size el_ui_font_size(9.5) text_align 0.5 xalign 0.5
 
 
 # ------------------------------------------------------------
@@ -208,21 +210,21 @@ screen pausa_menu():
     """
     tag menu
 
-    use el_ui_shell("Jeda"):
+    use el_ui_shell(_("Jeda")):
         hbox:
             xpos el_u(40)
             ypos el_u(72)
             spacing el_u(16)
             vbox:
                 spacing el_u(8)
-                use el_ui_button("Simpan", ShowMenu("el_ui_save"), width=200)
+                use el_ui_button(_("Simpan"), ShowMenu("el_ui_save"), width=200)
                 use el_ui_button("Muat Game", ShowMenu("el_ui_load"), width=200)
                 use el_ui_button("Pengaturan", ShowMenu("el_ui_preferences"), width=200)
             vbox:
                 spacing el_u(8)
                 use el_ui_button("Cara Bermain", ShowMenu("help"), width=200)
                 use el_ui_button("Tentang", ShowMenu("about"), width=200)
-                use el_ui_button("Menu Utama", MainMenu(), width=200)
+                use el_ui_button(_("Menu Utama"), MainMenu(), width=200)
 
 
 # ------------------------------------------------------------
@@ -250,7 +252,7 @@ screen about():
     """
     tag menu
 
-    use el_ui_shell("Tentang"):
+    use el_ui_shell(_("Tentang")): 
         viewport:
             xpos el_u(40)
             ypos el_u(66)
@@ -263,22 +265,22 @@ screen about():
                 spacing el_u(8)
 
                 use pom_p("Pay o' May", True)
-                use pom_p("Versi [config.version!t]")
-                use pom_p("Gim novel visual edukasi untuk meningkatkan kesadaran finansial mahasiswa perantauan. Kamu menjalani satu bulan dengan uang saku terbatas dan memutuskan sendiri ke mana uang itu pergi.")
+                use pom_p(_("Versi [config.version!t]"))
+                use pom_p(_("Gim novel visual edukasi untuk meningkatkan kesadaran finansial mahasiswa perantauan. Kamu menjalani satu bulan dengan uang saku terbatas dan memutuskan sendiri ke mana uang itu pergi."))
 
                 ## use pom_p("Pengembang", True)
                 ## use pom_p("Luthfi Rais Asral\nS1 Terapan Teknologi Rekayasa Multimedia\nFakultas Ilmu Terapan, Universitas Telkom")
 
-                use pom_p("Tentang Proyek", True)
-                use pom_p("Dikembangkan sebagai Tugas Akhir dengan metode Game Development Life Cycle (GDLC). Cerita dan angka dalam game adalah fiksi untuk keperluan edukasi, bukan nasihat keuangan profesional.")
+                use pom_p(_("Tentang Proyek"), True)
+                use pom_p(_("Dikembangkan sebagai Tugas Akhir dengan metode Game Development Life Cycle (GDLC). Cerita dan angka dalam game adalah fiksi untuk keperluan edukasi, bukan nasihat keuangan profesional."))
 
-                use pom_p("Kredit", True)
+                use pom_p(_("Kredit"), True)
                 use pom_p("[kredit_visual]\n[kredit_audio]")
 
-                use pom_p("Catatan Pembaruan", True)
-                use pom_p("Riwayat pembaruan dan perubahan versi lengkap tercatat pada berkas CHANGELOG.md di direktori gim.")
+                use pom_p(_("Catatan Pembaruan"), True)
+                use pom_p(_("Riwayat pembaruan dan perubahan versi lengkap tercatat pada berkas CHANGELOG.md di direktori gim."))
 
-                use pom_p("Dibuat dengan Ren'Py", True)
+                use pom_p(_("Dibuat dengan Ren'Py"), True)
                 use pom_p("Ren'Py [renpy.version_only].")
 
 
@@ -292,7 +294,7 @@ screen help():
     """
     tag menu
 
-    use el_ui_shell("Cara Bermain"):
+    use el_ui_shell(_("Cara Bermain")): 
         viewport:
             xpos el_u(40)
             ypos el_u(66)
@@ -304,23 +306,23 @@ screen help():
             vbox:
                 spacing el_u(8)
 
-                use pom_p("Tujuan", True)
-                use pom_p("Kamu mahasiswa perantauan yang menerima uang saku Rp 2.000.000 untuk satu bulan. Bertahanlah sampai 1 Bulan dengan keputusan keuangan yang cerdas.")
+                use pom_p(_("Tujuan"), True)
+                use pom_p(_("Kamu mahasiswa perantauan yang menerima uang saku Rp 2.000.000 untuk satu bulan. Bertahanlah sampai 1 Bulan dengan keputusan keuangan yang cerdas."))
 
-                use pom_p("Papan Status (pojok kanan atas)", True)
-                use pom_p("Uang jajan: sisa uang untuk kebutuhan sehari-hari. Baranya berubah warna saat uangmu menipis.\nDana darurat: tabungan terpisah untuk kejadian tak terduga.\nTagihan PayLater: utang yang harus dibayar di akhir bulan (muncul jika kamu berutang).")
+                use pom_p(_("Papan Status (pojok kanan atas)"), True)
+                use pom_p(_("Uang jajan: sisa uang untuk kebutuhan sehari-hari. Baranya berubah warna saat uangmu menipis.\nDana darurat: tabungan terpisah untuk kejadian tak terduga.\nTagihan PayLater: utang yang harus dibayar di akhir bulan (muncul jika kamu berutang)."))
 
-                use pom_p("Mengambil Keputusan", True)
-                use pom_p("Di beberapa momen kamu harus memilih. Tidak ada jawaban benar mutlak, tetapi setiap pilihan punya konsekuensi pada uang, utang, dan ending. Baca Tips Finansial yang muncul setelah tiap keputusan.")
+                use pom_p(_("Mengambil Keputusan"), True)
+                use pom_p(_("Di beberapa momen kamu harus memilih. Tidak ada jawaban benar mutlak, tetapi setiap pilihan punya konsekuensi pada uang, utang, dan ending. Baca Tips Finansial yang muncul setelah tiap keputusan."))
 
-                use pom_p("Ending", True)
-                use pom_p("Ada 4 ending yang ditentukan oleh sisa uang, dana darurat, utang, dan kualitas keputusanmu.")
+                use pom_p(_("Ending"), True)
+                use pom_p(_("Ada 4 ending yang ditentukan oleh sisa uang, dana darurat, utang, dan kualitas keputusanmu."))
 
-                use pom_p("Setelah Selesai", True)
-                use pom_p("Jangan lupa mengisi Post-Test yang diberikan.")
+                use pom_p(_("Setelah Selesai"), True)
+                use pom_p(_("Jangan lupa mengisi Post-Test yang diberikan."))
 
-                use pom_p("Kontrol", True)
-                use pom_p("Klik, Enter, atau Spasi: lanjut dialog.\nRoda mouse: gulir menu atau kembali ke dialog sebelumnya.\nCtrl (tahan) atau Tab: lewati dialog yang sudah dibaca.\nEsc: buka menu Jeda.\nBilah atas: Riwayat, Simpan, Muat, dan Opsi.")
+                use pom_p(_("Kontrol"), True)
+                use pom_p(_("Klik, Enter, atau Spasi: lanjut dialog.\nRoda mouse: gulir menu atau kembali ke dialog sebelumnya.\nCtrl (tahan) atau Tab: lewati dialog yang sudah dibaca.\nEsc: buka menu Jeda.\nBilah atas: Riwayat, Simpan, Muat, dan Opsi."))
 
 
 # ------------------------------------------------------------
@@ -348,21 +350,24 @@ init python:
         mb = getattr(store, "mama_bantu", False)
         w = getattr(store, "wants", 0)
 
+        def _t(s):
+            return renpy.translation.translate_string(s) if s else ""
+
         if u <= 0:
-            return ("Sobat Mie Instan Akhir Bulan", "#ef5350", "Uang saku habis sebelum akhir bulan. Perlu evaluasi pos pengeluaran besar dan mulai sisihkan dana darurat sejak awal bulan.")
+            return (_t(_("Sobat Mie Instan Akhir Bulan")), "#ef5350", _t(_("Uang saku habis sebelum akhir bulan. Perlu evaluasi pos pengeluaran besar dan mulai sisihkan dana darurat sejak awal bulan.")))
         elif h > 0:
-            return ("Korban Kemudahan PayLater", "#ffa726", "Terjebak ilusi belanja sekarang bayar nanti. Berhati-hatilah dengan bunga dan biaya layanan utang konsumtif.")
+            return (_t(_("Korban Kemudahan PayLater")), "#ffa726", _t(_("Terjebak ilusi belanja sekarang bayar nanti. Berhati-hatilah dengan bunga dan biaya layanan utang konsumtif.")))
         elif getattr(store, "pinjam_dimas", "") == "penuh" and u < 100000:
-            return ("Korban Sungkan Teman", "#ff7043", "Uangmu tertahan karena meminjamkan melebihi batas kerelaan diri. Belajarlah berani berkata tidak saat kondisi keuangan pribadi belum stabil.")
+            return (_t(_("Korban Sungkan Teman")), "#ff7043", _t(_("Uangmu tertahan karena meminjamkan melebihi batas kerelaan diri. Belajarlah berani berkata tidak saat kondisi keuangan pribadi belum stabil.")))
         elif u >= 300000 and d >= 100000 and p >= 75 and not mb:
             if d >= 200000:
-                return ("Master Dana Darurat", "#4caf50", "Luar biasa! Mampu membangun benteng keamanan finansial yang kokoh dan tetap mandiri sepanjang bulan.")
+                return (_t(_("Master Dana Darurat")), "#4caf50", _t(_("Luar biasa! Mampu membangun benteng keamanan finansial yang kokoh dan tetap mandiri sepanjang bulan.")))
             else:
-                return ("Akuntan Kos Teladan", "#42a5f5", "Sangat disiplin membedakan kebutuhan dan keinginan. Anggaran bulanan terkelola secara seimbang dan terarah.")
+                return (_t(_("Akuntan Kos Teladan")), "#42a5f5", _t(_("Sangat disiplin membedakan kebutuhan dan keinginan. Anggaran bulanan terkelola secara seimbang dan terarah.")))
         elif w <= 3:
-            return ("Pejuang Hemat & Terencana", "#26a69a", "Mampu menahan godaan konsumtif dan memprioritaskan kebutuhan pokok dengan sangat baik.")
+            return (_t(_("Pejuang Hemat & Terencana")), "#26a69a", _t(_("Mampu menahan godaan konsumtif dan memprioritaskan kebutuhan pokok dengan sangat baik.")))
         else:
-            return ("Survivor Tanggal Tua", "#78909c", "Berhasil bertahan melewati bulan tanpa utang, meski pengeluaran keinginan masih bisa ditekan lebih efisien.")
+            return (_t(_("Survivor Tanggal Tua")), "#78909c", _t(_("Berhasil bertahan melewati bulan tanpa utang, meski pengeluaran keinginan masih bisa ditekan lebih efisien.")))
 
 screen rekap_finansial():
     """
@@ -394,10 +399,10 @@ screen rekap_finansial():
                 xfill True
                 vbox:
                     spacing el_u(1)
-                    text "RAPOR KEUANGAN BULANAN" style "el_ui_text" color el_ui_color(2) size el_ui_font_size(15) bold True
+                    text _("RAPOR KEUANGAN BULANAN") style "el_ui_text" color el_ui_color(2) size el_ui_font_size(15) bold True
                     $ _nama_display = getattr(store, "nama", "Billa")
                     $ _ending_display = getattr(store, "ending_nama", "Selesai")
-                    text "E-Statement Mahasiswa: [_nama_display] | [_ending_display]" style "el_ui_text" color el_ui_color(1) size el_ui_font_size(9.5)
+                    text _("E-Statement Mahasiswa: [_nama_display] | [_ending_display!t]") style "el_ui_text" color el_ui_color(1) size el_ui_font_size(9.5)
 
                 $ _gelar_info = hitung_gelar_finansial()
                 frame:
@@ -405,7 +410,7 @@ screen rekap_finansial():
                     xalign 1.0
                     yalign 0.5
                     padding (el_u(10), el_u(3), el_u(10), el_u(3))
-                    text "[_gelar_info[0]]" style "el_ui_text" color _gelar_info[1] size el_ui_font_size(10.5) bold True
+                    text "[_gelar_info[0]!t]" style "el_ui_text" color _gelar_info[1] size el_ui_font_size(10.5) bold True
 
             null height el_u(1)
 
@@ -421,56 +426,56 @@ screen rekap_finansial():
 
                     vbox:
                         spacing el_u(3)
-                        text "RINGKASAN SALDO & ARUS KAS" style "el_ui_text" color el_ui_color(2) size el_ui_font_size(9.5) bold True
+                        text _("RINGKASAN SALDO & ARUS KAS") style "el_ui_text" color el_ui_color(2) size el_ui_font_size(9.5) bold True
                         null height el_u(1)
 
                         hbox:
                             xfill True
-                            text "Saldo Sisa Uang Jajan:" style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
+                            text _("Saldo Sisa Uang Jajan:") style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
                             $ _u = getattr(store, "uang", 0)
                             $ _t_uang = rp(_u)
                             text "[_t_uang]" style "el_ui_text" size el_ui_font_size(9.5) bold True color ("#2e7d32" if _u >= 300000 else ("#e65100" if _u > 0 else "#c62828"))
 
                         hbox:
                             xfill True
-                            text "Simpanan Dana Darurat:" style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
+                            text _("Simpanan Dana Darurat:") style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
                             $ _d = getattr(store, "dana_darurat", 0)
                             $ _t_dana = rp(_d)
                             text "[_t_dana]" style "el_ui_text" size el_ui_font_size(9.5) bold True color ("#1976d2" if _d > 0 else el_ui_color(1))
 
                         hbox:
                             xfill True
-                            text "Sisa Tagihan PayLater:" style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
+                            text _("Sisa Tagihan PayLater:") style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
                             $ _h = getattr(store, "hutang", 0)
                             if _h <= 0:
-                                text "Rp 0 (Bebas Utang)" style "el_ui_text" size el_ui_font_size(9.5) bold True color "#2e7d32"
+                                text _("Rp 0 (Bebas Utang)") style "el_ui_text" size el_ui_font_size(9.5) bold True color "#2e7d32"
                             else:
                                 $ _t_hutang = rp(_h)
                                 text "[_t_hutang]" style "el_ui_text" size el_ui_font_size(9.5) bold True color "#c62828"
 
                         hbox:
                             xfill True
-                            text "Piutang Teman:" style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
+                            text _("Piutang Teman:") style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
                             $ _pj_status = getattr(store, "pinjam_dimas", "")
                             if _pj_status == "penuh":
-                                text "Rp 200.000 (Macet)" style "el_ui_text" size el_ui_font_size(9.5) bold True color "#c62828"
+                                text _("Rp 200.000 (Macet)") style "el_ui_text" size el_ui_font_size(9.5) bold True color "#c62828"
                             elif _pj_status == "sebagian":
-                                text "Rp 0 (Sudah Lunas)" style "el_ui_text" size el_ui_font_size(9.5) bold True color "#2e7d32"
+                                text _("Rp 0 (Sudah Lunas)") style "el_ui_text" size el_ui_font_size(9.5) bold True color "#2e7d32"
                             else:
                                 text "Rp 0" style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color(1)
 
                         hbox:
                             xfill True
-                            text "Bantuan Dana Darurat:" style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
+                            text _("Bantuan Dana Darurat:") style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
                             if not getattr(store, "mama_bantu", False):
-                                text "100% Mandiri" style "el_ui_text" size el_ui_font_size(9.5) color "#2e7d32"
+                                text _("100% Mandiri") style "el_ui_text" size el_ui_font_size(9.5) color "#2e7d32"
                             else:
-                                text "Dibantu Mama" style "el_ui_text" size el_ui_font_size(9.5) color "#e65100"
+                                text _("Dibantu Mama") style "el_ui_text" size el_ui_font_size(9.5) color "#e65100"
 
                         hbox:
                             xfill True
-                            text "Pencatatan Keuangan:" style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
-                            text ("Aktif Mencatat" if getattr(store, "catat", False) else "Tidak Mencatat") style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color(1)
+                            text _("Pencatatan Keuangan:") style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
+                            text (_("Aktif Mencatat") if getattr(store, "catat", False) else _("Tidak Mencatat")) style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color(1)
 
                 # KOLOM KANAN: SKOR & ANALISIS KEPUTUSAN
                 frame:
@@ -480,7 +485,7 @@ screen rekap_finansial():
 
                     vbox:
                         spacing el_u(3)
-                        text "SKOR KESADARAN FINANSIAL" style "el_ui_text" color el_ui_color(2) size el_ui_font_size(9.5) bold True
+                        text _("SKOR KESADARAN FINANSIAL") style "el_ui_text" color el_ui_color(2) size el_ui_font_size(9.5) bold True
                         null height el_u(1)
 
                         $ _s = getattr(store, "skor", 0)
@@ -489,43 +494,43 @@ screen rekap_finansial():
 
                         hbox:
                             xfill True
-                            text "Skor:" style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
+                            text _("Skor:") style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
                             text "[_s] / [_sm] ([_p]%)" style "el_ui_text" size el_ui_font_size(9.5) bold True color el_ui_color(2)
 
                         hbox:
                             xfill True
-                            text "Kebutuhan/Tabungan (Needs):" style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
+                            text _("Kebutuhan/Tabungan (Needs):") style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
                             $ _needs = getattr(store, "needs", 0)
-                            text "[_needs] kali" style "el_ui_text" size el_ui_font_size(9.5) bold True color "#2e7d32"
+                            text (_("[_needs] kali")) style "el_ui_text" size el_ui_font_size(9.5) bold True color "#2e7d32"
 
                         hbox:
                             xfill True
-                            text "Keinginan/Gaya Hidup (Wants):" style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
+                            text _("Keinginan/Gaya Hidup (Wants):") style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
                             $ _wants = getattr(store, "wants", 0)
-                            text "[_wants] kali" style "el_ui_text" size el_ui_font_size(9.5) bold True color ("#e65100" if _wants >= 5 else el_ui_color(1))
+                            text (_("[_wants] kali")) style "el_ui_text" size el_ui_font_size(9.5) bold True color ("#e65100" if _wants >= 5 else el_ui_color(1))
 
                         hbox:
                             xfill True
-                            text "Langganan Hiburan:" style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
+                            text _("Langganan Hiburan:") style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
                             $ _lang = getattr(store, "langganan", "")
                             if _lang == "tahunan":
-                                text "Tahunan (Impulsif)" style "el_ui_text" size el_ui_font_size(9.5) bold True color "#e65100"
+                                text _("Tahunan (Impulsif)") style "el_ui_text" size el_ui_font_size(9.5) bold True color "#e65100"
                             elif _lang == "bulanan":
-                                text "Bulanan (Fleksibel)" style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color(1)
+                                text _("Bulanan (Fleksibel)") style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color(1)
                             elif _lang == "nobar":
-                                text "Nobar (Hemat Cerdas)" style "el_ui_text" size el_ui_font_size(9.5) bold True color "#2e7d32"
+                                text _("Nobar (Hemat Cerdas)") style "el_ui_text" size el_ui_font_size(9.5) bold True color "#2e7d32"
                             else:
                                 text "-" style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color(1)
 
                         null height el_u(1)
                         $ _gelar_msg = _gelar_info[2]
-                        text "[_gelar_msg]" style "el_ui_text" size el_ui_font_size(8.5) color el_ui_color(1) italic True
+                        text "[_gelar_msg!t]" style "el_ui_text" size el_ui_font_size(8.5) color el_ui_color(1) italic True
 
             # --- PELAJARAN KUNCI ---
             frame:
                 background None
                 padding (el_u(4), 0, el_u(4), 0)
-                text "💡 {b}Kunci Sukses Finansial:{/b} Sisihkan dana darurat di awal bulan, batasi belanja keinginan, dan hindari utang konsumtif PayLater." style "el_ui_text" size el_ui_font_size(8.5) color el_ui_color(1)
+                text _("💡 {b}Kunci Sukses Finansial:{/b} Sisihkan dana darurat di awal bulan, batasi belanja keinginan, dan hindari utang konsumtif PayLater.") style "el_ui_text" size el_ui_font_size(8.5) color el_ui_color(1)
 
             null height el_u(1)
 
@@ -537,9 +542,9 @@ screen rekap_finansial():
                 spacing el_u(2)
 
                 if not _buka_post:
-                    text "⚠️ Harap buka kuesioner Post-Test terlebih dahulu sebelum menekan tombol Selesai." style "el_ui_text" size el_ui_font_size(8.5) color "#e65100" xalign 0.5 italic True
+                    text _("⚠️ Harap buka kuesioner Post-Test terlebih dahulu sebelum menekan tombol Selesai.") style "el_ui_text" size el_ui_font_size(8.5) color "#e65100" xalign 0.5 italic True
                 else:
-                    text "💡 Setelah selesai mengisi Post-Test di browser, klik tombol 'Saya Sudah Mengisi & Selesai'." style "el_ui_text" size el_ui_font_size(8.5) color el_ui_color(2) xalign 0.5 italic True
+                    text _("💡 Setelah selesai mengisi Post-Test di browser, klik tombol 'Saya Sudah Mengisi & Selesai'.") style "el_ui_text" size el_ui_font_size(8.5) color el_ui_color(2) xalign 0.5 italic True
 
                 null height el_u(1)
 
@@ -547,12 +552,12 @@ screen rekap_finansial():
                     xalign 0.5
                     spacing el_u(16)
 
-                    use el_ui_button("Buka Post-Test (Kuesioner)", [OpenURL(url_posttest), SetVariable("posttest_dibuka", True)], width=225)
+                    use el_ui_button(_("Buka Post-Test (Kuesioner)"), [OpenURL(url_posttest), SetVariable("posttest_dibuka", True)], width=225)
 
                     if not _buka_post:
-                        use el_ui_button("Selesai & Menu Utama", Return(), sensitive=False, width=225)
+                        use el_ui_button(_("Selesai & Menu Utama"), Return(), sensitive=False, width=225)
                     else:
-                        use el_ui_button("Saya Sudah Mengisi & Selesai", [SetVariable("posttest_selesai", True), Return()], sensitive=True, width=225)
+                        use el_ui_button(_("Saya Sudah Mengisi & Selesai"), [SetVariable("posttest_selesai", True), Return()], sensitive=True, width=225)
 
 
 # ------------------------------------------------------------
@@ -586,8 +591,8 @@ screen kuesioner_pretest():
             vbox:
                 xalign 0.5
                 spacing el_u(1)
-                text "KUESIONER PRE-TEST" style "el_ui_text" color el_ui_color(2) size el_ui_font_size(15) bold True xalign 0.5
-                text "Instrumen Penelitian Evaluasi Literasi Keuangan Mahasiswa" style "el_ui_text" color el_ui_color(1) size el_ui_font_size(9) xalign 0.5
+                text _("KUESIONER PRE-TEST") style "el_ui_text" color el_ui_color(2) size el_ui_font_size(15) bold True xalign 0.5
+                text _("Instrumen Penelitian Evaluasi Literasi Keuangan Mahasiswa") style "el_ui_text" color el_ui_color(1) size el_ui_font_size(9) xalign 0.5
 
             null height el_u(1)
 
@@ -597,7 +602,7 @@ screen kuesioner_pretest():
                 xalign 0.5
                 xfill True
                 padding (el_u(14), el_u(9), el_u(14), el_u(9))
-                text "Sebelum mulai bermain, silakan isi kuesioner singkat untuk mengukur pemahaman awal pengelolaan keuanganmu.\n\nData kuesioner ini digunakan untuk pengujian efektivitas media pembelajaran gim edukatif Pay o' May." style "el_ui_text" color el_ui_color() size el_ui_font_size(9) text_align 0.5 xalign 0.5
+                text _("Sebelum mulai bermain, silakan isi kuesioner singkat untuk mengukur pemahaman awal pengelolaan keuanganmu.\n\nData kuesioner ini digunakan untuk pengujian efektivitas media pembelajaran gim edukatif Pay o' May.") style "el_ui_text" color el_ui_color() size el_ui_font_size(9) text_align 0.5 xalign 0.5
 
             null height el_u(1)
 
@@ -607,9 +612,9 @@ screen kuesioner_pretest():
                 spacing el_u(2)
 
                 if not _buka_pre:
-                    text "⚠️ Harap buka kuesioner Pre-Test terlebih dahulu sebelum melanjutkan." style "el_ui_text" size el_ui_font_size(8.5) color "#e65100" xalign 0.5 italic True
+                    text _("⚠️ Harap buka kuesioner Pre-Test terlebih dahulu sebelum melanjutkan.") style "el_ui_text" size el_ui_font_size(8.5) color "#e65100" xalign 0.5 italic True
                 else:
-                    text "💡 Setelah selesai mengisi Pre-Test di browser, klik tombol 'Saya sudah mengisi Pre-Test'." style "el_ui_text" size el_ui_font_size(8.5) color el_ui_color(2) xalign 0.5 italic True
+                    text _("💡 Setelah selesai mengisi Pre-Test di browser, klik tombol 'Saya sudah mengisi Pre-Test'.") style "el_ui_text" size el_ui_font_size(8.5) color el_ui_color(2) xalign 0.5 italic True
 
             null height el_u(2)
 
@@ -618,12 +623,12 @@ screen kuesioner_pretest():
                 xalign 0.5
                 spacing el_u(14)
 
-                use el_ui_button("Buka tautan Pre-Test", [OpenURL(url_pretest), SetVariable("pretest_dibuka", True)], width=225)
+                use el_ui_button(_("Buka tautan Pre-Test"), [OpenURL(url_pretest), SetVariable("pretest_dibuka", True)], width=225)
 
                 if not _buka_pre:
-                    use el_ui_button("Saya sudah mengisi Pre-Test", Return(), sensitive=False, width=225)
+                    use el_ui_button(_("Saya sudah mengisi Pre-Test"), Return(), sensitive=False, width=225)
                 else:
-                    use el_ui_button("Saya sudah mengisi Pre-Test", [SetVariable("pretest_selesai", True), Return()], sensitive=True, width=225)
+                    use el_ui_button(_("Saya sudah mengisi Pre-Test"), [SetVariable("pretest_selesai", True), Return()], sensitive=True, width=225)
 
 
 
