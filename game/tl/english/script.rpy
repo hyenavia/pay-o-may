@@ -926,6 +926,132 @@ translate english akhir_minggu_632ed22a:
     # tip "Bunga PayLater terus bertambah setiap minggu selama belum lunas. Semakin lama menunda, semakin berat beban finansialmu."
     tip "PayLater interest continues to accumulate weekly until fully paid off. The longer you delay, the heavier your financial burden becomes."
 
+# game/script.rpy (baru v0.3.8)
+translate english nama_pemain_f9cf0046:
+
+    # "Kelas baru saja selesai. Dosen membagikan kelompok untuk tugas besar yang dikumpulkan di minggu ketiga dan dipresentasikan di minggu terakhir bulan ini. Kamu sekelompok dengan Axel dan Michelle."
+    "Class has just ended. The lecturer assigns groups for the big project, due in week three and presented in the last week of the month. You're in the same group as Axel and Michelle."
+
+# game/script.rpy (baru v0.3.8)
+translate english nama_pemain_946ce0a5:
+
+    # dimas "Lagian kita sekelompok buat tugas besar, kan? Sekalian bahas di sana!"
+    dimas "Besides, we're in the same project group, right? We can discuss it there!"
+
+# game/script.rpy (baru v0.3.8)
+translate english nama_pemain_8308d922:
+
+    # "Sabtu ini kelompokmu mulai kerja bareng di kosmu. Axel dan Michelle akan datang, jadi urusan makan jadi makin penting."
+    "This Saturday your group starts working together at your place. Axel and Michelle will be coming over, so food matters even more."
+
+# game/script.rpy (baru v0.3.8)
+translate english nama_pemain_681165bf:
+
+    # "Draf bagianmu harus masuk ke dokumen kelompok sebelum jam tujuh pagi. Kalau terlambat, Axel dan Michelle ikut kena imbasnya."
+    "Your section's draft must be in the group document before seven a.m. If it's late, Axel and Michelle will pay for it too."
+
+# game/script.rpy (baru v0.3.8)
+translate english nama_pemain_146baf6e:
+
+    # sinta "Sebenarnya... aku juga lagi capek, tahu. Terlalu ketat sama anggaran itu melelahkan."
+    sinta "Honestly... I'm tired too, you know. Being too strict with a budget is exhausting."
+
+# game/script.rpy (baru v0.3.8)
+translate english nama_pemain_10070c25:
+
+    # sinta "Kemarin aku sampai nolak ulang tahun temanku karena takut over budget. Rasanya kesepian juga."
+    sinta "Yesterday I even turned down a friend's birthday because I was scared of going over budget. It felt lonely, too."
+
+# game/script.rpy (baru v0.3.8)
+translate english nama_pemain_3bee549f:
+
+    # sinta "Makanya di aturan tadi ada jatah 30 persen buat keinginan. Menabung itu penting, tapi hidupmu juga harus tetap kamu nikmati."
+    sinta "That's why the rule has a 30 percent share for wants. Saving matters, but you still need to enjoy your life."
+
+# game/script.rpy (baru v0.3.8)
+translate english nama_pemain_88298853:
+
+    # mama "Terima kasih sudah jujur, Nak. Itu yang paling Mama hargai. Kita cari cara melunasinya bareng, ya."
+    mama "Thank you for being honest, sweetie. That's what I value most. Let's figure out how to pay it off together."
+
+# game/script.rpy (baru v0.3.8)
+translate english nama_pemain_03de27bc:
+
+    # tip "Utang yang disembunyikan cenderung membesar. Bicara lebih awal membuka lebih banyak pilihan, termasuk bantuan orang tua."
+    tip "Hidden debt tends to grow. Speaking up early opens more options, including help from your parents."
+
+# game/script.rpy (baru v0.3.8)
+translate english nama_pemain_96c2c3bf:
+
+    # mama "Hmm, ya sudah. Tapi kalau mulai berat, jangan dipendam sendiri ya, Nak."
+    mama "Hmm, alright. But if it starts getting heavy, don't bottle it up alone, okay, sweetie?"
+
+# game/script.rpy (baru v0.3.8)
+translate english nama_pemain_a2c864f1:
+
+    # tip "Cerita setengah-setengah sering membuat bantuan datang terlambat. Orang yang peduli lebih butuh gambaran utuh."
+    tip "Half-telling often makes help arrive late. People who care need the full picture."
+
+# game/script.rpy (baru v0.3.8)
+translate english nama_pemain_b6c6646d:
+
+    # mama "Syukurlah kalau begitu. Mama lega dengarnya, Nak."
+    mama "Thank goodness. I'm relieved to hear that, sweetie."
+
+# game/script.rpy (baru v0.3.8)
+translate english nama_pemain_f0340600:
+
+    # "Mama percaya begitu saja. Rasa bersalahmu terasa lebih berat daripada angka tagihan itu."
+    "Mom believes you right away. Your guilt feels heavier than the bill itself."
+
+# game/script.rpy (baru v0.3.8)
+translate english nama_pemain_27a0d790:
+
+    # tip "Menyembunyikan utang dari orang yang bisa membantu menambah beban dua kali: tagihannya tetap ada, dan kamu menanggungnya sendirian."
+    tip "Hiding debt from people who could help doubles the burden: the bill is still there, and you carry it alone."
+
+# game/script.rpy (baru v0.3.8)
+translate english nama_pemain_cc26b3ce:
+
+    # "Presentasi tugas besar kelompokmu selesai pagi tadi, dan hasilnya memuaskan."
+    "Your group's big project presentation finished this morning, and it went well."
+
+# game/script.rpy (baru v0.3.8)
+translate english nama_pemain_5e6a1af7:
+
+    # dimas "Eh, boleh jujur nggak? Sebenernya aku sering ikut-ikutan karena takut dijauhi."
+    dimas "Hey, can I be honest? I tag along a lot because I'm scared of being left out."
+
+# game/script.rpy (baru v0.3.8)
+translate english nama_pemain_15adb591:
+
+    # dimas "Kalau nggak ikut, rasanya aku nggak punya tempat di geng ini. Makanya susah banget bilang nggak."
+    dimas "If I don't go, it feels like I don't belong in this group. That's why saying no is so hard."
+
+# game/script.rpy (baru v0.3.8)
+translate english nama_pemain_3ef57415:
+
+    # dimas "Tapi presentasi kita tadi lancar banget, ya! Pas banget buat dirayain."
+    dimas "But our presentation went so smoothly! Perfect to celebrate."
+
+# game/script.rpy (baru v0.3.8)
+translate english nama_pemain_772b6a5c:
+
+    # dimas "Eh, tapi makasih ya udah dengerin tadi. Aku jadi sadar nggak harus ikut semuanya biar diterima."
+    dimas "Hey, thanks for listening earlier. I realize I don't have to join everything to be accepted."
+
+# game/script.rpy (baru v0.3.8)
+translate english ending_paylater_ae627f0c:
+
+    # mama "Soal tagihan itu, ayo kita selesaikan bareng pelan-pelan. Kamu tidak sendirian, Nak."
+    mama "About that bill, let's settle it together, little by little. You're not alone, sweetie."
+
+# game/script.rpy (baru v0.3.8)
+translate english ending_paylater_245daa3b:
+
+    # "Kamu masih belum berani menceritakan tagihan itu pada Mama. Setiap kali ponselmu bergetar, dadamu ikut berdebar."
+    "You still haven't dared to tell Mom about that bill. Every time your phone buzzes, your heart skips with it."
+
 translate english strings:
 
     # game/script.rpy:328
@@ -1539,3 +1665,20 @@ translate english strings:
     old "Jangan tarik, tetap bertahan dengan sisa uang saku yang ada."
     new "Do not withdraw, push through with existing allowance."
 
+translate english strings:
+
+    # game/script.rpy (baru v0.3.8)
+    old "Mama menunggu jawabanmu."
+    new "Mom is waiting for your answer."
+
+    # game/script.rpy (baru v0.3.8)
+    old "Ceritakan semuanya dan minta saran Mama."
+    new "Tell her everything and ask for her advice."
+
+    # game/script.rpy (baru v0.3.8)
+    old "Ceritakan sebagian: ada tagihan, tapi bilang masih terkendali."
+    new "Tell her part of it: there's a bill, but say it's under control."
+
+    # game/script.rpy (baru v0.3.8)
+    old "Bilang semuanya aman. Tidak ada utang."
+    new "Say everything is fine. There's no debt."

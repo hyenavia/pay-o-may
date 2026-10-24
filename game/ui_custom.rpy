@@ -44,6 +44,15 @@ style notify_text:
     xalign 0.5
     text_align 0.5
 
+# ------------------------------------------------------------
+# POSISI PANGGUNG KARAKTER (STAGE TRANSFORMS)
+# ------------------------------------------------------------
+# Menyesuaikan transform 'right' agar karakter di sisi kanan panggung (Axel & Michelle)
+# tidak bertabrakan dengan kartu status M-Banking di pojok kanan atas.
+transform right:
+    xalign 0.70
+    yalign 1.0
+
 
 # ------------------------------------------------------------
 # 2. PERBAIKAN GAYA DIALOG & TEKS SISTEM

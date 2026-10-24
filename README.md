@@ -8,7 +8,7 @@
 [![Python](https://img.shields.io/badge/Python-3.12-brightgreen.svg)](https://www.python.org/)
 [![Methodology](https://img.shields.io/badge/Methodology-GDLC-orange.svg)](https://en.wikipedia.org/wiki/Video_game_development)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20|%20Android-lightgrey.svg)]()
-[![Version](https://img.shields.io/badge/Version-0.3.72-teal.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-0.3.8-teal.svg)](CHANGELOG.md)
 
 </div>
 

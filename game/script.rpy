@@ -1,5 +1,5 @@
 # ============================================================
-#  PAY O' MAY  (v0.3.72)
+#  PAY O' MAY  (v0.3.8)
 #  Gim novel visual edukasi kesadaran finansial mahasiswa perantauan
 #  Ren'Py 8.5.3
 # ============================================================
@@ -241,7 +241,7 @@ default uang = 0                  # Saldo uang jajan aktif untuk belanja sehari-
 default dana_darurat = 0          # Saldo simpanan terpisah khusus keadaan darurat
 default hutang = 0                # Total pokok tagihan utang PayLater
 default skor = 0                  # Akumulasi poin keputusan finansial yang bijak
-define skor_max = 22             # Skor maksimal (11 titik keputusan x 2 poin maksimal)
+default skor_max = 22            # Skor maksimal (11 titik keputusan x 2 poin; +2 jika dilema Mama muncul)
 default minggu = 1                # Indikator progres minggu (Minggu 1 s.d. 4)
 default catat = False             # Status pencatatan keuangan (diaktifkan di Minggu 2 jika setuju)
 default wants = 0                 # Penghitung berapa kali pemain memilih pengeluaran Keinginan
@@ -257,6 +257,7 @@ default makan = ""                # "online" / "campur" / "masak"  (Minggu 2)
 default langganan = ""            # "tahunan" / "bulanan" / "nobar"  (Minggu 2)
 default pinjam_dimas = ""         # "penuh" / "sebagian" / "tolak"  (Minggu 3)
 default pinjaman_dimas = 0        # Nominal uang yang dipinjamkan ke Axel
+default jujur_mama = ""           # "jujur" / "sebagian" / "bohong" (dilema PayLater di telepon Mama, Minggu 4)
 default uang_awal_minggu = 0      # Untuk rekap pengeluaran mingguan
 default dana_awal_minggu = 0                # Persentase skor akhir kesadaran finansial
 default ending_nama = _("Selamat Sampai Akhir Bulan")  # Nama ending yang diraih pemain
@@ -905,8 +906,10 @@ label nama_pemain:
     else:
         show dimas senang with dissolve
 
+    "Kelas baru saja selesai. Dosen membagikan kelompok untuk tugas besar yang dikumpulkan di minggu ketiga dan dipresentasikan di minggu terakhir bulan ini. Kamu sekelompok dengan Axel dan Michelle."
     dimas "[nama]! Uang saku udah masuk, kan? Ayo nongkrong di kafe baru itu, lagi viral banget!"
     dimas "Anak-anak kelas udah pada ke sana. Masa cuma kamu yang nggak ikut?"
+    dimas "Lagian kita sekelompok buat tugas besar, kan? Sekalian bahas di sana!"
     "Perutmu mulas sedikit. Itu rasanya FOMO: takut ketinggalan, takut dianggap kurang gaul."
 
     menu:
@@ -1017,6 +1020,7 @@ label nama_pemain:
         "Keranjang belanja yang kosong itu membuatmu merasa ringan. Saldo masih utuh."
 
     "Kamu mulai sadar bahwa urusan makan adalah pos pengeluaran terbesar yang paling sering terlupa."
+    "Sabtu ini kelompokmu mulai kerja bareng di kosmu. Axel dan Michelle akan datang, jadi urusan makan jadi makin penting."
 
     menu:
         "Bagaimana kamu mengatur makan minggu ini?"
@@ -1140,6 +1144,7 @@ label nama_pemain:
     scene bg malam with el_lantern_glow
     "Minggu ketiga. Kamis malam, jam sepuluh. Tugas besar harus dikumpulkan besok pagi."
     "Tiba-tiba laptopmu mati. Charger-nya putus tepat di sambungan kabel. Baterai tinggal sedikit."
+    "Draf bagianmu harus masuk ke dokumen kelompok sebelum jam tujuh pagi. Kalau terlambat, Axel dan Michelle ikut kena imbasnya."
     "Charger original di toko resmi harganya {b}Rp 275.000{/b}. Toko buka besok pagi dan kamu harus memutuskan sumber dananya sekarang."
 
     menu:
@@ -1215,6 +1220,13 @@ label nama_pemain:
             sinta "Seru banget nobar di kamarku kemarin, Billa! Kadang kumpul bareng sambil patungan camilan jauh lebih asyik daripada bayar langganan mahal sendirian."
         else:
             sinta "Seru ya nobar di kos kemarin. Kadang kumpul bareng jauh lebih asyik daripada bayar langganan mahal sendirian."
+
+    # --- Sisi lain Michelle ---
+    show sinta kecewa at right
+    sinta "Sebenarnya... aku juga lagi capek, tahu. Terlalu ketat sama anggaran itu melelahkan."
+    sinta "Kemarin aku sampai nolak ulang tahun temanku karena takut over budget. Rasanya kesepian juga."
+    sinta "Makanya di aturan tadi ada jatah 30 persen buat keinginan. Menabung itu penting, tapi hidupmu juga harus tetap kamu nikmati."
+    show sinta khawatir at right
 
     if catat:
         $ t = rp(uang)
@@ -1327,6 +1339,34 @@ label nama_pemain:
         p "Aman kok, Ma..."
         mama "Suaramu tidak seyakin biasanya. Ada yang ingin kamu ceritakan?"
         "Kamu menelan ludah. Ada tagihan PayLater yang belum kamu ceritakan."
+        $ skor_max += 2
+        menu:
+            "Mama menunggu jawabanmu."
+
+            "Ceritakan semuanya dan minta saran Mama.":
+                $ skor += 2
+                $ jujur_mama = "jujur"
+                $ telepon_mama = "senang"
+                if pakai_sprite_billa:
+                    show billa netral
+                mama "Terima kasih sudah jujur, Nak. Itu yang paling Mama hargai. Kita cari cara melunasinya bareng, ya."
+                tip "Utang yang disembunyikan cenderung membesar. Bicara lebih awal membuka lebih banyak pilihan, termasuk bantuan orang tua."
+
+            "Ceritakan sebagian: ada tagihan, tapi bilang masih terkendali.":
+                $ skor += 1
+                $ jujur_mama = "sebagian"
+                $ telepon_mama = "netral"
+                mama "Hmm, ya sudah. Tapi kalau mulai berat, jangan dipendam sendiri ya, Nak."
+                tip "Cerita setengah-setengah sering membuat bantuan datang terlambat. Orang yang peduli lebih butuh gambaran utuh."
+
+            "Bilang semuanya aman. Tidak ada utang.":
+                $ jujur_mama = "bohong"
+                $ telepon_mama = "senang"
+                if pakai_sprite_billa:
+                    show billa kecewa
+                mama "Syukurlah kalau begitu. Mama lega dengarnya, Nak."
+                "Mama percaya begitu saja. Rasa bersalahmu terasa lebih berat daripada angka tagihan itu."
+                tip "Menyembunyikan utang dari orang yang bisa membantu menambah beban dua kali: tagihannya tetap ada, dan kamu menanggungnya sendirian."
     elif mama_bantu:
         $ telepon_mama = "senang"
         if pakai_sprite_billa:
@@ -1371,6 +1411,14 @@ label nama_pemain:
         show dimas netral at right
         dimas "Kemarin aku sempat agak kesal waktu kamu tolak, sih. Tapi setelah kita susun pos anggaran bareng kemarin, kamu bener juga. Aku mulai coba catat pengeluaran sekarang."
         show dimas senang at right
+    # --- Sisi lain Axel ---
+    "Presentasi tugas besar kelompokmu selesai pagi tadi, dan hasilnya memuaskan."
+    show dimas khawatir at right
+    dimas "Eh, boleh jujur nggak? Sebenernya aku sering ikut-ikutan karena takut dijauhi."
+    dimas "Kalau nggak ikut, rasanya aku nggak punya tempat di geng ini. Makanya susah banget bilang nggak."
+    show dimas senang at right
+    dimas "Tapi presentasi kita tadi lancar banget, ya! Pas banget buat dirayain."
+
     dimas "[nama], weekend ini kita ke Lembang! Sewa vila patungan, BBQ, foto-foto. Total {b}Rp 300.000{/b} all-in."
     dimas "Ini momen terakhir sebelum UAS. Kalau nggak ikut, nyesel loh!"
 
@@ -1406,6 +1454,7 @@ label nama_pemain:
                 show billa netral at left
             show dimas kecewa at right
             dimas "Hmm, ya sudah. Tapi janji ya lain kali!"
+            dimas "Eh, tapi makasih ya udah dengerin tadi. Aku jadi sadar nggak harus ikut semuanya biar diterima."
             "Kamu menolak dengan sopan dan merasa tenang karena sudah tahu batasanmu."
             tip "Mengatakan 'tidak' untuk keinginan hari ini adalah mengatakan 'ya' untuk ketenangan di akhir bulan."
 
@@ -1574,6 +1623,12 @@ label ending_paylater:
         show billa khawatir with dissolve
     "Uang jajanmu masih ada, tapi utang PayLater ikut terbawa ke bulan depan beserta biayanya."
     "Bulan depan akan terasa lebih berat dari yang kamu kira. Sebagian uang saku langsung terpotong untuk membayar tagihan lama."
+    if jujur_mama == "jujur":
+        $ telepon_mama = "senang"
+        mama "Soal tagihan itu, ayo kita selesaikan bareng pelan-pelan. Kamu tidak sendirian, Nak."
+        $ telepon_mama = None
+    elif jujur_mama == "bohong":
+        "Kamu masih belum berani menceritakan tagihan itu pada Mama. Setiap kali ponselmu bergetar, dadamu ikut berdebar."
     if pakai_sprite_billa:
         hide billa with dissolve
     jump rekap

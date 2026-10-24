@@ -8,6 +8,42 @@ Format berkas ini mengacu pada [Keep a Changelog](https://keepachangelog.com/id/
 
 ---
 
+## [0.3.8] - 2026-10-24
+
+### 🇬🇧 English
+#### Added
+- **Story Thread: Group Project Across the Month:**
+  - Week 1 assigns a big group project (Billa, Axel, Michelle), Week 2 hosts the group at the player's place (raising the meal decision's stakes), Week 3 ties the charger emergency to the group deadline, and Week 4 opens with the presentation before Axel's trip invitation.
+- **Vulnerable Sides of Axel and Michelle:**
+  - Michelle admits strict budgeting is exhausting and explains why the 50/30/20 rule reserves 30 percent for wants (Week 3). Axel confesses he follows along out of fear of being excluded (Week 4), with a follow-up line if the player declines the trip.
+- **Honesty Dilemma in Mom's Call (Week 4):**
+  - When the player has PayLater debt, they choose between telling Mom everything (+2), telling part of it (+1), or claiming everything is fine (0). The choice changes Ending C's closing lines. `skor_max` increases by 2 only when this decision appears.
+- Full English translations for all new dialogue, menu choices, and tips in `game/tl/english/script.rpy`.
+#### Fixed
+- `skor_max` changed from `define` to `default` so the dynamic maximum score is saved and restored correctly.
+#### Changed
+- **Version Bump to 0.3.8:**
+  - Bumped version number in `game/options.rpy`, `game/script.rpy`, `README.md`, `CHANGELOG.md`, and the hero badge in `docs/index.html`.
+
+---
+
+### 🇮🇩 Bahasa Indonesia
+#### Ditambahkan (Added)
+- **Benang Merah Cerita: Tugas Kelompok Sepanjang Bulan:**
+  - Minggu 1 membagikan tugas besar kelompok (Billa, Axel, Michelle), Minggu 2 kelompok bekerja di kos pemain (menaikkan bobot keputusan makan), Minggu 3 menghubungkan keadaan darurat charger dengan tenggat kelompok, dan Minggu 4 dibuka dengan presentasi sebelum ajakan trip dari Axel.
+- **Sisi Rapuh Axel dan Michelle:**
+  - Michelle mengaku terlalu ketat menjaga anggaran itu melelahkan dan menjelaskan mengapa aturan 50/30/20 menyisakan 30 persen untuk keinginan (Minggu 3). Axel mengaku sering ikut-ikutan karena takut dijauhi (Minggu 4), dengan dialog lanjutan jika pemain menolak trip.
+- **Dilema Kejujuran pada Telepon Mama (Minggu 4):**
+  - Jika pemain punya utang PayLater, pemain memilih menceritakan semuanya (+2), sebagian (+1), atau mengaku semuanya aman (0). Pilihan ini memengaruhi kalimat penutup Ending C. `skor_max` bertambah 2 hanya saat keputusan ini muncul.
+- Terjemahan Inggris lengkap untuk seluruh dialog, pilihan menu, dan tips baru pada `game/tl/english/script.rpy`.
+#### Diperbaiki (Fixed)
+- `skor_max` diubah dari `define` menjadi `default` agar skor maksimal dinamis tersimpan dan dipulihkan dengan benar.
+#### Diubah (Changed)
+- **Pembaruan Versi Gim ke 0.3.8:**
+  - Memperbarui nomor versi pada `game/options.rpy`, komentar `game/script.rpy`, `README.md`, `CHANGELOG.md`, dan hero badge `docs/index.html`.
+
+---
+
 ## [0.3.72] - 2026-10-24
 
 ### 🇬🇧 English

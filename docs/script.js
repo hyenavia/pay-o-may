@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
             nav_ending: "Ending",
             nav_download: "Unduh Gim",
 
-            hero_badge: "Visual Novel Edukasi Finansial • Versi 0.3.72",
+            hero_badge: "Visual Novel Edukasi Finansial • Versi 0.3.8",
             hero_title: "Kelola Uang Sakumu,<br><span class=\"gradient-text\">Tentukan Masa Depanmu.</span>",
             hero_desc: "Kamu berperan sebagai seorang mahasiswa yang merantau dengan uang saku bulanan terbatas <strong>Rp 2.000.000</strong>. Mampukah kamu bertahan selama Sebulan di tengah godaan nongkrong FOMO, promo PayLater berbunga, dan keadaan darurat tak terduga?",
             hero_btn_download: "Unduh Sekarang",
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
             nav_ending: "Endings",
             nav_download: "Download Game",
 
-            hero_badge: "Financial Education Visual Novel • Version 0.3.72",
+            hero_badge: "Financial Education Visual Novel • Version 0.3.8",
             hero_title: "Manage Your Allowance,<br><span class=\"gradient-text\">Shape Your Future.</span>",
             hero_desc: "Play as a college student living away from home with a monthly allowance of <strong>Rp 2,000,000</strong>. Can you survive a full month amidst FOMO peer pressure, enticing PayLater loans, and unforeseen emergencies?",
             hero_btn_download: "Download Now",
