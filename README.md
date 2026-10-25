@@ -260,6 +260,6 @@ Kisah, tokoh, dan skenario dalam permainan ini adalah fiksi yang dirancang untuk
 
 **Pengembang / Developer:**  
 **Hyenavia**  
-*Indie Game Developer* • [GitHub Profile](https://github.com/hyenavia)
+*Indie Game Developer*
 
 </div>
