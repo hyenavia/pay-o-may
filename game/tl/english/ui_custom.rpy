@@ -327,3 +327,15 @@ translate english strings:
     old "E-Statement Mahasiswa: [_nama_display] | [_ending_display!t]"
     new "Student E-Statement: [_nama_display] | [_ending_display!t]"
 
+# TODO: Translation updated at 2026-11-07 16:46
+
+translate english strings:
+
+    # game/ui_custom.rpy:550
+    old "Jajanan Pilihan:"
+    new "Custom Snack:"
+
+    # game/ui_custom.rpy:554
+    old "Menahan Diri (Rp 0)"
+    new "Held Back (Rp 0)"
+

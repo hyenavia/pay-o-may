@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
             nav_ending: "Ending",
             nav_download: "Unduh Gim",
 
-            hero_badge: "Visual Novel Edukasi Finansial • Versi 0.3.8",
+            hero_badge: "Visual Novel Edukasi Finansial • Versi 0.3.9",
             hero_title: "Kelola Uang Sakumu,<br><span class=\"gradient-text\">Tentukan Masa Depanmu.</span>",
             hero_desc: "Kamu berperan sebagai seorang mahasiswa yang merantau dengan uang saku bulanan terbatas <strong>Rp 2.000.000</strong>. Mampukah kamu bertahan selama Sebulan di tengah godaan nongkrong FOMO, promo PayLater berbunga, dan keadaan darurat tak terduga?",
             hero_btn_download: "Unduh Sekarang",
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             ending_tag: "Hasil Akhir",
             ending_title: "4 Cabang Ending & Gelar Finansial",
-            ending_sub: "Skor kesadaran finansial (skala tetap 22 poin) menentukan nasib akhir petualanganmu di penghujung bulan.",
+            ending_sub: "Skor kesadaran finansial (skala dinamis 24 poin) menentukan nasib akhir petualanganmu di penghujung bulan.",
 
             end_badge_a: "Ending A",
             end_a_title: "Bendahara Handal",
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
             nav_ending: "Endings",
             nav_download: "Download Game",
 
-            hero_badge: "Financial Education Visual Novel • Version 0.3.8",
+            hero_badge: "Financial Education Visual Novel • Version 0.3.9",
             hero_title: "Manage Your Allowance,<br><span class=\"gradient-text\">Shape Your Future.</span>",
             hero_desc: "Play as a college student living away from home with a monthly allowance of <strong>Rp 2,000,000</strong>. Can you survive a full month amidst FOMO peer pressure, enticing PayLater loans, and unforeseen emergencies?",
             hero_btn_download: "Download Now",
@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             ending_tag: "Story Endings",
             ending_title: "4 Story Endings & Financial Titles",
-            ending_sub: "Your financial awareness score (fixed 22-point scale) determines the final outcome at the end of the month.",
+            ending_sub: "Your financial awareness score (dynamic 24-point scale) determines the final outcome at the end of the month.",
 
             end_badge_a: "Ending A",
             end_a_title: "Master Treasurer",

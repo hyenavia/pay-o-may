@@ -1427,18 +1427,6 @@ translate english strings:
     new "Lembang weekend trip"
 # TODO: Translation updated at 2026-10-24 13:28
 
-# game/script.rpy:678
-translate english nama_pemain_78251a9c:
-
-    # "Kamu memindahkan Rp 300.000 ke kantong terpisah di aplikasi bank digital ('Dana Darurat - Siaga & Berbunga'). Uang ini aman dari godaan jajan dan akan menghasilkan bunga simpanan tiap minggu."
-    "You transfer Rp 300,000 to a separate pocket in your digital banking app ('Emergency Fund - Standby & Earning'). This money is shielded from impulsive spending and will earn interest every week."
-
-# game/script.rpy:679
-translate english nama_pemain_39997315:
-
-    # tip "Pay yourself first: simpan dana darurat di kantong bank digital terpisah. Selain tidak gampang terpakai impulsif, dana tetap likuid dan menghasilkan bunga simpanan mingguan."
-    tip "Pay yourself first: stash your emergency fund in a separate digital bank pocket. Besides preventing impulsive spending, the funds stay liquid and earn weekly interest."
-
 # game/script.rpy:930
 translate english nama_pemain_fbf1b5d5:
 
@@ -1682,3 +1670,179 @@ translate english strings:
     # game/script.rpy (baru v0.3.8)
     old "Bilang semuanya aman. Tidak ada utang."
     new "Say everything is fine. There's no debt."
+# TODO: Translation updated at 2026-11-07 16:46
+
+# game/script.rpy:898
+translate english nama_pemain_e0799246:
+
+    # "Kamu memindahkan [t_dana_awal] ke kantong terpisah di aplikasi bank digital ('Dana Darurat - Siaga & Berbunga'). Nominal ini sudah ideal (minimal 10 persen dari uang saku) dan akan menghasilkan bunga simpanan tiap minggu."
+    "You transfer [t_dana_awal] to a separate pocket in your digital banking app ('Emergency Fund - Standby & Earning'). This amount is ideal (at least 10 percent of your allowance) and will earn weekly savings interest."
+
+# game/script.rpy:903
+translate english nama_pemain_28931247:
+
+    # "Kamu memindahkan [t_dana_awal] ke kantong terpisah di aplikasi bank digital ('Dana Darurat - Siaga & Berbunga'). Jumlahnya masih di bawah 10 persen uang saku, tetapi sudah menjadi langkah awal yang baik dan tetap menghasilkan bunga mingguan."
+    "You transfer [t_dana_awal] to a separate pocket in your digital banking app ('Emergency Fund - Standby & Earning'). Although it's under 10 percent of your allowance, it's a solid first step and still earns weekly interest."
+
+# game/script.rpy:904
+translate english nama_pemain_a7171373:
+
+    # tip "Pay yourself first: simpan dana darurat di kantong bank digital terpisah. Idealnya sisihkan 10 hingga 20 persen uang saku di awal bulan agar aman dari godaan jajan dan menghasilkan bunga simpanan mingguan."
+    tip "Pay yourself first: stash your emergency fund in a separate digital bank pocket. Ideally set aside 10 to 20 percent of your allowance at the start of the month to shield it from impulse spending and earn weekly interest."
+
+# game/script.rpy:1087
+translate english nama_pemain_77cacaeb:
+
+    # "Sabtu sore, Axel dan Michelle datang ke kosmu untuk menyusun kerangka tugas besar kelompok."
+    "On Saturday afternoon, Axel and Michelle come over to your dorm room to draft the group project outline."
+
+# game/script.rpy:1088
+translate english nama_pemain_814c748d:
+
+    # dimas "Huh, baru nulis latar belakang aja kepalaku udah ngebul! Eh [nama], istirahat jajan sebentar yuk. Kamu lagi pengen jajan apa sore ini?"
+    dimas "Phew, just writing the background section is frying my brain! Hey [nama], let's take a quick snack break. What are you craving this afternoon?"
+
+# game/script.rpy:1104
+translate english nama_pemain_42b38ca8:
+
+    # "Kamu sempat membayangkan nikmatnya [jajan_nama], tetapi memilih menahan diri dan menyeduh minuman sendiri di kos. Dompetmu aman tanpa keluar uang sepeser pun!"
+    "You briefly picture how delicious [jajan_nama] would be, but decide to hold back and brew your own drink in your room. Your wallet stays completely untouched!"
+
+# game/script.rpy:1105
+translate english nama_pemain_80443e59:
+
+    # tip "Menyadari keinginan lalu memilih tidak membelinya saat belum mendesak adalah bentuk pengendalian diri terbaik terhadap belanja impulsif."
+    tip "Acknowledging a craving and choosing not to buy it when it isn't urgent is the strongest form of self-control against impulse spending."
+
+# game/script.rpy:1113
+translate english nama_pemain_ea989bae:
+
+    # "Kamu membeli [jajan_nama] seharga {b}[t_jajan_harga]{/b} untuk menemani kerja kelompok. Harganya masih cukup terukur sebagai apresiasi diri mingguan."
+    "You buy [jajan_nama] for {b}[t_jajan_harga]{/b} to enjoy during the group study session. The price is still reasonable for a measured weekly treat."
+
+# game/script.rpy:1114
+translate english nama_pemain_eb9de23e:
+
+    # tip "Jajan kecil seperti [jajan_nama] ([t_jajan_harga]) boleh saja sesekali, tetapi tetap waspadai 'Latte Factor'—jajan murah yang diulang tiap hari bisa menguras ratusan ribu rupiah sebulan."
+    tip "Small treats like [jajan_nama] ([t_jajan_harga]) are fine occasionally, but watch out for the 'Latte Factor'—inexpensive daily snacks can quietly drain hundreds of thousands of rupiah a month."
+
+# game/script.rpy:1121
+translate english nama_pemain_94216102:
+
+    # "Kamu memesan [jajan_nama] seharga {b}[t_jajan_harga]{/b}. Rasanya memang memuaskan, tetapi untuk ukuran camilan sekali duduk, harganya lumayan menggerus sisa uang jajanmu."
+    "You order [jajan_nama] for {b}[t_jajan_harga]{/b}. It tastes great, but for a single-sitting treat, the price takes a noticeable bite out of your remaining allowance."
+
+# game/script.rpy:1122
+translate english nama_pemain_3b8f2408:
+
+    # tip "Jajanan impulsif di atas Rp 35.000 sekali beli dapat memotong jatah makan pokok beberapa hari. Selalu bandingkan harga jajanan dengan sisa anggaran mingguanmu."
+    tip "Impulse snacks costing over Rp 35,000 in one go can eat into several days of essential meal money. Always weigh treat prices against your remaining weekly budget."
+
+# game/script.rpy:1139
+translate english nama_pemain_665f7802:
+
+    # sinta "Eh, coba tebak deh tanpa mengintip M-Banking! Menurutmu sejak awal bulan sampai hari ini, total uang saku yang sudah habis terpakai itu berapa Rupiah?"
+    sinta "Hey, try guessing without peeking at your M-Banking! Since the start of the month until today, how much of your allowance do you think you've spent in total?"
+
+# game/script.rpy:1150
+translate english nama_pemain_b327c471:
+
+    # p "Hmm... kayaknya sekitar [t_tebakan] deh."
+    p "Hmm... I think around [t_tebakan]."
+
+# game/script.rpy:1151
+translate english nama_pemain_54988f5c:
+
+    # "Kamu membuka mutasi M-Banking bersama Michelle. Ternyata total uang saku yang sudah terpakai sejak awal bulan adalah {b}[t_asli]{/b}!"
+    "You open your M-Banking statement with Michelle. It turns out your actual total spending since the start of the month is {b}[t_asli]{/b}!"
+
+# game/script.rpy:1155
+translate english nama_pemain_7e42ed87:
+
+    # sinta "Wah, tebakanmu hampir tepat! Selisihnya tipis banget dari [t_asli]. Berarti kamu lumayan peka sama arus uangmu sendiri."
+    sinta "Whoa, your guess is spot on! It's super close to [t_asli]. That means you're pretty mindful of your own cash flow."
+
+# game/script.rpy:1158
+translate english nama_pemain_27d7841c:
+
+    # sinta "Tuh kan! Kamu nebak baru habis [t_tebakan], padahal aslinya udah keluar [t_asli]. Tanpa catatan, kita memang sering merasa baru belanja sedikit."
+    sinta "See! You guessed [t_tebakan], when in reality you've already spent [t_asli]. Without records, we almost always think we've spent much less than we actually have."
+
+# game/script.rpy:1161
+translate english nama_pemain_c8da1541:
+
+    # sinta "Eh, ternyata pengeluaran aslimu [t_asli], lebih kecil dari tebakanmu ([t_tebakan]). Karena nggak dicatat, kamu jadi menebak-nebak dan cemas sendiri."
+    sinta "Oh, your actual spending is [t_asli], lower than your guess ([t_tebakan]). Because you didn't write it down, you ended up guessing and worrying unnecessarily."
+
+# game/script.rpy:1362
+translate english nama_pemain_2cabc798:
+
+    # "Kamu memindahkan [t_dana_m3] ke kantong dana darurat sesuai perhitunganmu sendiri. Sedikit demi sedikit, bantalan pengamanmu menebal."
+    "You transfer [t_dana_m3] to your emergency fund pocket based on your own calculation. Little by little, your safety cushion grows stronger."
+
+# game/script.rpy:1363
+translate english nama_pemain_6ea2eb10:
+
+    # tip "Menyesuaikan nominal tabungan dengan sisa anggaran riil membantumu tetap konsisten menabung tanpa mencekik kebutuhan makan harian."
+    tip "Tailoring your savings amount to your actual remaining budget helps you save consistently without starving your daily meal needs."
+
+translate english strings:
+
+    # game/script.rpy:888
+    old "Bagi ke pos-pos: sisihkan dana darurat di bank digital (input nominal sendiri), sisanya untuk kebutuhan & keinginan."
+    new "Divide into pots: set aside a digital bank emergency fund (enter custom amount), and use the rest for needs & wants."
+
+    # game/script.rpy:889
+    old "Berapa Rupiah yang ingin disisihkan ke Dana Darurat? (Saran 10-20%: Rp 200.000 - Rp 400.000)"
+    new "How much Rupiah would you like to set aside for your Emergency Fund? (Suggested 10-20%: Rp 200,000 - Rp 400,000)"
+
+    # game/script.rpy:1090
+    old "Kamu lagi pengen jajan apa sore ini? (Contoh: Kopi Susu, Seblak, Matcha)"
+    new "What snack or drink are you craving this afternoon? (e.g., Iced Coffee, Boba, Matcha)"
+
+    # game/script.rpy:1090
+    old "Es Kopi Susu"
+    new "Iced Milk Coffee"
+
+    # game/script.rpy:1094
+    old "Berapa harga [jajan_nama] dalam Rupiah? (Ketik 0 jika memilih menahan diri & batal jajan)"
+    new "How much does [jajan_nama] cost in Rupiah? (Type 0 if you decide to hold back & skip buying)"
+
+    # game/script.rpy:1143
+    old "Tebak total uang saku yang sudah terpakai sejak awal bulan (Rp):"
+    new "Guess how much allowance you've spent since the start of the month (Rp):"
+
+    # game/script.rpy:1345
+    old "Ketik sendiri nominal tabungan ke dana darurat."
+    new "Enter a custom amount to save into the emergency fund."
+
+    # game/script.rpy:1348
+    old "Masukkan nominal tabungan Dana Darurat (Rp 25.000 - [t_maks_sisih]):"
+    new "Enter Emergency Fund savings amount (Rp 25,000 - [t_maks_sisih]):"
+
+# TODO: Translation updated at 2026-11-07 17:18
+
+# game/script.rpy:1094
+translate english nama_pemain_d0a62a2a:
+
+    # sinta "Ide bagus tuh, Axel! Sambil nunggu draf bab satu, jajan camilan enak kayaknya bisa bikin otak segar lagi."
+    sinta "Ide bagus tuh, Axel! Sambil nunggu draf bab satu, jajan camilan enak kayaknya bisa bikin otak segar lagi."
+
+# game/script.rpy:1115
+translate english nama_pemain_46f75976:
+
+    # sinta "Keren banget pengendalian dirimu, [nama]. Bikin teh atau kopi sendiri di kos jauh lebih hemat!"
+    sinta "Keren banget pengendalian dirimu, [nama]. Bikin teh atau kopi sendiri di kos jauh lebih hemat!"
+
+# game/script.rpy:1129
+translate english nama_pemain_edba7568:
+
+    # sinta "Pilihan oke! Harganya masih masuk akal buat nemenin nugas bareng."
+    sinta "Pilihan oke! Harganya masih masuk akal buat nemenin nugas bareng."
+
+# game/script.rpy:1143
+translate english nama_pemain_3289ec77:
+
+    # sinta "Wah... harganya lumayan juga ya buat sekali jajan. Jangan sampai kebablasan di minggu depan ya."
+    sinta "Wah... harganya lumayan juga ya buat sekali jajan. Jangan sampai kebablasan di minggu depan ya."
+

@@ -8,6 +8,38 @@ Format berkas ini mengacu pada [Keep a Changelog](https://keepachangelog.com/id/
 
 ---
 
+## [0.3.9] - 2026-11-07
+
+### 🇬🇧 English
+#### Added
+- **Interactive Player Input Mechanics Across the Storyline:**
+  - **Custom Snack Craving & Price Input (Week 2 Group Study):** During the Saturday group study session at the dorm (featuring the sunset dorm room background `bg kos sore`), Michelle (`sinta`) now appears alongside Axel (`dimas`) and Billa (`billa`). Players type in what snack/drink they are craving (`jajan_nama`) and its price in Rupiah (`jajan_harga`). Choosing `Rp 0` rewards self-control (+2 points, *Needs*), spending `≤ Rp 35,000` represents a measured treat (+1 point, *Wants*), and spending `> Rp 35,000` triggers an impulse snack warning (0 points, *Wants* + Latte Factor reflection).
+  - **Custom Emergency Fund Savings Input (Prologue & Week 3):** Players can input their own custom Rupiah amount when setting aside money into the digital bank emergency fund pocket (`baca_nominal_input()` automatically converts shorthand inputs like `250` into `Rp 250,000` and enforces realistic guardrails).
+  - **Spending Estimation vs. Reality Challenge with Michelle (Week 2):** Before Michelle introduces expense tracking, the M-Banking HUD temporarily hides and Michelle asks the player to guess their cumulative spending since the start of the month (`tebakan_keluar`). The game compares the player's guess against actual spending (`pengeluaran_asli`) with dynamic dialogue reactions.
+  - **Custom Pixel-Art Input Screen (`screen input`) & E-Statement Tracking:** Styled `renpy.input` prompts using the *Everyday Life* `dialogue_wide` frame in `game/ui_custom.rpy` and added a **Custom Snack** (`Jajanan Pilihan`) row to the final Monthly E-Statement report (`screen rekap_finansial`).
+  - Full English localization for all new dialogue blocks, prompts, and UI strings in `game/tl/english/script.rpy` and `game/tl/english/ui_custom.rpy`.
+#### Changed
+- **Version Bump to 0.3.9 & Dynamic Score Scale (24 Points):**
+  - Updated base `skor_max` from `22` to `24` (12 core decision points × 2 points, plus +2 when the Week 4 PayLater honesty dilemma triggers) and preserved dynamic `skor_max` calculation in the epilogue and E-Statement.
+  - Bumped version number to `0.3.9` across `game/options.rpy`, `game/script.rpy`, `README.md`, `CHANGELOG.md`, `docs/index.html`, and `docs/script.js`.
+
+---
+
+### 🇮🇩 Bahasa Indonesia
+#### Ditambahkan (Added)
+- **Mekanika Input Interaktif Pemain di Sepanjang Cerita:**
+  - **Input Nama Jajanan & Harga Kustom (Kerja Kelompok Minggu 2):** Saat kerja kelompok di kamar kos pada Sabtu sore (latar `bg kos sore`), Michelle (`sinta`) hadir bersama Axel (`dimas`) dan Billa (`billa`). Pemain mengetik sendiri jajanan/minuman yang sedang diinginkan (`jajan_nama`) beserta harganya (`jajan_harga`). Mengetik `Rp 0` mengapresiasi pengendalian diri (+2 poin, *Needs*), harga `≤ Rp 35.000` dinilai sebagai *self-reward* terukur (+1 poin, *Wants*), dan harga `> Rp 35.000` memicu refleksi belanja impulsif (0 poin, *Wants* + edukasi *Latte Factor*).
+  - **Input Nominal Tabungan Dana Darurat Mandiri (Prolog & Minggu 3):** Pemain dapat mengetik sendiri nominal Rupiah yang ingin disisihkan ke kantong Dana Darurat bank digital (dilengkapi fungsi pintar `baca_nominal_input()` yang otomatis mengonversi ketikan singkat seperti `250` menjadi `Rp 250.000` serta menjaga batas aman anggaran).
+  - **Tantangan Tebak Pengeluaran vs Realita bersama Michelle (Minggu 2):** Sebelum Michelle memperkenalkan metode pencatatan 50/30/20, HUD M-Banking disembunyikan sementara dan pemain diminta menebak total uang saku yang sudah terpakai sejak awal bulan (`tebakan_keluar`), lalu dibandingkan langsung dengan mutasi pengeluaran asli (`pengeluaran_asli`).
+  - **Kustomisasi Kotak Input Pixel-Art (`screen input`) & Baris Rapor E-Statement:** Membungkus tampilan `renpy.input` dengan bingkai dialog *Everyday Life* pada `game/ui_custom.rpy` serta menampilkan riwayat **Jajanan Pilihan** pemain pada layar Rapor Keuangan Bulanan (`screen rekap_finansial`).
+  - Terjemahan Bahasa Inggris lengkap untuk seluruh blok dialog, prompt input, dan label UI baru pada `game/tl/english/script.rpy` dan `game/tl/english/ui_custom.rpy`.
+#### Diubah (Changed)
+- **Pembaruan Versi Gim ke 0.3.9 & Skala Skor Dinamis (24 Poin):**
+  - Memperbarui nilai dasar `skor_max` dari `22` menjadi `24` (12 titik keputusan × 2 poin; +2 poin jika dilema kejujuran PayLater muncul di Minggu 4) serta menjaga perhitungan `skor_max` dinamis hingga akhir permainan.
+  - Menyelaraskan nomor versi `0.3.9` pada `game/options.rpy`, `game/script.rpy`, `README.md`, `CHANGELOG.md`, `docs/index.html`, dan `docs/script.js`.
+
+---
+
 ## [0.3.8] - 2026-10-24
 
 ### 🇬🇧 English

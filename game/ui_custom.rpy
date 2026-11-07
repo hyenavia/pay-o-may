@@ -53,6 +53,19 @@ transform right:
     xalign 0.70
     yalign 1.0
 
+# Posisi bertiga di panggung (kiri, tengah, kanan)
+transform stage_left:
+    xalign 0.15
+    yalign 1.0
+
+transform stage_mid:
+    xalign 0.45
+    yalign 1.0
+
+transform stage_right:
+    xalign 0.75
+    yalign 1.0
+
 
 # ------------------------------------------------------------
 # 2. PERBAIKAN GAYA DIALOG & TEKS SISTEM
@@ -109,6 +122,33 @@ screen centered_say(who, what):
 # Membelokkan panggilan screen standar Ren'Py ke implementasi screen Everyday Life
 screen say(who, what):
     use el_ui_say(who, what)
+
+screen input(prompt):
+    style_prefix "el_ui"
+    window:
+        id "window"
+        background el_ui_frame("dialogue_wide")
+        xpos el_u(16)
+        ypos el_u(260)
+        xanchor 0.0
+        yanchor 0.0
+        xsize el_u(608)
+        ysize el_u(84)
+        padding (el_u(20), el_u(12), el_u(32), el_u(12))
+        vbox:
+            spacing el_u(4)
+            text prompt:
+                style "el_ui_text"
+                color el_ui_color(1)
+                size el_ui_font_size(11.5)
+                xmaximum el_u(556)
+            input:
+                id "input"
+                style "el_ui_text"
+                color el_ui_color(2)
+                size el_ui_font_size(13.5)
+                bold True
+                xmaximum el_u(556)
 
 screen choice(items):
     use el_ui_choices(items)
@@ -354,7 +394,7 @@ init python:
         d = getattr(store, "dana_darurat", 0)
         h = getattr(store, "hutang", 0)
         s = getattr(store, "skor", 0)
-        s_max = 22
+        s_max = getattr(store, "skor_max", 24)
         p = (s * 100) // s_max if s_max else 0
         mb = getattr(store, "mama_bantu", False)
         w = getattr(store, "wants", 0)
@@ -498,7 +538,7 @@ screen rekap_finansial():
                         null height el_u(1)
 
                         $ _s = getattr(store, "skor", 0)
-                        $ _sm = 22
+                        $ _sm = getattr(store, "skor_max", 24)
                         $ _p = (_s * 100) // _sm if _sm else 0
 
                         hbox:
@@ -517,6 +557,17 @@ screen rekap_finansial():
                             text _("Keinginan/Gaya Hidup (Wants):") style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
                             $ _wants = getattr(store, "wants", 0)
                             text (_("[_wants] kali")) style "el_ui_text" size el_ui_font_size(9.5) bold True color ("#e65100" if _wants >= 5 else el_ui_color(1))
+
+                        hbox:
+                            xfill True
+                            text _("Jajanan Pilihan:") style "el_ui_text" size el_ui_font_size(9.5) color el_ui_color()
+                            $ _jn = getattr(store, "jajan_nama", "")
+                            $ _jh = getattr(store, "jajan_harga", 0)
+                            if _jh <= 0:
+                                text _("Menahan Diri (Rp 0)") style "el_ui_text" size el_ui_font_size(9.5) bold True color "#2e7d32"
+                            else:
+                                $ _t_jh = rp(_jh)
+                                text "[_jn] ([_t_jh])" style "el_ui_text" size el_ui_font_size(9.5) bold True color ("#e65100" if _jh > 35000 else el_ui_color(1))
 
                         hbox:
                             xfill True

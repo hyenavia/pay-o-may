@@ -8,7 +8,7 @@
 [![Python](https://img.shields.io/badge/Python-3.12-brightgreen.svg)](https://www.python.org/)
 [![Methodology](https://img.shields.io/badge/Methodology-GDLC-orange.svg)](https://en.wikipedia.org/wiki/Video_game_development)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20|%20Android-lightgrey.svg)]()
-[![Version](https://img.shields.io/badge/Version-0.3.8-teal.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-0.3.9-teal.svg)](CHANGELOG.md)
 
 </div>
 
@@ -41,7 +41,7 @@ Banyak mahasiswa perantau yang menghadapi kesulitan mengelola keuangan pribadi k
 - **Papan Status HUD Real-Time (M-Banking Style):** Menampilkan sisa Saldo Uang Jajan dengan *progress bar* dinamis, akumulasi simpanan Dana Darurat, beban tagihan PayLater, dan status Piutang Teman.
 - **Widget Panggilan Telepon Masuk Mama:** Desain kartu panggilan interaktif reaktif di pojok kanan atas dengan avatar pixel art ekspresif saat Mama menelpon dari rumah.
 - **Sistem Notifikasi Smartphone Adaptif (`layar_hp`):** Simulasi pesan push notifikasi ponsel pop-up (M-Banking, toko online, chat teman, dan promo supermarket).
-- **11 Titik Keputusan Finansial:** Setiap pilihan memiliki konsekuensi langsung pada arus kas, rasio kebutuhan/keinginan, tingkat stres keuangan, dan alur naratif.
+- **12 Titik Keputusan & Interaksi Input Finansial:** Setiap pilihan dan input pemain (nama & harga jajanan, nominal tabungan dana darurat, serta tebakan pengeluaran) memiliki konsekuensi langsung pada arus kas, rasio kebutuhan/keinginan, tingkat stres keuangan, dan alur naratif.
 - **4 Cabang Ending Cerita:**
   - 🏆 **Ending A (Bendahara Handal):** Pengelolaan seimbang, memiliki dana darurat utuh, bebas utang, dan mandiri tanpa bantuan tambahan.
   - 🛡️ **Ending B (Selamat Sampai Akhir Bulan):** Berhasil bertahan melewati bulan tanpa krisis utang.
@@ -139,7 +139,7 @@ Many independent college students face severe personal budgeting struggles becau
 - **Real-Time M-Banking Style HUD:** Features dynamic progress bars tracking allowance balance, protected emergency savings, outstanding PayLater balances, and pending peer loans.
 - **Mom's Incoming Call Widget:** An interactive, adaptive phone call card displayed on the top-right corner with reactive pixel-art facial expressions when Mom calls from home.
 - **Adaptive Smartphone Notification System (`layar_hp`):** Realistic pop-down phone push notifications simulating mobile banking alerts, e-commerce promos, friend chats, and supermarket flash sales.
-- **11 Critical Financial Decision Points:** Every choice directly affects wallet liquidity, need-to-want ratios, financial stress levels, and branching story outcomes.
+- **12 Critical Financial Decision & Player Input Points:** Every choice and custom player input (custom snack cravings & prices, emergency fund savings amounts, and spending estimations) directly affects wallet liquidity, need-to-want ratios, financial stress levels, and branching story outcomes.
 - **4 Distinct Story Endings:**
   - 🏆 **Ending A (Master Treasurer):** Balanced budgeting, intact emergency funds, zero debt, and 100% financial independence.
   - 🛡️ **Ending B (Safe Survivor):** Survived the month cleanly without turning to consumer debt.

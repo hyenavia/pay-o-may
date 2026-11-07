@@ -1,5 +1,5 @@
 # ============================================================
-#  PAY O' MAY  (v0.3.8)
+#  PAY O' MAY  (v0.3.9)
 #  Gim novel visual edukasi kesadaran finansial mahasiswa perantauan
 #  Ren'Py 8.5.3
 # ============================================================
@@ -175,6 +175,22 @@ init python:
         _lapor(teks, "#ffcc80")
         sfx("sfx_notif")
 
+    def baca_nominal_input(teks_input, default_val=0):
+        """
+        Mengonversi input teks angka dari pemain menjadi nominal Rupiah bulat.
+        - Mengabaikan titik/koma pemisah ribuan jika diketik.
+        - Jika pemain mengetik angka kecil (1 s.d. 999, misal '25' untuk 25 ribu),
+          otomatis dikalikan 1.000 menjadi Rp 25.000.
+        - Mengembalikan default_val jika input kosong atau tidak valid.
+        """
+        s = "".join(ch for ch in (teks_input or "") if ch.isdigit())
+        if not s:
+            return default_val
+        n = int(s)
+        if 0 < n < 1000:
+            n *= 1000
+        return max(0, n)
+
     # ---------- PLACEHOLDER GAMBAR OTOMATIS (FALLBACK) ----------
     def placeholder_bg(label, color):
         """Membuat displayable latar belakang darurat jika file background asli hilang."""
@@ -197,8 +213,9 @@ init python:
         Jika ada aset yang belum ada, digantikan dengan placeholder agar game tidak crash.
         """
         latar = [
-            ("bg kos",    "Kamar Kos (Siang)",   "#5c6bc0"),
-            ("bg kampus", "Kampus",              "#26a69a"),
+            ("bg kos",         "Kamar Kos (Siang)",   "#5c6bc0"),
+            ("bg kos sore",    "Kamar Kos (Sore)",    "#d87a48"),
+            ("bg kampus",      "Kampus",              "#26a69a"),
             ("bg malam",  "Kamar Kos (Malam)",   "#263238"),
             ("bg akhir",  "Kamar Kos (Senja)",   "#8d6e63"),
         ]
@@ -241,7 +258,7 @@ default uang = 0                  # Saldo uang jajan aktif untuk belanja sehari-
 default dana_darurat = 0          # Saldo simpanan terpisah khusus keadaan darurat
 default hutang = 0                # Total pokok tagihan utang PayLater
 default skor = 0                  # Akumulasi poin keputusan finansial yang bijak
-default skor_max = 22            # Skor maksimal (11 titik keputusan x 2 poin; +2 jika dilema Mama muncul)
+default skor_max = 24            # Skor maksimal (12 titik keputusan x 2 poin; +2 jika dilema Mama muncul)
 default minggu = 1                # Indikator progres minggu (Minggu 1 s.d. 4)
 default catat = False             # Status pencatatan keuangan (diaktifkan di Minggu 2 jika setuju)
 default wants = 0                 # Penghitung berapa kali pemain memilih pengeluaran Keinginan
@@ -250,10 +267,13 @@ default mama_bantu = False        # Penanda apakah pemain meminta bantuan dana k
 default biaya_darurat = 275000    # Biaya perbaikan/penggantian charger laptop saat darurat
 default persen = 0
 
-# Jejak keputusan (dipakai untuk percabangan cerita)
+# Jejak keputusan & input interaktif pemain (dipakai untuk percabangan cerita & rapor akhir)
 default nongkrong = ""            # "boros" / "hemat" / "tolak"  (Minggu 1)
 default headset = ""              # "paylater" / "tunai" / "tunda"  (Minggu 1)
 default makan = ""                # "online" / "campur" / "masak"  (Minggu 2)
+default jajan_nama = ""           # Nama jajanan yang diinput pemain saat kerja kelompok (Minggu 2)
+default jajan_harga = 0           # Harga jajanan yang diinput pemain (Minggu 2)
+default tebakan_keluar = 0        # Tebakan pengeluaran kumulatif pemain saat ditanya Michelle (Minggu 2)
 default langganan = ""            # "tahunan" / "bulanan" / "nobar"  (Minggu 2)
 default pinjam_dimas = ""         # "penuh" / "sebagian" / "tolak"  (Minggu 3)
 default pinjaman_dimas = 0        # Nominal uang yang dipinjamkan ke Axel
@@ -796,7 +816,10 @@ label start:
     $ posttest_dibuka = False
     $ posttest_selesai = False
     $ skor = 0
-    $ skor_max = 22
+    $ skor_max = 24
+    $ jajan_nama = ""
+    $ jajan_harga = 0
+    $ tebakan_keluar = 0
     scene black
     $ musik("bgm_menu")
     centered "{size=48}{b}PAY O' MAY{/b}{/size}\n{size=26}Gim edukasi kesadaran finansial untuk mahasiswa perantauan{/size}"
@@ -863,14 +886,23 @@ label nama_pemain:
     menu:
         "Bagaimana kamu mengatur uang ini?"
 
-        "Bagi ke pos-pos: kebutuhan, dana darurat Rp 300.000 di bank digital, dan sisanya untuk keinginan.":
-            $ pindah_ke_dana(300000)
-            $ skor += 2
+        "Bagi ke pos-pos: sisihkan dana darurat di bank digital (input nominal sendiri), sisanya untuk kebutuhan & keinginan.":
+            $ input_dana_awal = renpy.input(_("Berapa Rupiah yang ingin disisihkan ke Dana Darurat? (Saran 10-20%: Rp 200.000 - Rp 400.000)"), default="300000", allow="0123456789.", length=7)
+            $ nominal_dana_awal = max(50000, min(600000, baca_nominal_input(input_dana_awal, 300000)))
+            $ pindah_ke_dana(nominal_dana_awal)
+            $ t_dana_awal = rp(nominal_dana_awal)
             $ needs += 1
-            if pakai_sprite_billa:
-                show billa senang
-            "Kamu memindahkan Rp 300.000 ke kantong terpisah di aplikasi bank digital ('Dana Darurat - Siaga & Berbunga'). Uang ini aman dari godaan jajan dan akan menghasilkan bunga simpanan tiap minggu."
-            tip "Pay yourself first: simpan dana darurat di kantong bank digital terpisah. Selain tidak gampang terpakai impulsif, dana tetap likuid dan menghasilkan bunga simpanan mingguan."
+            if nominal_dana_awal >= 200000:
+                $ skor += 2
+                if pakai_sprite_billa:
+                    show billa senang
+                "Kamu memindahkan [t_dana_awal] ke kantong terpisah di aplikasi bank digital ('Dana Darurat - Siaga & Berbunga'). Nominal ini sudah ideal (minimal 10 persen dari uang saku) dan akan menghasilkan bunga simpanan tiap minggu."
+            else:
+                $ skor += 1
+                if pakai_sprite_billa:
+                    show billa netral
+                "Kamu memindahkan [t_dana_awal] ke kantong terpisah di aplikasi bank digital ('Dana Darurat - Siaga & Berbunga'). Jumlahnya masih di bawah 10 persen uang saku, tetapi sudah menjadi langkah awal yang baik dan tetap menghasilkan bunga mingguan."
+            tip "Pay yourself first: simpan dana darurat di kantong bank digital terpisah. Idealnya sisihkan 10 hingga 20 persen uang saku di awal bulan agar aman dari godaan jajan dan menghasilkan bunga simpanan mingguan."
 
         "Biarkan semua di satu rekening dulu. Lihat nanti saja.":
             $ skor += 1
@@ -1046,6 +1078,78 @@ label nama_pemain:
             "Kamu masak nasi, telur, dan sayur untuk beberapa hari. Tidak ada pengeluaran tambahan, dan perut tetap kenyang."
             tip "Makan adalah kebutuhan, tetapi cara memenuhinya bisa dipilih. Memasak sendiri biasanya jauh lebih murah dari memesan."
 
+    # --- Interaksi Input Pemain 1: Keinginan Jajan & Harga (Saat Kerja Kelompok di Kos) ---
+    scene bg kos sore with el_sunset_horizon
+    if pakai_sprite_billa:
+        show billa netral at stage_left with dissolve
+        show sinta netral at stage_mid with dissolve
+        show dimas senang at stage_right with dissolve
+    else:
+        show sinta netral at left with dissolve
+        show dimas senang at right with dissolve
+
+    "Sabtu sore, Axel dan Michelle datang ke kosmu untuk menyusun kerangka tugas besar kelompok."
+    dimas "Huh, baru nulis latar belakang aja kepalaku udah ngebul! Eh [nama], istirahat jajan sebentar yuk. Kamu lagi pengen jajan apa sore ini?"
+    show sinta senang
+    sinta "Ide bagus tuh, Axel! Sambil nunggu draf bab satu, jajan camilan enak kayaknya bisa bikin otak segar lagi."
+    show sinta netral
+
+    $ jajan_nama = renpy.input(_("Kamu lagi pengen jajan apa sore ini? (Contoh: Kopi Susu, Seblak, Matcha)"), default=_("Es Kopi Susu"), length=24).strip()
+    if not jajan_nama:
+        $ jajan_nama = _tr(_("Es Kopi Susu"))
+
+    $ input_harga_jajan = renpy.input(_("Berapa harga [jajan_nama] dalam Rupiah? (Ketik 0 jika memilih menahan diri & batal jajan)"), default="25000", allow="0123456789.", length=7)
+    $ jajan_harga = min(250000, baca_nominal_input(input_harga_jajan, 25000))
+    $ t_jajan_harga = rp(jajan_harga)
+
+    if jajan_harga == 0:
+        $ skor += 2
+        $ needs += 1
+        if pakai_sprite_billa:
+            show billa senang at stage_left
+            show sinta senang at stage_mid
+            show dimas netral at stage_right
+        else:
+            show sinta senang at left
+            show dimas netral at right
+        sinta "Keren banget pengendalian dirimu, [nama]. Bikin teh atau kopi sendiri di kos jauh lebih hemat!"
+        "Kamu sempat membayangkan nikmatnya [jajan_nama], tetapi memilih menahan diri dan menyeduh minuman sendiri di kos. Dompetmu aman tanpa keluar uang sepeser pun!"
+        tip "Menyadari keinginan lalu memilih tidak membelinya saat belum mendesak adalah bentuk pengendalian diri terbaik terhadap belanja impulsif."
+    elif jajan_harga <= 35000:
+        $ ubah_uang(-jajan_harga, jajan_nama)
+        $ wants += 1
+        $ skor += 1
+        if pakai_sprite_billa:
+            show billa senang at stage_left
+            show sinta senang at stage_mid
+            show dimas senang at stage_right
+        else:
+            show sinta senang at left
+            show dimas senang at right
+        sinta "Pilihan oke! Harganya masih masuk akal buat nemenin nugas bareng."
+        "Kamu membeli [jajan_nama] seharga {b}[t_jajan_harga]{/b} untuk menemani kerja kelompok. Harganya masih cukup terukur sebagai apresiasi diri mingguan."
+        tip "Jajan kecil seperti [jajan_nama] ([t_jajan_harga]) boleh saja sesekali, tetapi tetap waspadai 'Latte Factor'—jajan murah yang diulang tiap hari bisa menguras ratusan ribu rupiah sebulan."
+    else:
+        $ ubah_uang(-jajan_harga, jajan_nama)
+        $ wants += 1
+        if pakai_sprite_billa:
+            show billa khawatir at stage_left
+            show sinta khawatir at stage_mid
+            show dimas senang at stage_right
+        else:
+            show sinta khawatir at left
+            show dimas senang at right
+        show sinta khawatir
+        sinta "Wah... harganya lumayan juga ya buat sekali jajan. Jangan sampai kebablasan di minggu depan ya."
+        "Kamu memesan [jajan_nama] seharga {b}[t_jajan_harga]{/b}. Rasanya memang memuaskan, tetapi untuk ukuran camilan sekali duduk, harganya lumayan menggerus sisa uang jajanmu."
+        tip "Jajanan impulsif di atas Rp 35.000 sekali beli dapat memotong jatah makan pokok beberapa hari. Selalu bandingkan harga jajanan dengan sisa anggaran mingguanmu."
+
+    hide dimas with dissolve
+    hide sinta with dissolve
+    if pakai_sprite_billa:
+        hide billa with dissolve
+
+    # --- Interaksi Input Pemain 2: Tebakan Pengeluaran vs Realita bersama Michelle ---
     $ musik("bgm_kampus")
     scene bg kampus with el_mosaic_tiles
 
@@ -1056,6 +1160,31 @@ label nama_pemain:
         show sinta netral with dissolve
 
     sinta "Hei [nama], kok mukamu bingung lihat saldo? Aku juga dulu begitu."
+    sinta "Eh, coba tebak deh tanpa mengintip M-Banking! Menurutmu sejak awal bulan sampai hari ini, total uang saku yang sudah habis terpakai itu berapa Rupiah?"
+
+    hide screen hud
+    $ pengeluaran_asli = max(0, 2000000 - uang - dana_darurat)
+    $ input_tebakan = renpy.input(_("Tebak total uang saku yang sudah terpakai sejak awal bulan (Rp):"), default="500000", allow="0123456789.", length=7)
+    $ tebakan_keluar = min(2000000, baca_nominal_input(input_tebakan, 500000))
+    $ selisih_tebak = abs(tebakan_keluar - pengeluaran_asli)
+    $ t_tebakan = rp(tebakan_keluar)
+    $ t_asli = rp(pengeluaran_asli)
+    show screen hud
+
+    p "Hmm... kayaknya sekitar [t_tebakan] deh."
+    "Kamu membuka mutasi M-Banking bersama Michelle. Ternyata total uang saku yang sudah terpakai sejak awal bulan adalah {b}[t_asli]{/b}!"
+
+    if selisih_tebak <= 50000:
+        show sinta senang at right
+        sinta "Wah, tebakanmu hampir tepat! Selisihnya tipis banget dari [t_asli]. Berarti kamu lumayan peka sama arus uangmu sendiri."
+    elif tebakan_keluar < pengeluaran_asli:
+        show sinta khawatir at right
+        sinta "Tuh kan! Kamu nebak baru habis [t_tebakan], padahal aslinya udah keluar [t_asli]. Tanpa catatan, kita memang sering merasa baru belanja sedikit."
+    else:
+        show sinta netral at right
+        sinta "Eh, ternyata pengeluaran aslimu [t_asli], lebih kecil dari tebakanmu ([t_tebakan]). Karena nggak dicatat, kamu jadi menebak-nebak dan cemas sendiri."
+
+    show sinta netral at right
     sinta "Sejak aku mencatat semua pengeluaran, aku jadi tahu uangku bocor ke mana."
     sinta "Coba aturan 50, 30, 20 versi mahasiswa: 50 persen kebutuhan, 30 persen keinginan, 20 persen tabungan. Gampang kok."
 
@@ -1236,6 +1365,26 @@ label nama_pemain:
 
     menu:
         "Berapa yang kamu sisihkan?"
+
+        "Ketik sendiri nominal tabungan ke dana darurat." if uang >= 25000:
+            $ maks_sisih = min(uang, 500000)
+            $ t_maks_sisih = rp(maks_sisih)
+            $ input_dana_m3 = renpy.input(_("Masukkan nominal tabungan Dana Darurat (Rp 25.000 - [t_maks_sisih]):"), default="100000", allow="0123456789.", length=7)
+            $ nominal_dana_m3 = max(25000, min(maks_sisih, baca_nominal_input(input_dana_m3, 100000)))
+            $ pindah_ke_dana(nominal_dana_m3)
+            $ t_dana_m3 = rp(nominal_dana_m3)
+            $ needs += 1
+            if nominal_dana_m3 >= 100000:
+                $ skor += 2
+                if pakai_sprite_billa:
+                    show billa senang at left
+                show sinta senang at right
+            else:
+                $ skor += 1
+                if pakai_sprite_billa:
+                    show billa netral at left
+            "Kamu memindahkan [t_dana_m3] ke kantong dana darurat sesuai perhitunganmu sendiri. Sedikit demi sedikit, bantalan pengamanmu menebal."
+            tip "Menyesuaikan nominal tabungan dengan sisa anggaran riil membantumu tetap konsisten menabung tanpa mencekik kebutuhan makan harian."
 
         "Sisihkan Rp 100.000 ke dana darurat." if uang >= 100000:
             $ pindah_ke_dana(100000)
@@ -1556,8 +1705,7 @@ label nama_pemain:
     "Hari terakhir bulan ini. Malam yang tenang. Kamu membuka aplikasi bank dan menatap angkanya."
     if uang < 200000 and dana_darurat > 0:
         call menu_tarik_darurat from _call_menu_tarik_darurat_akhir
-    $ skor_max = 22
-    $ persen = (skor * 100) // 22
+    $ persen = (skor * 100) // max(1, skor_max)
 
     if uang <= 0:
         jump ending_habis
@@ -1658,8 +1806,7 @@ label ending_habis:
 label rekap:
     # Menutup HUD permainan dan menampilkan modal E-Statement Rapor Keuangan Mahasiswa
     # serta tautan kuesioner Post-Test penelitian.
-    $ skor_max = 22
-    $ persen = (skor * 100) // 22
+    $ persen = (skor * 100) // max(1, skor_max)
     hide screen hud
     hide screen el_ui_quick_menu
     hide weather with dissolve
