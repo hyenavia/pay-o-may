@@ -170,10 +170,13 @@ jobs:
           fi
 
       - name: Accept Android Licenses & Build APK
+        env:
+          ANDROID_NDK_HOME: ""
+          RAPT_NO_TERMS: "1"
         run: |
           yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null 2>&1 || true
           mkdir -p dist
-          "./renpy-${RENPY_VERSION}-sdk/renpy.sh" "./renpy-${RENPY_VERSION}-sdk/launcher" android_build . assembleRelease --destination dist
+          "./renpy-${RENPY_VERSION}-sdk/renpy.sh" "./renpy-${RENPY_VERSION}-sdk/launcher" android_build . --destination dist
           if ls bin/*.apk 1> /dev/null 2>&1; then
             cp -f bin/*.apk dist/
           fi
