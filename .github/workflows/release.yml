@@ -1,4 +1,4 @@
-name: Auto Release
+name: Build & Auto Release
 
 on:
   push:
@@ -6,39 +6,39 @@ on:
       - main
     tags:
       - 'v*'
+  workflow_dispatch:
 
 permissions:
   contents: write
 
+env:
+  RENPY_VERSION: "8.4.1"
+
 jobs:
-  release:
+  check:
+    name: Check Version & Release Status
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.extract.outputs.version }}
+      tag: ${{ steps.extract.outputs.tag }}
+      exists: ${{ steps.check_release.outputs.exists }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
 
       - name: Extract Version & Changelog
-        id: extract_changelog
+        id: extract
         run: |
-          python - << 'EOF'
+          python3 - << 'EOF'
           import os
           import re
 
-          # Baca versi dari game/options.rpy
           with open("game/options.rpy", "r", encoding="utf-8") as f:
               opt = f.read()
           v_match = re.search(r'define\s+config\.version\s*=\s*["\']([^"\']+)["\']', opt)
           version = v_match.group(1).strip() if v_match else "0.0.0"
           tag = f"v{version}"
 
-          # Ekstrak catatan perubahan dari CHANGELOG.md
           with open("CHANGELOG.md", "r", encoding="utf-8") as f:
               cl = f.read()
 
@@ -46,37 +46,169 @@ jobs:
           notes_match = re.search(pattern, cl, re.DOTALL)
           notes = notes_match.group(1).strip() if notes_match else f"Rilis pembaruan versi {version}"
 
-          # Simpan ke file release_notes.md untuk body release
           with open("release_notes.md", "w", encoding="utf-8") as f:
               f.write(notes)
 
-          # Teruskan variabel ke output GitHub Action
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
               f.write(f"version={version}\n")
               f.write(f"tag={tag}\n")
           EOF
+
+      - name: Upload Release Notes
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-notes
+          path: release_notes.md
 
       - name: Check if Release Already Exists
         id: check_release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TAG="${{ steps.extract_changelog.outputs.tag }}"
+          TAG="${{ steps.extract.outputs.tag }}"
           if gh release view "$TAG" > /dev/null 2>&1; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-            echo "Release $TAG sudah ada. Melewati pembuatan rilis otomatis."
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Release $TAG sudah ada. Build dan rilis dilewati."
           else
-            echo "exists=false" >> $GITHUB_OUTPUT
-            echo "Release $TAG belum ada. Rilis otomatis akan dibuat."
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "Release $TAG belum ada. Lanjut build dan rilis otomatis."
           fi
 
-      - name: Create GitHub Release
-        if: steps.check_release.outputs.exists == 'false'
+  build-pc:
+    name: Build PC Distribution
+    needs: check
+    if: needs.check.outputs.exists == 'false'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Cache Ren'Py SDK
+        id: cache-renpy
+        uses: actions/cache@v4
+        with:
+          path: renpy-${{ env.RENPY_VERSION }}-sdk
+          key: renpy-sdk-${{ env.RENPY_VERSION }}
+
+      - name: Download Ren'Py SDK
+        if: steps.cache-renpy.outputs.cache-hit != 'true'
+        run: |
+          wget -q "https://www.renpy.org/dl/${RENPY_VERSION}/renpy-${RENPY_VERSION}-sdk.tar.bz2"
+          tar -xjf "renpy-${RENPY_VERSION}-sdk.tar.bz2"
+          rm -f "renpy-${RENPY_VERSION}-sdk.tar.bz2"
+
+      - name: Build PC (.zip)
+        run: |
+          mkdir -p dist
+          "./renpy-${RENPY_VERSION}-sdk/renpy.sh" . distribute --package pc --destination dist
+
+      - name: Upload PC Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pc-build
+          path: dist/*.zip
+
+  build-android:
+    name: Build Android APK
+    needs: check
+    if: needs.check.outputs.exists == 'false'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Cache Ren'Py SDK & RAPT
+        id: cache-renpy-rapt
+        uses: actions/cache@v4
+        with:
+          path: renpy-${{ env.RENPY_VERSION }}-sdk
+          key: renpy-sdk-rapt-${{ env.RENPY_VERSION }}
+
+      - name: Download Ren'Py SDK & RAPT
+        if: steps.cache-renpy-rapt.outputs.cache-hit != 'true'
+        run: |
+          wget -q "https://www.renpy.org/dl/${RENPY_VERSION}/renpy-${RENPY_VERSION}-sdk.tar.bz2"
+          tar -xjf "renpy-${RENPY_VERSION}-sdk.tar.bz2"
+          rm -f "renpy-${RENPY_VERSION}-sdk.tar.bz2"
+
+          wget -q "https://www.renpy.org/dl/${RENPY_VERSION}/renpy-${RENPY_VERSION}-rapt.zip"
+          unzip -q "renpy-${RENPY_VERSION}-rapt.zip" -d "renpy-${RENPY_VERSION}-sdk"
+          rm -f "renpy-${RENPY_VERSION}-rapt.zip"
+
+      - name: Prepare Android Keystores
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          BUNDLE_KEYSTORE_BASE64: ${{ secrets.BUNDLE_KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$ANDROID_KEYSTORE_BASE64" ]; then
+            echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > android.keystore
+          else
+            keytool -genkeypair -v -keystore android.keystore -alias android \
+              -keyalg RSA -keysize 2048 -validity 10000 \
+              -storepass android -keypass android \
+              -dname "CN=PayoMay, OU=Dev, O=PayoMay, L=ID, ST=ID, C=ID"
+          fi
+
+          if [ -n "$BUNDLE_KEYSTORE_BASE64" ]; then
+            echo "$BUNDLE_KEYSTORE_BASE64" | base64 -d > bundle.keystore
+          else
+            cp android.keystore bundle.keystore
+          fi
+
+      - name: Accept Android Licenses & Build APK
+        run: |
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null 2>&1 || true
+          mkdir -p dist
+          "./renpy-${RENPY_VERSION}-sdk/renpy.sh" . android_build --destination dist
+          if ls bin/*.apk 1> /dev/null 2>&1; then
+            cp -f bin/*.apk dist/
+          fi
+
+      - name: Upload Android Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-build
+          path: dist/*.apk
+
+  release:
+    name: Create GitHub Release
+    needs: [check, build-pc, build-android]
+    if: needs.check.outputs.exists == 'false'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Release Notes
+        uses: actions/download-artifact@v4
+        with:
+          name: release-notes
+          path: .
+
+      - name: Download PC Build
+        uses: actions/download-artifact@v4
+        with:
+          name: pc-build
+          path: release-assets
+
+      - name: Download Android Build
+        uses: actions/download-artifact@v4
+        with:
+          name: android-build
+          path: release-assets
+
+      - name: Create GitHub Release with Assets
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TAG="${{ steps.extract_changelog.outputs.tag }}"
-          gh release create "$TAG" \
+          TAG="${{ needs.check.outputs.tag }}"
+          gh release create "$TAG" release-assets/* \
             --title "Pay o' May $TAG" \
             --notes-file release_notes.md \
-            --target main
+            --target "${{ github.sha }}"
