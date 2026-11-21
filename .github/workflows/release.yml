@@ -95,26 +95,26 @@ jobs:
         id: cache-renpy
         uses: actions/cache@v4
         with:
-          path: renpy-${{ env.RENPY_VERSION }}-sdk
+          path: ${{ runner.temp }}/renpy-${{ env.RENPY_VERSION }}-sdk
           key: renpy-sdk-${{ env.RENPY_VERSION }}
 
       - name: Download Ren'Py SDK
         if: steps.cache-renpy.outputs.cache-hit != 'true'
         run: |
-          wget -q "https://www.renpy.org/dl/${RENPY_VERSION}/renpy-${RENPY_VERSION}-sdk.tar.bz2"
-          tar -xjf "renpy-${RENPY_VERSION}-sdk.tar.bz2"
-          rm -f "renpy-${RENPY_VERSION}-sdk.tar.bz2"
+          wget -q "https://www.renpy.org/dl/${RENPY_VERSION}/renpy-${RENPY_VERSION}-sdk.tar.bz2" -O "${{ runner.temp }}/renpy-sdk.tar.bz2"
+          tar -xjf "${{ runner.temp }}/renpy-sdk.tar.bz2" -C "${{ runner.temp }}"
+          rm -f "${{ runner.temp }}/renpy-sdk.tar.bz2"
 
       - name: Build PC (.zip)
         run: |
-          mkdir -p dist
-          "./renpy-${RENPY_VERSION}-sdk/renpy.sh" "./renpy-${RENPY_VERSION}-sdk/launcher" distribute . --package pc --destination dist
+          mkdir -p "${{ runner.temp }}/dist"
+          "${{ runner.temp }}/renpy-${RENPY_VERSION}-sdk/renpy.sh" "${{ runner.temp }}/renpy-${RENPY_VERSION}-sdk/launcher" distribute . --package pc --destination "${{ runner.temp }}/dist"
 
       - name: Upload PC Build Artifact
         uses: actions/upload-artifact@v4
         with:
           name: pc-build
-          path: dist/*.zip
+          path: ${{ runner.temp }}/dist/*.zip
 
   build-android:
     name: Build Android APK
@@ -135,19 +135,19 @@ jobs:
         id: cache-renpy-rapt
         uses: actions/cache@v4
         with:
-          path: renpy-${{ env.RENPY_VERSION }}-sdk
+          path: ${{ runner.temp }}/renpy-${{ env.RENPY_VERSION }}-sdk
           key: renpy-sdk-rapt-${{ env.RENPY_VERSION }}
 
       - name: Download Ren'Py SDK & RAPT
         if: steps.cache-renpy-rapt.outputs.cache-hit != 'true'
         run: |
-          wget -q "https://www.renpy.org/dl/${RENPY_VERSION}/renpy-${RENPY_VERSION}-sdk.tar.bz2"
-          tar -xjf "renpy-${RENPY_VERSION}-sdk.tar.bz2"
-          rm -f "renpy-${RENPY_VERSION}-sdk.tar.bz2"
+          wget -q "https://www.renpy.org/dl/${RENPY_VERSION}/renpy-${RENPY_VERSION}-sdk.tar.bz2" -O "${{ runner.temp }}/renpy-sdk.tar.bz2"
+          tar -xjf "${{ runner.temp }}/renpy-sdk.tar.bz2" -C "${{ runner.temp }}"
+          rm -f "${{ runner.temp }}/renpy-sdk.tar.bz2"
 
-          wget -q "https://www.renpy.org/dl/${RENPY_VERSION}/renpy-${RENPY_VERSION}-rapt.zip"
-          unzip -q "renpy-${RENPY_VERSION}-rapt.zip" -d "renpy-${RENPY_VERSION}-sdk"
-          rm -f "renpy-${RENPY_VERSION}-rapt.zip"
+          wget -q "https://www.renpy.org/dl/${RENPY_VERSION}/renpy-${RENPY_VERSION}-rapt.zip" -O "${{ runner.temp }}/renpy-rapt.zip"
+          unzip -q "${{ runner.temp }}/renpy-rapt.zip" -d "${{ runner.temp }}/renpy-${RENPY_VERSION}-sdk"
+          rm -f "${{ runner.temp }}/renpy-rapt.zip"
 
       - name: Prepare Android Keystores
         env:
@@ -175,17 +175,17 @@ jobs:
           RAPT_NO_TERMS: "1"
         run: |
           yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null 2>&1 || true
-          mkdir -p dist
-          "./renpy-${RENPY_VERSION}-sdk/renpy.sh" "./renpy-${RENPY_VERSION}-sdk/launcher" android_build . --destination dist
+          mkdir -p "${{ runner.temp }}/dist"
+          "${{ runner.temp }}/renpy-${RENPY_VERSION}-sdk/renpy.sh" "${{ runner.temp }}/renpy-${RENPY_VERSION}-sdk/launcher" android_build . --destination "${{ runner.temp }}/dist"
           if ls bin/*.apk 1> /dev/null 2>&1; then
-            cp -f bin/*.apk dist/
+            cp -f bin/*.apk "${{ runner.temp }}/dist/"
           fi
 
       - name: Upload Android Build Artifact
         uses: actions/upload-artifact@v4
         with:
           name: android-build
-          path: dist/*.apk
+          path: ${{ runner.temp }}/dist/*.apk
 
   release:
     name: Create GitHub Release
