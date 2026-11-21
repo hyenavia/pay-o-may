@@ -21,7 +21,8 @@ jobs:
     outputs:
       version: ${{ steps.extract.outputs.version }}
       tag: ${{ steps.extract.outputs.tag }}
-      exists: ${{ steps.check_release.outputs.exists }}
+      release_exists: ${{ steps.check_release.outputs.release_exists }}
+      should_build: ${{ steps.check_release.outputs.should_build }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -66,18 +67,25 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG="${{ steps.extract.outputs.tag }}"
-          if gh release view "$TAG" > /dev/null 2>&1; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
-            echo "Release $TAG sudah ada. Build dan rilis dilewati."
+          if ASSETS_COUNT=$(gh release view "$TAG" --json assets --jq '.assets | length' 2>/dev/null); then
+            echo "release_exists=true" >> "$GITHUB_OUTPUT"
+            if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$ASSETS_COUNT" -eq 0 ]; then
+              echo "should_build=true" >> "$GITHUB_OUTPUT"
+              echo "Release $TAG sudah ada (assets: $ASSETS_COUNT), tetap build & upload."
+            else
+              echo "should_build=false" >> "$GITHUB_OUTPUT"
+              echo "Release $TAG sudah ada dengan $ASSETS_COUNT asset. Build dan rilis dilewati."
+            fi
           else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "release_exists=false" >> "$GITHUB_OUTPUT"
+            echo "should_build=true" >> "$GITHUB_OUTPUT"
             echo "Release $TAG belum ada. Lanjut build dan rilis otomatis."
           fi
 
   build-pc:
     name: Build PC Distribution
     needs: check
-    if: needs.check.outputs.exists == 'false'
+    if: needs.check.outputs.should_build == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -100,7 +108,7 @@ jobs:
       - name: Build PC (.zip)
         run: |
           mkdir -p dist
-          "./renpy-${RENPY_VERSION}-sdk/renpy.sh" . distribute --package pc --destination dist
+          "./renpy-${RENPY_VERSION}-sdk/renpy.sh" "./renpy-${RENPY_VERSION}-sdk/launcher" distribute . --package pc --destination dist
 
       - name: Upload PC Build Artifact
         uses: actions/upload-artifact@v4
@@ -111,7 +119,7 @@ jobs:
   build-android:
     name: Build Android APK
     needs: check
-    if: needs.check.outputs.exists == 'false'
+    if: needs.check.outputs.should_build == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -122,9 +130,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
 
       - name: Cache Ren'Py SDK & RAPT
         id: cache-renpy-rapt
@@ -168,7 +173,7 @@ jobs:
         run: |
           yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null 2>&1 || true
           mkdir -p dist
-          "./renpy-${RENPY_VERSION}-sdk/renpy.sh" . android_build --destination dist
+          "./renpy-${RENPY_VERSION}-sdk/renpy.sh" "./renpy-${RENPY_VERSION}-sdk/launcher" android_build . assembleRelease --destination dist
           if ls bin/*.apk 1> /dev/null 2>&1; then
             cp -f bin/*.apk dist/
           fi
@@ -182,7 +187,7 @@ jobs:
   release:
     name: Create GitHub Release
     needs: [check, build-pc, build-android]
-    if: needs.check.outputs.exists == 'false'
+    if: needs.check.outputs.should_build == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Download Release Notes
@@ -203,12 +208,16 @@ jobs:
           name: android-build
           path: release-assets
 
-      - name: Create GitHub Release with Assets
+      - name: Create or Update GitHub Release with Assets
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG="${{ needs.check.outputs.tag }}"
-          gh release create "$TAG" release-assets/* \
-            --title "Pay o' May $TAG" \
-            --notes-file release_notes.md \
-            --target "${{ github.sha }}"
+          if [ "${{ needs.check.outputs.release_exists }}" = "true" ]; then
+            gh release upload "$TAG" release-assets/* --clobber
+          else
+            gh release create "$TAG" release-assets/* \
+              --title "Pay o' May $TAG" \
+              --notes-file release_notes.md \
+              --target "${{ github.sha }}"
+          fi
